@@ -13,7 +13,7 @@ nchnls = 2
 
 massign	3,1 ;channel 3 for this sequencer
 
-giNoteArr  []   init 4	
+giNoteArr  []   init 5
 giLength        init lenarray:i(giNoteArr)
 giEmptyArr []   init giLength		
 giActive        init 0
@@ -45,20 +45,3 @@ endin
 
 </CsScore>
 </CsoundSynthesizer>
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>725</x>
- <y>140</y>
- <width>400</width>
- <height>300</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="nobackground">
-  <r>255</r>
-  <g>255</g>
-  <b>255</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>

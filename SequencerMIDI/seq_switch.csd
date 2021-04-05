@@ -1,9 +1,4 @@
 
-/*-------------------------------------------------------------------------
-Writing MIDI to Array for MIDI Sequencer
-	write the midi number in order that played
--------------------------------------------------------------------------*/
-
 
 <CsoundSynthesizer>
 <CsOptions>
@@ -18,7 +13,7 @@ nchnls = 2
 
 massign	0,0
 
-giNoteArr  []   init 4	
+giNoteArr  []   init 5
 giLength        init lenarray:i(giNoteArr)
 giEmptyArr []   init giLength		
 giCountMIDI     init 0 
@@ -127,20 +122,4 @@ endin
 i "MIDI_Play" 0 999
 </CsScore>
 </CsoundSynthesizer>
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>604</x>
- <y>683</y>
- <width>400</width>
- <height>300</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="nobackground">
-  <r>255</r>
-  <g>255</g>
-  <b>255</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>
+
