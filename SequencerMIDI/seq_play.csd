@@ -1,10 +1,4 @@
 
-/*-------------------------------------------------------------------------
-Writing MIDI to Array for MIDI Sequencer
-	write the midi number in order that played
--------------------------------------------------------------------------*/
-
-
 <CsoundSynthesizer>
 <CsOptions>
 -m128  
