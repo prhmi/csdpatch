@@ -10,7 +10,7 @@ nchnls = 2
 0dbfs = 1
 
 
-seed 63
+seed 0
 
 opcode ArrCheck, i, ii[]
  iEl, iArr[] xin
@@ -33,15 +33,27 @@ iInArr[] xin
 iRnd = iInArr[0]
 iRead = 0
 	until ArrCheck:i(iRnd,iInArr) == 0 do
-	iRnd = int(random:i(1,12))
+	iRnd = int(random:i(0,96))
 	iRead = (iRead+1) % lenarray(iInArr)
 	enduntil
 xout iRnd
 endop
 
+
+opcode MtoName, S,i
+iMidi xin 
+SNoteArr [] fillarray "C", "C#", "D", "D#","E", "F", "F#", "G","G#", "A", "A#", "B"
+iNoteIndex = iMidi % 12
+iSnumber = int(iMidi/12)-1
+Sout sprintfk "%d%s",iSnumber,SNoteArr[iNoteIndex]
+xout Sout
+endop
+
+
+
 instr 1
 
-iInArr [] init  9
+iInArr [] init  35
 iOutArr [] init lenarray(iInArr)
 iOutArr2 [] init lenarray(iInArr)
 
@@ -49,7 +61,7 @@ iRead = 0
 iCheck = 0
 itrim = 0
 while iRead < lenarray(iInArr) do
-iInArr [iRead] = int(random:i(1,12))
+iInArr [iRead] = int(random:i(0,96))
 	if ArrCheck:i(iInArr[iRead],iOutArr) == 0 then
 	iOutArr[iCheck] = iInArr [iRead]
 	iCheck += 1
@@ -69,6 +81,15 @@ print iCheck
 	printarray iOutArr, "%.0f", "note"
 	printarray iOutArr2, "%.0f", "note2"
 
+SNoteArr [] init lenarray:i(iOutArr2)
+iNoteIndx = 0
+while iNoteIndx < lenarray:i(iOutArr2) do
+Snote MtoName iOutArr2[iNoteIndx]
+SNoteArr [iNoteIndx] = Snote
+iNoteIndx += 1
+od
+printarray SNoteArr,1, "%s"
+
 endin
 
 </CsInstruments>
@@ -79,8 +100,8 @@ i1 0 .1
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
- <x>100</x>
- <y>100</y>
+ <x>680</x>
+ <y>159</y>
  <width>320</width>
  <height>240</height>
  <visible>true</visible>
