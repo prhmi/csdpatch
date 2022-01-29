@@ -1,13 +1,23 @@
 <Cabbage>
-form caption("Loop") size(280,180), pluginid("Loop")
-image  bounds(0, 0, 350, 200), outlinethickness(6), , colour(45, 61, 87, 255) file("loop.jpg")
-checkbox  bounds(12, 10, 68, 21), text("Loop") , channel("loop"),   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255) fontcolour:0(255, 255, 255, 255) fontcolour:1(255, 255, 255, 255)
-checkbox  bounds(90, 10, 68, 21), text("Metro") , channel("metro"),   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255) fontcolour:0(255, 255, 255, 255) fontcolour:1(255, 255, 255, 255)
-rslider bounds(186, 48, 85, 85), channel("mix"), text("mix"), range(0, 1, 1, 1, 0.001), trackercolour(147, 207, 207, 255) outlinecolour(3, 29, 29, 255) valuetextbox(1) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
-rslider bounds(10, 48, 85, 85), channel("looptime"), text("Time"), range(0.2, 10, 6, 1, 0.001), trackercolour(147, 207, 207, 255) outlinecolour(3, 29, 29, 255) valuetextbox(1) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
-hslider bounds(12, 138, 260, 31), channel("steps"), text("Steps"), range(1, 6, 2, 1, 1), trackercolour(147, 207, 207, 255) outlinecolour(3, 29, 29, 255) valuetextbox(1) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
-rslider bounds(98, 48, 85, 85), channel("pitch"), text("Pitch"), range(-2, 2, 1, 1, 0.001), trackercolour(147, 207, 207, 255) outlinecolour(3, 29, 29, 255) valuetextbox(1) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255) identchannel("pitchID")
-button bounds(172, 8, 80, 26) text("Reset Pitch", "Reset Pitch") channel("rstpch") colour:0(80, 83, 94, 255) colour:1(80, 83, 94, 255)
+form caption("Loop") size(350,200), pluginId("Loop")
+image  bounds(0, 0, 350, 200), outlineThickness(6), , colour(45, 61, 87, 255) file("loop.jpg")
+checkbox  bounds(12, 10, 68, 21), text("Loop") , channel("loop"),   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+checkbox  bounds(260, 10, 68, 21), text("Metro") , channel("metro"),   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+rslider bounds(258, 48, 85, 85), channel("mix"), text("mix"), range(0, 1, 1, 1, 0.001), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
+rslider bounds(10, 48, 85, 85), channel("looptime"), text("Time"), range(0.2, 10, 1, 1, 0.001), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
+nslider bounds(26, 152, 56, 32) range(0, 100, 70, 1, 1) velocity(50) channel("mtromss") text("Metro moses")
+nslider bounds(148, 10, 53, 25) range(2, 100, 7, 1, 1) velocity(50) channel("fde") text("Fade")
+
+nslider bounds(128, 126, 46, 31), channel("stepsmin"), text("StepsMin"), range(1, 6, 2, 1, 1), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1) velocity(50)
+nslider bounds(176, 126, 45, 31), channel("stepsmax"), text("StepsMax"), range(4, 20, 10, 1, 1), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1) 
+checkbox  bounds(136, 162, 89, 21), text("Rnd Steps") , channel("rndstp"),   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255) value(1)
+nslider bounds(114, 42, 61, 31), channel("pitchmin"), text("PitchMin"), range(0.3, 1.5, 1, 1, 0.001), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1) velocity(50)
+nslider bounds(178, 42, 60, 31), channel("pitchmax"), text("PitchMax"), range(0.5, 2, 1.01, 1, 0.001), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1) 
+
+checkbox  bounds(134, 78, 84, 21), text("Rnd Pitch") , channel("rndptch"),   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255) 
+nslider bounds(266, 152, 56, 32) range(0, 1, 0.1, 1, .001) velocity(50) channel("swft") text("SWIFT")
+
+
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
@@ -20,110 +30,160 @@ ksmps = 64
 nchnls = 2
 0dbfs = 1
 
- seed 0
+seed 0
+giTableL ftgen 0, 0, 10*sr, 2, 0
+giTableR ftgen 0, 0, 10*sr, 2, 0
+giTableLength = ftlen(giTableL) / sr
 
-giSoundFileL      	ftgen   0, 0, 20*sr, 2, 0
-giSoundFileR      	ftgen   0, 0, 20*sr, 2, 0
-giTableLength = ftlen(giSoundFileL)/ sr
 
+instr Start
+ ;aInL,aInR diskin2 "harp.wav",1,0,1
+ aInL,aInR ins
+ kTime init 0
+ kTime chnget "looptime"
+ kMetroMoses chnget "mtromss"
+ kMetroTime init 0
+ kMetro chnget "metro"
+ kLoop chnget "loop"
+ kSwift chnget "swft"
+ kRndStp chnget "rndstp"
+ kPitch chnget "pitch"
+ kStepsMin chnget "stepsmin"
+ kStepsMax chnget "stepsmax"
+ kRndPch chnget "rndpch"
+ kPitchMin chnget "pitchmin"
+ kPitchMax chnget "pitchmax"
+ kMix chnget "mix"
+ 
+ if kMetro == 1 && kLoop == 0 then
+    if metro(1/kTime) == 1 then
+      kMetroTirg = (random:k(0, 100) > kMetroMoses ) ? 0 : 1
+    endif
+ elseif kMetro == 0 then
+    kMetroTirg = 0
+ endif
+;printk2 kMetroTirg
 
-instr start
-;ainL diskin2 "test.wav",1,0,1
-;ainR = ainL
-ainL,ainR ins
-kLoop     chnget "loop" ; 1
-kMetro    chnget "metro" ; 1
-kmix      chnget "mix"
-kSteps    chnget "steps" ; 1
-gkpitch   chnget "pitch"
-kLoopTime chnget "looptime" ; 2 ; 0.1-10
-kRstPch   chnget "rstpch"
-kreset = 1
-if changed(kRstPch) == 1 then
-chnset kreset, "pitch"
-endif
-kMetSpd = 1/kLoopTime
-;kLoop = (randi:k(50,7,2)+50 > 90) ? 0 : 1
-kTime init 1
-
-if kMetro == 1 then
-	if metro:k(kTime) == 1 then
-	turnoff2 "Record",0,1
-	turnoff2 "Play",0,1
-	kTime random kMetSpd, kMetSpd*2
-	kDur = 1/kTime
-	schedulek "Record", 0 ,30
-	schedulek "Play",kDur+0.1 ,30,kDur/kSteps
+ ;kMetroTirg = 1
+ 
+	if kMetroTirg == 1 then
+		if metro:k(1/kMetroTime) == 1 then
+		kMetroTime random kTime/2, kTime
+		    if kRndStp == 1 then
+		      kSteps = int(random:k( kStepsMin, kStepsMax))
+		    elseif kRndStp == 0 then
+		      kSteps =  kStepsMin
+		    endif
+		    if kRndPch == 1 then
+		      kPitch = int(random:k( kPitchMin, kPitchMax))
+		    elseif kRndPch == 0 then
+		      kPitch =  kPitchMin
+		    endif		
+		schedulek "Record", 0 ,kMetroTime
+		schedulek "machine", 0,kMetroTime,kSteps,kSwift,kPitch
+		endif
 	endif
-elseif kLoop == 1 && changed(kLoop) == 1 && kMetro == 0 then
+	
+	if kLoop == 1 && changed(kLoop) == 1 && kMetro == 0 then
+	schedulek "Record", 0 ,9999
+    schedulek "loopme", 0,9999,kTime,kStepsMin,kSwift,kPitchMin
+    elseif kLoop == 0 && changed(kLoop) == 1 && kMetro == 0  then
     turnoff2 "Record",0,1
-	turnoff2 "Play",0,1
-	schedulek "Record", 0 ,30
-	schedulek "Play",kLoopTime+0.1 ,30,kLoopTime/kSteps
-elseif kLoop == 0  && kMetro == 0 then
-	turnoff2 "Record",0,1
-	turnoff2 "Play",0,1
+    turnoff2 "loopme",0,1
+	endif
+	
+
+
+ chnmix	aInL,"audioL"
+ chnmix	aInR,"audioR"
+ 
+ aLoopL chnget "LoopL"
+ aLoopR chnget "LoopR"
+  
+  aMixL ntrpol aInL,aLoopL,kMix
+  aMixR ntrpol aInR,aLoopR,kMix
+  
+if kLoop == 0 && kMetro == 0 then
+kIn = 1
+kOut = 0
+elseif kLoop == 1 && kMetro == 0 then
+kIn = 0
+kOut = 1
+elseif kLoop == 0 && kMetro == 1 then
+    if kMetroTirg == 1 then
+    kIn = 0
+    kOut = 1
+    elseif kMetroTirg == 0 then
+    kIn = 1
+    kOut = 0
+    endif 
 endif
+;printk2 kOut
+aIn interp kIn
+aOut interp kOut
 
 
-chnmix	ainL,"SendL"
-chnmix	ainR,"SendL"
+aoutL sum (aMixL*aOut),(aInL*aIn)
+aoutR sum (aMixR*aOut),(aInR*aIn)
 
-aLoopL		chnget	"LoopL"
-aLoopR		chnget	"LoopR"
-aLoopL clip aLoopL, 0, 0.5
-aLoopR clip aLoopR, 0, 0.5
-amixL ntrpol ainL, aLoopL*0.5, kmix
-amixR ntrpol ainR, aLoopR*0.5, kmix
-out amixL,amixR
 
-chnclear	"LoopL"
-chnclear	"LoopL"
+  out aoutL,aoutR
+  
+ chnclear	"LoopL"
+ chnclear	"LoopR"
 endin
+
 
 instr Record
-
-iAtt = 0.1
-iRel = 0.1
-;print iAtt
-aEnv	transegr	0,iAtt,6, 1,p3,4,0, iRel,-6,0
-ainL chnget "SendL"
-ainR chnget "SendR"
-aPointer linseg 0, giTableLength, giTableLength*sr
-tablew ainL*aEnv, aPointer, giSoundFileL
-tablew ainR*aEnv, aPointer, giSoundFileR
-chnclear	"SendL"
-chnclear	"SendR"
+ aInL chnget "audioL"
+ aInR chnget "audioR"
+ ;ain inch 1
+ aPointer linseg 0, giTableLength, giTableLength*sr
+ tablew aInL, aPointer, giTableL
+ tablew aInR, aPointer, giTableR
+ chnclear	"audioL"
+ chnclear	"audioR"
 endin
+
+
+instr machine
+ if metro(1/(p3/p4)) == 1 then
+    kStart random 0, p5
+    schedulek "Play", kStart, p3/p4,p6
+ endif
+ kTimer line 0, 1, 1
+ if kTimer >= p3*p4 then
+    turnoff
+ endif
+endin
+
+instr loopme
+ if metro(1/(p4/p5)) == 1 then
+    kStart random 0, p6
+    schedulek "Play", kStart, p4/p5,p7
+ endif
+endin
+
+
 
 instr Play
-iAtt = 0.1
-iRel = 0.1
-aEnv	transegr	0,iAtt,6, 1,p3,4,0, iRel,-6,0
-kamp = 1
-kpitch  = gkpitch
-ainL chnget "SendL"
-ainR chnget "SendR"
-istart = 0.1
-idur  =  p4
-ifad = 0.1
-ktrig = 1
-aoutL flooper kamp, kpitch, istart, idur, ifad, giSoundFileL 
-aoutR flooper kamp, kpitch, istart, idur, ifad, giSoundFileR
-;aoutL,krec sndloop ainL*aEnv, kpitch, ktrig, idur, ifad
-;aoutR,krec sndloop ainR*aEnv, kpitch, ktrig, idur, ifad
-
-chnmix	aoutL*aEnv,"LoopL"
-chnmix	aoutR*aEnv,"LoopR"
-chnclear	"SendL"
-chnclear	"SendR"
+ iSpeed = p4/giTableLength
+ ;print iSkip
+ iFade chnget "fde" 
+ iAtt = p3/iFade
+ iRel = p3/iFade
+ aEnv	transegr	0,iAtt,6, 1,p3,4,1, iRel,-6,0
+ aLoopL poscil3 0.5, iSpeed, giTableL,0
+ aLoopR poscil3 0.5, iSpeed, giTableR,0
+ aoutL linen aLoopL*aEnv,p3/iFade, p3, p3/iFade
+ aoutR linen aLoopR*aEnv,p3/iFade, p3, p3/iFade
+ chnmix	aoutL,"LoopL"
+ chnmix	aoutL,"LoopR"
 endin
+
 
 </CsInstruments>
 <CsScore>
-i "start" 0 999
-;i "Record" 0 99
-;i "Play" 0.4 99
+i "Start" 0 999
 </CsScore>
 </CsoundSynthesizer>
-

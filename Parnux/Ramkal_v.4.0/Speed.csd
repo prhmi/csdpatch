@@ -1,12 +1,16 @@
 <Cabbage>
-form caption("Speed") size(280,120), pluginid("Speed")
-image            bounds(0, 0, 280, 120), outlinethickness(6), , colour(45, 61, 87, 255) file("speed.jpg")
-rslider bounds(12, 14, 85, 85), channel("stime"), text("Speed Time"), range(0, 2, 0.7, 1, 0.001)   trackercolour(147, 207, 207, 255)     valuetextbox(1) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
-rslider bounds(180, 14, 85, 85), channel("mix"), text("mix"), range(0, 1, 1, 1, 0.001)     trackercolour(147, 207, 207, 255) valuetextbox(1) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
-checkbox  bounds(106, 60, 68, 21), text("Record") , channel("record") colour:1(236, 255, 0, 255)  colour:0(103, 103, 103, 255) fontcolour:0(255, 255, 255, 255) fontcolour:1(255, 255, 255, 255)
-checkbox  bounds(106, 14, 68, 21), text("Metro") , channel("metro"), colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontcolour:0(255, 255, 255, 255) fontcolour:1(255, 255, 255, 255)
-checkbox  bounds(106, 84, 68, 21), text("Play") , channel("play") colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontcolour:0(255, 255, 255, 255) fontcolour:1(255, 255, 255, 255)
-combobox bounds(106, 38, 69, 20),channel("box"), text("Static", "Random"), value(2)
+form caption("Speed") size(280,153), pluginId("sped")
+image            bounds(0, 0, 278, 152), outlineThickness(6), , colour(45, 61, 87, 255) file("speed.jpg")
+checkbox  bounds(106, 114, 68, 21), text("Lock") , channel("lock"), colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255) value(1)
+nslider bounds(194, 106, 56, 32) range(0.3, 1.5, 0.3, 1, 0.01) velocity(50) channel("spdpnt") text("Speed Point")
+nslider bounds(18, 104, 70, 32) range(1, 23, 17, 1, 1) velocity(50) channel("spdrnd") text("Random Speed")
+
+rslider bounds(8, 12, 85, 85), channel("spdrng"), text("Speed Range"), range(0.01, 1, 0.5, 1, 0.001)   trackerColour(147, 207, 207, 255)      textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
+rslider bounds(180, 14, 85, 85), channel("mix"), text("mix"), range(0, 1, .5, 1, 0.001)     trackerColour(147, 207, 207, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
+checkbox  bounds(106, 52, 68, 21), text("Record") , channel("record") colour:1(236, 255, 0, 255)  colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+checkbox  bounds(106, 14, 68, 21), text("Metro") , channel("metro"), colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+checkbox  bounds(106, 74, 68, 21), text("Play") , channel("play") colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
@@ -15,7 +19,7 @@ combobox bounds(106, 38, 69, 20),channel("box"), text("Static", "Random"), value
 <CsInstruments>
 
 ;sr = 44100
-ksmps = 32
+ksmps = 64
 nchnls = 2
 0dbfs = 1
 
@@ -23,87 +27,86 @@ giSoundFileL      	ftgen   0, 0, 60*sr, 2, 0
 giSoundFileR      	ftgen   0, 0, 60*sr, 2, 0
 giTableLength = ftlen(giSoundFileL)/ sr
 
-gainL init 0
-gainR init 0
 
 
 
 
 instr start
-kmetro chnget "metro"
-krcrd chnget "record"
-kplay chnget "play"
+kMetro chnget "metro"
+kRcrd chnget "record"
+kPly chnget "play"
+kMix chnget "mix"
 
-;ainL diskin "test.wav",1,0,1
-;ainR = ainL
-ainL,ainR ins
-if kmetro == 1 then
-kenv = 0
-elseif kplay == 1 then
-kenv = 0
-else
-kenv = 1
-endif
-kenv port kenv, 0.1
 
-if     kmetro == 1 	&& changed(kmetro) == 1 && krcrd == 0 && kplay == 0 then
-event "i", "Record", 0 , 99999
-event "i", "Play", 0.1 , 99999
-elseif	kmetro = 0	&& changed(kmetro) == 1 && krcrd == 0 && kplay == 0 then
+
+
+;aInL,aInR diskin "harp.wav",1,0,1
+aInL,aInR ins
+
+if kMetro == 0 && changed(kMetro) == 1 then
 turnoff2 "Record",0,0
 turnoff2 "Play",0,0
-	
-
-elseif krcrd == 1 && changed(krcrd) == 1 &&  kmetro == 0 then
-event "i", "Record", 0 , 99999
-elseif krcrd == 0 && changed(krcrd) == 1 &&  kmetro == 0 then
+elseif kMetro == 1 && changed(kMetro) == 1 then
+schedulek "Record",0,99999
+schedulek "Play",  0,99999,1
+elseif kRcrd == 1 && changed(kRcrd) == 1 then
+schedulek "Record",0,99999
+elseif kRcrd == 0 && changed(kRcrd) == 1 then
 turnoff2 "Record",0,0
-
-
-elseif kplay == 1 && changed(kplay) == 1 &&  kmetro == 0 then
-event "i", "Play", 0 , 99999
-elseif kplay == 0 && changed(kplay) == 1 &&  kmetro == 0 then
-turnoff2 "Play",0,0
-elseif kplay == 0 && krcrd == 0 && kmetro = 0 then
-turnoff2 "Record",0,0
+elseif kPly == 1 && changed(kPly) == 1 then
+schedulek "Play",0,99999,0
+elseif kPly == 0 && changed(kPly) == 1 then
 turnoff2 "Play",0,0
 endif
-aoutL linenr ainL*kenv,0.1,1,0.01
-aoutR linenr ainR*kenv,0.1,1,0.01
+ chnmix	aInL,"AudioL"
+ chnmix	aInR,"AudioR"
+aSpeedL chnget "SpeedL"
+aSpeedR chnget "SpeedR"
+;if kPly == 0 && kMetro == 0 then
+;kMix = 0
+;endif
+aMixL ntrpol aInL,aSpeedL,kMix
+aMixR ntrpol aInR,aSpeedR,kMix
 
-outs aoutL,aoutR
-gainL = ainL
-gainR = ainR
+out aMixL,aMixR
+ chnclear	"SpeedL"
+ chnclear	"SpeedR"
 endin
 
+
+
+
 instr Record
-ainL linenr gainL,0.1,1,0.01
-ainR linenr gainR,0.1,1,0.01
+aInL chnget "AudioL"
+aInR chnget "AudioR"
+
 aPointer linseg 0, giTableLength, giTableLength*sr
-tablew ainL, aPointer, giSoundFileL
-tablew ainR, aPointer, giSoundFileR
+tablew aInL, aPointer, giSoundFileL
+tablew aInR, aPointer, giSoundFileR
+ chnclear	"AudioL"
+ chnclear	"AudioR"
 endin
 
 instr Play
-kBox chnget "box"
-if kBox == 1 then
-ktime chnget "stime"
-elseif kBox == 2 then
-ktime randomh 0.3, 1.3, 2
+kLock chnget "lock"
+kSpeedPoint chnget "spdpnt"
+kSpeedRange chnget "spdrng"
+kRndSpd chnget "spdrnd"
+kBox = p4
+if kBox == 0 then
+kSpeed = kSpeedPoint
+elseif kBox == 1 then
+kSpeed = randi:k( kSpeedRange,kRndSpd,2)+(kSpeedPoint/2)+kSpeedRange
 endif
-iamp = 1
-kpitch = 1
-ilock = 0
-kmix chnget "mix"
-ainL linenr gainL,0.1,1,0.01
-ainR linenr gainR,0.1,1,0.01
 
-aoutL   temposcal ktime, iamp, kpitch, giSoundFileL, ilock
-aoutR   temposcal ktime, iamp, kpitch, giSoundFileR, ilock
+iAmp = 1
+kPitch = 1
+;printk2 kSpeed
+aSpeedL   temposcal kSpeed, iAmp, kPitch, giSoundFileL, kLock
+aSpeedR   temposcal kSpeed, iAmp, kPitch, giSoundFileR, kLock
+ chnmix	aSpeedL,"SpeedL"
+ chnmix	aSpeedR,"SpeedR"
 
-amixL ntrpol ainL, aoutL, kmix
-amixR ntrpol ainR, aoutR, kmix
-outs amixL,amixR
 endin
 
 </CsInstruments>
