@@ -6,7 +6,7 @@ checkbox  bounds(260, 10, 68, 21), text("Metro") , channel("metro"),   , colour:
 rslider bounds(258, 48, 85, 85), channel("mix"), text("mix"), range(0, 1, 1, 1, 0.001), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
 rslider bounds(10, 48, 85, 85), channel("looptime"), text("Time"), range(0.2, 10, 1, 1, 0.001), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
 nslider bounds(26, 152, 56, 32) range(0, 100, 70, 1, 1) velocity(50) channel("mtromss") text("Metro moses")
-nslider bounds(148, 10, 53, 25) range(2, 100, 7, 1, 1) velocity(50) channel("fde") text("Fade")
+nslider bounds(148, 10, 53, 25) range(10, 100, 10, 1, 1) velocity(50) channel("fde") text("Fade")
 
 nslider bounds(128, 126, 46, 31), channel("stepsmin"), text("StepsMin"), range(1, 6, 2, 1, 1), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1) velocity(50)
 nslider bounds(176, 126, 45, 31), channel("stepsmax"), text("StepsMax"), range(4, 20, 10, 1, 1), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1) 
@@ -37,8 +37,8 @@ giTableLength = ftlen(giTableL) / sr
 
 
 instr Start
- ;aInL,aInR diskin2 "harp.wav",1,0,1
- aInL,aInR ins
+ aInL,aInR diskin2 "harp.wav",1,0,1
+ ;aInL,aInR ins
  kTime init 0
  kTime chnget "looptime"
  kMetroMoses chnget "mtromss"
