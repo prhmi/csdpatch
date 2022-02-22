@@ -1,36 +1,89 @@
-giTableSize    =    131073   
-giRtosScale    =    1000  
-giwave1        ftgen    0, 0, giTableSize, 9, 1000,1.000,0, 2890,0.500,0,		\
-					     4950,0.250,0,     6990,0.125,0,     8010,0.062,0,     			\
-					     9020,0.031,0,     0,0.000,0,     0,0.000,0,     0,0.000,0,	\
-					     0,0.000,0,     0,0.000,0,     0,0.000,0,     0,0.000,0,   	\
-					     0,0.000,0,     0,0.000,0,     0,0.000,0,     0,0.000,0,    	\
-					     0,0.000,0,     0,0.000,0,     0,0.000,0,     0,0.000,0,    	\
-					     0,0.000,0
-giwave2    ftgen    0, 0, giTableSize, 9, 1000,1.000,0,     2572,0.667,0,  	\
-						  4644,0.444,0,     6984,0.296,0,     9723,0.198,0,   				\
-						   0,0.132,0,     0,0.000,0,     0,0.000,0,     0,0.000,0,    \
-						   0,0.000,0,     0,0.000,0,     0,0.000,0,     0,0.000,0,     \
-						   0,0.000,0,     0,0.000,0,     0,0.000,0,     0,0.000,0,     \
-						   0,0.000,0,     0,0.000,0,     0,0.000,0,     0,0.000,0,     \
-						   0,0.000,0
-giwave3        ftgen    0, 0, giTableSize, 9, 1000,1.000,0,     1027,1.000,0,\
-					     1422,1.000,0,     1448,1.000,0,     1466,1.000,0,     \
-					     1499,1.000,0,     1789,1.000,0,     1877,1.000,0,     \
-					     1965,1.000,0,     1979,1.000,0,     2033,1.000,0,     \
-					     2145,1.000,0,     2156,1.000,0,     2253,1.000,0,     \
-					     2291,1.000,0,     2333,1.000,0,     2457,1.000,0,     \
-					     2493,1.000,0,     2566,1.000,0,     2606,1.000,0,     \
-					     2669,1.000,0,     2714,1.000,0
+;;midi
+opcode RmvZ, i[],i[]
+iArrIn[] xin
+iLen lenarray iArrIn
+indxc = 0
+iLenA = 0
+while indxc < iLen do
+	if iArrIn[indxc] != 0 then
+	iLenA += 1
+	endif
+indxc += 1
+od
+		if iLenA == 0 then
+		iLenA = 1
+		endif
+iArrOut [] init iLenA
+indx = 0
+indxw = 0
+while indx < iLen do
+	if iArrIn[indx] != 0 then
+	iArrOut [indxw] = iArrIn[indx]
+	indxw += 1
+	endif
+indx += 1
+od
+xout iArrOut
+endop
 
-giwave4    ftgen    0, 0, giTableSize, 9, 1000,1.000,0,     1002,0.833,0, \
-					    1794,0.694,0,     1801,0.579,0,     2520,0.482,0,    \
-					    2522,0.402,0,     2991,0.335,0,     2994,0.279,0,     \
-					    3786,0.233,0,     3806,0.194,0,     4569,0.162,0,     \
-					    4575,0.135,0,     5030,0.112,0,     5046,0.093,0,     \
-					    6076,0.078,0,     5909,0.065,0,     6412,0.054,0,     \
-					    6443,0.045,0,     7083,0.038,0,     7092,0.031,0,     \
-					    7319,0.026,0,     7555,0.022,0
+
+;;tala
+opcode ArrTala, i[], i[]i
+ iInArr[],iTalaCount xin
+ iLen lenarray iInArr
+ iOutArr [] init iLen
+ iRead = 0
+ iWrite = iTalaCount
+ while iRead < iLen do
+ 	iOutArr [iRead] = iInArr[iWrite]
+	iRead +=1
+	iWrite = (iWrite+1)% iLen
+ od
+ xout iOutArr
+endop
+opcode ArrRep, i[], i[]i
+ iInArr[],iTalaCount xin
+ iLen lenarray iInArr
+ iOutArr[] init  iLen+1
+ iRead = 0
+ iWrite = 0
+ while iRead < iLen+1 do
+ iOutArr [iRead] = iInArr [iWrite]
+ 	if iRead != iTalaCount then
+ 	iWrite += 1
+ 	endif
+ iRead += 1
+ od
+ iOutArr[iTalaCount+1] = iInArr[iTalaCount]
+ xout iOutArr
+endop
+opcode ArrPlus, i[], i[]i
+ iInArr[],iElm xin
+ iLen lenarray iInArr
+ iOutArr[] = iInArr
+ iAdd = int(random:i( 1,4))
+ iMines = random:i( 0,100) > 50 ? 1: -1
+ iOutArr [iElm] = iInArr [iElm] + (iAdd*iMines)	
+		 iOutArr[iElm] = ( iOutArr[iElm] < 1 ) ? 
+ 		 iInArr[iElm] :  iOutArr[iElm]
+ xout iOutArr
+endop
+opcode ArrChng, i[], i[]
+ iInArr[] xin
+ iLen lenarray iInArr
+ iOutArr[] = iInArr
+ indx = 0 
+ while indx < iLen do
+ iAdd random  0, 3
+ iMines = random:i( 0,100) > 50 ? 1: -1
+ iOutArr [indx] = iInArr [indx] + (iAdd*iMines)
+ 		 iOutArr[indx] = ( iOutArr[indx] < 1 ) ? 
+ 		 iInArr[indx] :  iOutArr[indx]
+ indx += 1
+ od
+ xout iOutArr
+endop
+
 
 ;;scale
 opcode pythagorean,i,ii
@@ -169,6 +222,60 @@ iNote ftom iFrq
 xout iFrqOut
 endop
 
+;;string
+opcode StrToArr, i[],S
+SIn xin
+Snote     sprintf "%s ",SIn
+iLen strlen SIn
+iReadChar = 0
+iLenCount = 0
+while iReadChar < iLen do
+	until strchar(Snote,iReadChar) == 32 do
+	iReadChar += 1
+	od	
+	iReadChar2 = iReadChar+1
+			while strchar(Snote,iReadChar2) == 32 do
+			iReadChar2 += 1
+			iReadChar += 1
+			od
+iReadChar += 1
+iLenCount += 1
+od
+iArrOut [] init iLenCount
+
+iWrite = 0
+iRead = 0
+while iRead < iLen do
+iCountChr = 0
+iStart = iRead 
+	until strchar(Snote,iRead) == 32 do
+	iRead += 1
+	iCountChr += 1
+	od	
+		Schar     strsub    Snote, iStart, iStart+iCountChr
+	if strchar(Schar,0) != 0 then
+	inum strtod Schar
+	;print inum
+	iArrOut [iWrite] = inum
+	iWrite += 1
+	endif
+iRead += 1
+od
+xout iArrOut
+endop
+
+opcode ArrToStrg, S,i[]
+  iArrIn [] xin
+  Sprint init ""
+  indx = 0
+  while indx < lenarray(iArrIn) do
+    Sscale     sprintf " %d",iArrIn[indx]
+    Sprint strcat Sprint, Sscale
+  indx += 1
+  od
+  xout Sprint
+endop
+
 
 ;;udos
 opcode MirrorMe,i,iii
@@ -184,8 +291,3 @@ endif
 xout iOut
 
 endop
-
-
-
-
-
