@@ -1,7 +1,7 @@
 
 <Cabbage>
 form caption("DoubleCoreLa") size(650, 350)  guiMode("queue")  colour(0,0,0) style("legacy") pluginId("crlp")
-image bounds(0, 0, 650, 350) channel("img") file("DoubleCoreLa.jpg")
+image bounds(0, 0, 650, 350) channel("img") file("CoreLa.jpg")
 ;;sequencer1
 label    bounds(35, 15, 40, 12) text("On/Off") channel("label1")
 checkbox bounds(10, 10, 20, 20) colour:0(100, 100, 100, 255) popupText("Start")  channel("sq1") colour:1(100, 250, 60, 255) value(1)
@@ -20,7 +20,7 @@ label    bounds(10, 132, 28, 12) text("rep") channel("label6")
 label    bounds(484, 10, 40, 12) text("On/Off") channel("label10")
 checkbox bounds(530, 8, 15, 15) colour:0(100, 100, 100, 255) popupText("Synth")  channel("dng1") colour:1(100, 250, 60, 255) value(1)
 combobox bounds(396, 30, 77, 25) text("Note", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B") channel("BNote")  value(2)
-combobox bounds(396, 4, 77, 25) text("Scale", "pythagorean", "shur", "homayun", "segah", "chargah") channel("scale") value(2) 
+combobox bounds(385, 4, 96, 25) text("Scale", "pythagorean", "shur", "homayun", "segah", "chargah") channel("scale") value(2) 
 label    bounds(196, 8, 40, 12) text("Veloc") channel("label11")
 checkbox bounds(206, 26, 15, 15) colour:0(100, 100, 100, 255) popupText("velocity")  channel("vlc") colour:1(100, 250, 60, 255) value(1)
 ;sequncer2
@@ -39,7 +39,7 @@ label    bounds(10, 302, 28, 12) text("rep") channel("label25")
 label    bounds(484, 182, 40, 12) text("On/Off") channel("label30")
 checkbox bounds(530, 180, 15, 15) colour:0(100, 100, 100, 255) popupText("Synth")  channel("dng2") colour:1(100, 250, 60, 255) value(1)
 combobox bounds(396, 202, 77, 25) text("Note", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B") channel("BNote2")  value(2)
-combobox bounds(396, 176, 77, 25) text("Scale", "pythagorean", "shur", "homayun", "segah", "chargah") channel("scale2") value(2) 
+combobox bounds(382, 176, 99, 25) text("Scale", "pythagorean", "shur", "homayun", "segah", "chargah") channel("scale2") value(2) 
 label    bounds(478, 206, 46, 12) text("Reverse") channel("label31")
 checkbox bounds(530, 204, 15, 15) colour:0(100, 100, 100, 255) popupText("Synth")  channel("rvrs2") colour:1(100, 250, 60, 255) value(0)
 label    bounds(478, 36, 46, 12) text("Reverse") channel("label32")
