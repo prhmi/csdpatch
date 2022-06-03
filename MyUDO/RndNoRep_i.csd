@@ -22,47 +22,69 @@ nchnls = 2
 0dbfs = 1
 
 seed 0
+giRndArr[] init 2 
+gindx init 0
 
-//k-rate version
-opcode RndNoRep, k,kkk
-kMin, kMax,kTime xin
-kIndx init 0
-kRndArr [] init 2 
- if metro(kTime) == 1 then
+//i-rate version
+opcode RndNoRep, i,ii
+iMin, iMax xin
 	start:
-	kRnd = int(random:k(kMin,kMax))	
-	kIndx = (kIndx + 1) %2
-	kCheck = (kIndx == 0 ) ? 1: 0
-	kRndArr [kIndx] = kRnd
-	  if kRnd == kRndArr [kCheck] kgoto start
-	  kgoto pass
+	iRnd = int(random:i(iMin,iMax))	
+	giRndArr[gindx] = iRnd
+	iCheck = (gindx == 0 ) ? 1: 0
+	 if iRnd == giRndArr[iCheck] igoto start
+	  igoto pass
    pass:
- endif
-xout kRnd
+gindx = (gindx+1) % 2
+xout iRnd
 endop
 
-
 instr 1
-kMin = 2
-kMax = 10
-kTime = 20
-krnd RndNoRep kMin,kMax,kTime
-printk2 krnd
+if metro(3) == 1 then
+schedulek 2,0,0.1
+endif
+endin
+
+instr 2
+iMin = 2
+iMax = 10
+iRndNoRep RndNoRep iMin,iMax
+print  iRndNoRep
 endin
 
 </CsInstruments>
 <CsScore>
-i1 0 1
+i1 0 999
 </CsScore>
 </CsoundSynthesizer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
- <x>0</x>
- <y>0</y>
- <width>0</width>
- <height>0</height>
+ <x>595</x>
+ <y>493</y>
+ <width>400</width>
+ <height>300</height>
  <visible>true</visible>
  <uuid/>
  <bgcolor mode="nobackground">
