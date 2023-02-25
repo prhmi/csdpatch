@@ -1,11 +1,14 @@
+; Ramkal_VSTe_V_4.9, Cabbage_V_2.9.0
+; Written by Parham Izadyar, 2023
+; github.com/prhmi
 <Cabbage>
-image bounds(2, 0, 300, 150) file("Blur.jpg")
-form caption("Metalizer") size(300,150), pluginid("Metalizer")
-rslider bounds(112, 44, 85, 85) channel("metalizer_time") text("Metalizer") range(0, 5, 1, 1, 0.001) valuetextbox(1) trackercolour(147, 207, 207, 255) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
-rslider bounds(26, 44, 85, 85) channel("blur_time") text("Blur Time") range(0, 5, 0.3, 1, 0.001) valuetextbox(1) trackercolour(147, 207, 207, 255) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
-checkbox  bounds(202, 18, 57, 21), text("Pan") , channel("pan")   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255), value(0) fontcolour:0(255, 255, 255, 255) fontcolour:1(255, 255, 255, 255)
-rslider bounds(196, 44, 85, 85), channel("mix"), text("Mix"), range(0, 1, 1, 1, 0.001), trackercolour(147, 207, 207, 255) valuetextbox(1) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
-combobox   bounds(120, 18, 57, 23), text("128","256","512","1024","2048","4096","8192"), channel("FFTSize"), value(5), fontcolour(255,255,255)
+image bounds(0, 0, 302, 150) file("back.jpg") channel("image1")
+form caption("Metalizer") size(300,150), pluginId("mtlz")
+rslider bounds(112, 44, 85, 85) channel("metalizer_time") text("Metalizer") range(0, 5, 1, 1, 0.001) valueTextBox(147)  trackerColour(147, 207, 207, 255)textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
+rslider bounds(26, 44, 85, 85) channel("blur_time") text("Blur Time") range(0, 5, 0.3, 1, 0.001) valueTextBox(1) trackerColour(147, 207, 207, 255) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
+checkbox  bounds(202, 18, 57, 21), text("Pan") , channel("pan")   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255), value(0) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+rslider bounds(196, 44, 85, 85), channel("mix"), text("Mix"), range(0, 1, 1, 1, 0.001), trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
+combobox   bounds(120, 18, 57, 23), text("128","256","512","1024","2048","4096","8192"), channel("FFTSize"), value(4), fontColour(255,255,255) colour(56, 63, 79, 255)
 
 </Cabbage>
 
@@ -32,7 +35,7 @@ opcode	Metalizer,aa,aakk
 
 asig1,asig2,kdepth,krvt	xin
 
-kBox_metalizer chnget "box"
+kBox_metalizer cabbageGet "box"
 
 
 kBox randomh 1, 7, 3
@@ -121,12 +124,12 @@ instr	blur_load
 ;-------------------------------------------
 
 kdepth1 = 1
-kmetalizertime chnget "metalizer_time" ; 0-5
+kmetalizertime cabbageGet "metalizer_time" ; 0-5
 kmetalizer_onoff = 1
 
 ainL,ainR	ins
 
-;ainL diskin "test.wav",1,0.2,1
+;ainL,ainR diskin "test.wav",1,10,1
 ;ainR = ainL
 
 aout1,aout2	Metalizer	ainL,ainR,kdepth1,kmetalizertime
@@ -139,15 +142,15 @@ aMetalR	ntrpol	aout2*0.7,ainR,1-kmetalizer_onoff
 ; Blur
 ;---------------------------------------------
 katt_table	init	 5
-kblurtime chnget "blur_time" ; 0-5
+kblurtime cabbageGet "blur_time" ; 0-5
 	kblur_onoff	= 1
 
 	klev		= 1
-	kPan chnget "pan"
+	kPan cabbageGet "pan"
 	;kPan port kPan, 0.01
 
 
-kFFTSize chnget "FFTSize"
+kFFTSize cabbageGet "FFTSize"
 kFFTSize	init	4 
 	 if changed(kFFTSize)==1 then
 	  reinit UPDATE
@@ -187,7 +190,7 @@ aDelayR linenr gaoutR,0.1,1,0.01
 aoutL = aoutL+aDelayL
 aoutR = aoutR+aDelayR
 
-kmix chnget "mix"
+kmix cabbageGet "mix"
 aMixEnv interp (kmix+2)
 kMixRnd = randi:k(0.4, 2, 2) + 0.5
 aRvbMixL, aRvbMixR  freeverb aoutL, aoutR, kblurtime/2, 0.35,1
@@ -198,6 +201,7 @@ aRvbMixL, aRvbMixR  freeverb aoutL, aoutR, kblurtime/2, 0.35,1
 	amixoutR		ntrpol		ainR, amixR, kmix	
 
 outs		amixoutL,amixoutR
+print 6^6
 endin
 
 
@@ -212,8 +216,8 @@ endin
 
 <CsScore>
 ;i 1 0 [60*60*24*7]
-i "metro"     0 [60*60*24*7]
-i "blur_load" 0 [60*60*24*7]
+i "metro"     0 [6^6]
+i "blur_load" 0 [6^6]
 
 </CsScore>
 

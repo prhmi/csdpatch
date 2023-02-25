@@ -1,17 +1,21 @@
-
+; Ramkal_VSTe_V_4.9, Cabbage_V_2.9.0
+; Written by Parham Izadyar, 2023
+; github.com/prhmi
 <Cabbage>
-form caption("Freeze") size(300,180) pluginId("frze")
-image bounds(0, 0, 300, 180) file("Freeze.jpg")
+form caption("Freeze") size(300,215) pluginId("frze") guiMode("queue")
+image bounds(0, 0, 300, 215) file("back.jpg")
 
-checkbox  bounds(116, 12, 68, 21) text("Metro")  channel("metro")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)
+checkbox  bounds(116, 12, 75, 21) text("Random")  channel("metro")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)
 checkbox  bounds(18, 12, 73, 21) text("Freeze")  channel("frznow")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)
 checkbox  bounds(206, 12, 77, 21) text("AmpRnd")  channel("ampnow")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)
 rslider bounds(10, 82, 85, 85) channel("frztme") text("Freeze Time") range(5, 50, 7, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1)
-nslider bounds(24, 42, 56, 32) range(0, 100, 40, 1, 1) velocity(50) channel("frzmss") text("Frz moses")
+nslider bounds(24, 42, 56, 32) range(0, 100, 40, 1, 1) velocity(50) channel("frzmss") text("Frz moses") colour(56, 63, 79, 255)
 rslider bounds(202, 82, 85, 85) channel("amptme") text("Amp Time") range(5, 50, 12, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1)
-nslider bounds(216, 42, 56, 32) range(0, 100, 70, 1, 1) velocity(50) channel("ampmss") text("Amp moses")
+nslider bounds(216, 42, 56, 32) range(0, 100, 70, 1, 1) velocity(50) channel("ampmss") text("Amp moses") colour(56, 63, 79, 255)
 rslider bounds(116, 98, 69, 69) channel("mix") text("mix"), range(0, 1, 1, 1, 0.001) trackerColour(198, 231, 231, 255)  outlineColour(0, 0, 0, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
-combobox   bounds(122, 54, 57, 23), text("128","256","512","1024","2048","4096","8192"), channel("FFTSize"), value(4), fontColour(255,255,255)
+combobox   bounds(122, 54, 57, 23), text("128","256","512","1024","2048","4096","8192"), channel("FFTSize"), value(4), fontColour(255,255,255) colour(56, 63, 79, 255)
+combobox   bounds(210, 172, 75, 23), text("Square", "Termolo", "RndTerm"), channel("tml"), value(1), colour(56, 63, 79, 255)
+combobox   bounds(16, 174, 71, 23), text("on Frz","anyway"), channel("frzmd"), value(1), fontColour(255,255,255) colour(56, 63, 79, 255)
 
 </Cabbage>
 <CsoundSynthesizer>
@@ -50,37 +54,61 @@ endop
 
 
 instr	1
-kAmpRnd chnget "ampnow"
-kfrznow chnget "frznow"
-kmetro chnget "metro"
-kmix	chnget	"mix"
-kmix port kmix, 0.1
+kAmpRnd cabbageGet "ampnow"
+kfrznow cabbageGet "frznow"
+kmetro cabbageGet "metro"
+kmix	cabbageGet	"mix"
+kAmpSpeed cabbageGet "amptme"
+kAmpMoses cabbageGet "ampmss"
 
-kAmpSpeed chnget "amptme"
-kAmpMoses chnget "ampmss"
+kFrzSpeed cabbageGet "frztme"
+kFrzMoses cabbageGet "frzmss"
 
-kFrzSpeed chnget "frztme"
-kFrzMoses chnget "frzmss"
-
-if kAmpRnd == 1 then
-kAmp = ((randi:k(50,kAmpSpeed,2)+50) > kAmpMoses) ? 0 : 1
-else
-kAmp = 1
-endif
-kAmp port kAmp, 0.001
-aAmp interp kAmp
+kAmpMod cabbageGet "tml"
+kFrzMod cabbageGet "frzmd"
 
 kTime init 1
 if kmetro == 1 then
 kfrznow = ((randi:k(50,kFrzSpeed,2)+50) < kFrzMoses) ? 0 : 1
+cabbageSetValue "frznow",kfrznow
+endif
+
+if kFrzMod == 1 then
+kFrzM = kfrznow
+elseif kFrzMod == 2 then
+kFrzM = 1
+endif
+aAmp = 1
+if kAmpRnd == 1 && kFrzM == 1 then
+
+    if kAmpMod == 1 then
+    kAmp = ((randi:k(50,kAmpSpeed,2)+50) > kAmpMoses) ? 0 : 1
+;    kAmp port kAmp, 0.001
+    aAmp interp kAmp
+    elseif kAmpMod == 2 then
+    kRng = (kAmpSpeed/5)
+    kSpeedMin = ((kAmpMoses/100)*5)+1
+    kSpeedMax = ((kRng*kSpeedMin)/10)+5
+    kAmp = jspline:k(kRng,kSpeedMin,12)+kRng
+    aAmp  lfo  1, kAmp,1
+    elseif kAmpMod == 3 then
+    kRng = (kAmpSpeed/5)
+    kSpeedMin = ((kAmpMoses/100)*5)+1
+    kSpeedMax = ((kRng*kSpeedMin)/10)+5
+    kAmp = jspline:k(kRng,kSpeedMin,12)+kRng
+    aAmp  lfo  1, kAmp,1
+    aAmp  lfo  1, kAmp,3
+    endif
 endif
 
 
-aInL,aInR	ins
-;ainL	diskin2	"test.wav",1,0,1
-;ainR = ainL
 
-kFFTSize chnget "FFTSize"
+
+
+aInL,aInR	ins
+;aInL,aInR	diskin2	"fox.wav",1,0,1
+
+kFFTSize cabbageGet "FFTSize"
 kFFTSize	init	4 
 	 if changed(kFFTSize)==1 then
 	  reinit UPDATE
@@ -91,16 +119,14 @@ rireturn
 		
 	amixL		ntrpol		aInL, aFrzL*aAmp, kmix
 	amixR		ntrpol		aInR, aFrzR*aAmp, kmix
-						
-			;outs	 aoutL, aoutR
-			outs amixL,amixR
+			out amixL,amixR
 endin
 
 
 </CsInstruments>
 
 <CsScore>
-i 1 0 [60*60*24*7]
+i 1 0 [6^6]
 </CsScore>
 
 </CsoundSynthesizer>

@@ -1,10 +1,13 @@
+; Ramkal_VSTe_V_4.9, Cabbage_V_2.9.0
+; Written by Parham Izadyar, 2023
+; github.com/prhmi
 <Cabbage>
-form caption("Blur") size(220,150), pluginid("Blur")
-image bounds(0, 0, 220, 150) file("Blur.jpg")
-combobox   bounds(120, 18, 57, 23), text("128","256","512","1024","2048","4096","8192"), channel("FFTSize"), value(4), fontcolour(255,255,255)
-rslider bounds(28, 46, 85, 85) channel("blrsze") text("Blur Size") range(0, 1, 0.2, 1, 0.001) valuetextbox(1) trackercolour(147, 207, 207, 255) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
-checkbox  bounds(28, 18, 75, 21), text("Random") , channel("mod")   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255), value(0) fontcolour:0(255, 255, 255, 255) fontcolour:1(255, 255, 255, 255)
-rslider bounds(116, 57, 73, 72), channel("mix"), text("Mix"), range(0, 1, 1, 1, 0.001), trackercolour(147, 207, 207, 255) valuetextbox(1) textcolour(255, 255, 255, 255) fontcolour(255, 255, 255, 255)
+form caption("Blur") size(220,150), pluginId("blur")
+image bounds(0, 0, 220, 150) file("back.jpg")
+combobox   bounds(120, 18, 57, 23), text("128","256","512","1024","2048","4096","8192"), channel("FFTSize"), value(4), fontColour(255,255,255) colour(56, 63, 79, 255)
+rslider bounds(28, 46, 85, 85) channel("blrsze") text("Blur Size") range(0, 1, 0.2, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1)
+checkbox  bounds(28, 18, 75, 21), text("Random") , channel("mod")   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255), value(0) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+rslider bounds(116, 57, 73, 72), channel("mix"), text("Mix"), range(0, 1, 1, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1) 
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
@@ -25,18 +28,17 @@ seed 0
 
 
 instr audio
-gkmod chnget "mod"
-gkRndSpeed chnget "rndspd"
-gkBlurSize chnget "blrsze"
-gkFFTSize chnget "FFT"
-gkmix chnget "mix"
+gkmod cabbageGet "mod"
+gkRndSpeed cabbageGet "rndspd"
+gkBlurSize cabbageGet "blrsze"
+gkFFTSize cabbageGet "FFT"
+gkmix cabbageGet "mix"
 
-;ainL diskin2 "test.wav", 0.7, 0, 1
-;ainR = ainL
-ainL, ainR ins
+;aInL,aInR diskin2 "fox.wav", 1, 0, 1
+aInL, aInR ins
 
-gaoutL = ainL
-gaoutR = ainR
+gaoutL = aInL
+gaoutR = aInR
 kmod = gkmod
 kBlureSize = gkBlurSize*10
 kTime init 1
@@ -69,18 +71,18 @@ endif
 iAtt = 0.5
 iRel = 2
 aEnv	transegr	0,iAtt,4, 1,p3,4,0, iRel,-4,0
-ainL paulstretch iSpeed, 0.2, giTableL
-ainR paulstretch iSpeed, 0.2, giTableR
-aoutL = ainL*aEnv
-aoutR = ainR*aEnv
-;out aout,aout
+aInL paulstretch iSpeed, 0.2, giTableL
+aInR paulstretch iSpeed, 0.2, giTableR
+aoutL = aInL*aEnv
+aoutR = aInR*aEnv
+
 gaout2L = aoutL
 gaout2R = aoutR
 endin
 
 instr blur
-ainL = gaoutL
-ainR = gaoutR
+aInL = gaoutL
+aInR = gaoutR
 if gkmod == 1 then
 kBlurSize = randi:k(0.4, 8, 2)+0.4
 elseif gkmod == 0 then
@@ -97,11 +99,11 @@ kFFTSize	init	5
 	iwinsize = 2^(i(kFFTSize)+6)
 	iwintype = 1 
 	
-fftinL		pvsanal	ainL, iFFTsize, ioverlap, iwinsize, iwintype
+fftinL		pvsanal	aInL, iFFTsize, ioverlap, iwinsize, iwintype
 fftblurL	pvsblur	fftinL, kBlurSize, 0.65; blur
 aoutBlurL		pvsynth	fftblurL
 
-fftinR		pvsanal	ainR, iFFTsize, ioverlap, iwinsize, iwintype
+fftinR		pvsanal	aInR, iFFTsize, ioverlap, iwinsize, iwintype
 fftblurR	pvsblur	fftinR, kBlurSize, 0.65; blur
 aoutBlurR		pvsynth	fftblurR
 rireturn
@@ -112,13 +114,13 @@ aRvbMixR		ntrpol		aoutBlurR, gaout2R , kMixRnd
 aRvbMixL, aRvbMixR  freeverb aRvbMixL, aRvbMixR, kBlurSize/2, 0.35,1
 kmix = gkmix
 aMixEnv interp (kmix+5)
-aoutL		ntrpol		ainL, aRvbMixL*aMixEnv , kmix
-aoutR		ntrpol		ainR, aRvbMixR*aMixEnv , kmix
+aoutL		ntrpol		aInL, aRvbMixL*aMixEnv , kmix
+aoutR		ntrpol		aInR, aRvbMixR*aMixEnv , kmix
 outs aoutL, aoutR
 endin
 </CsInstruments>
 <CsScore>
-i "audio" 0 999
+i "audio" 0 [6^6]
 </CsScore>
 </CsoundSynthesizer>
 

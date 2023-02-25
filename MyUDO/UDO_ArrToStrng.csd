@@ -16,7 +16,7 @@ opcode ArrToStrg, S,i[]
   Sprint init ""
   indx = 0
   while indx < lenarray(iArrIn) do
-    Sscale     sprintf " %d",iArrIn[indx]
+    Sscale     sprintf "%d ",iArrIn[indx]
     Sprint strcat Sprint, Sscale
   indx += 1
   od
@@ -35,6 +35,8 @@ endin
 i1 0 1
 </CsScore>
 </CsoundSynthesizer>
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
