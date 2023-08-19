@@ -18,11 +18,14 @@ SNoteArr [] fillarray "C", "C#", "D", "D#","E", "F", "F#", "G","G#", "A", "A#", 
 iNoteIndex = (iMidi) % 12
 iSnumber = int(iMidi/12)-1
 iSCent = (iMidi-int(iMidi))*100
+print iSCent
 if iSCent != 0 then
 	if iSCent > 50 then
 		Sout sprintfk "%d%s-%d",iSnumber,SNoteArr[iNoteIndex+1],(100-iSCent)
-	elseif iSCent <= 50 then
+	elseif iSCent < 50 then
 		Sout sprintfk "%d%s+%d",iSnumber,SNoteArr[iNoteIndex],iSCent
+	elseif iSCent == 50 then
+	Sout sprintfk "%d%s+",iSnumber,SNoteArr[iNoteIndex]
 	endif
 elseif iSCent == 0 then
 Sout sprintfk "%d%s",iSnumber,SNoteArr[iNoteIndex]
@@ -45,20 +48,22 @@ endin
 
 </CsInstruments>
 <CsScore>
-i1 + .1 25.6
+i1 + .1 25.5
 ;i1 + .1 1
 ;i1 + .1 13
 ;i1 + .1 24
 ;i1 + 99 38
 </CsScore>
 </CsoundSynthesizer>
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
- <x>792</x>
- <y>500</y>
- <width>320</width>
- <height>240</height>
+ <x>0</x>
+ <y>0</y>
+ <width>0</width>
+ <height>0</height>
  <visible>true</visible>
  <uuid/>
  <bgcolor mode="nobackground">
