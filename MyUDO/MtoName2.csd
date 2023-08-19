@@ -18,9 +18,11 @@ iAraziArr[] fillarray 1, 3, 6, 8, 10
 iNoteIndex = (iMidi) % 12
 iNoteIndxInt = int(iNoteIndex)
 iOctave = int(iMidi/12)-1
-iSCent = (iMidi-int(iMidi))*100
+iSCent = int((iMidi-int(iMidi))*100.5)
 if iSCent  == 0 then
 Sout sprintf "%d%s",iOctave,SNoteArr[iNoteIndex]
+elseif iSCent == 100 then
+Sout sprintf "%d%s",iOctave,SNoteArr[iNoteIndex+1]
 elseif iSCent != 0 then
 		if iSCent > 50 then
 		Sout sprintf "%d%s-%d",iOctave,SNoteArr[iNoteIndex+1],(100-iSCent)
@@ -43,7 +45,7 @@ endop
 
 instr 1
 
-iNum = 70.5
+iNum = 70.56
 S1 MtoName iNum
 S2 mton iNum
 
@@ -62,6 +64,8 @@ i1 + .1 25.6
 ;i1 + 99 38
 </CsScore>
 </CsoundSynthesizer>
+
+
 
 
 
