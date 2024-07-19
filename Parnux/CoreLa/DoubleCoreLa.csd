@@ -22,6 +22,8 @@ label    bounds(478, 36, 46, 12)   channel("label16") text("Reverse")
 label    bounds(48, 356, 78, 13)   channel("label17") text("Fx on/off")
 label    bounds(624, 18, 78, 13)   channel("label18") text("pad on/off")
 label    bounds(746, 46, 45, 16)   channel("label19") text("FM")
+label    bounds(88, 44, 100, 20)  channel("noteshow1")  fontColour(208, 157, 253, 255)
+label    bounds(12, 208, 100, 20)  channel("noteshow2") text("") fontColour(208, 157, 253, 255)
 
 
 checkbox bounds(10, 10, 20, 20)    channel("sq1")     popupText("Start")           colour:0(100, 100, 100, 255) colour:1(100, 250, 60, 255) value(1)
@@ -79,9 +81,9 @@ rslider bounds(522, 356, 60, 60)    channel("dlGn")      range(0, 1, 0.3, 1, 0.0
 nslider  bounds(380, 358, 40, 31) range(1, 12, 4, 1, 1)  fontColour(208, 157, 253, 255) text("Delay") channel("dlt")
 
 
-combobox bounds(340, 30, 77, 25)   channel("BNote")   text("Note", "G", "A-", "Bb", "C", "D", "E-", "D-", "F", "A", "B", "Gb")   value(2)
+combobox bounds(340, 30, 77, 25)   channel("BNote")   text("Note", "G", "A-", "Bb", "C", "E-", "D-", "F", "A", "B", "Gb", "D")   value(2)
 combobox bounds(308, 4, 109, 25)   channel("scale")   text("Scale", "pythagorean", "shur", "abuata", "bayat tork", "afshari", "dashti", "nava", "segah", "chargah",  "homayun", "bayat esf")  value(2) 
-combobox bounds(346, 202, 77, 25)  channel("BNote2")  text("Note", "G", "A-", "Bb", "C", "D", "E-", "D-", "F", "A", "B", "Gb")   value(2)
+combobox bounds(346, 202, 77, 25)  channel("BNote2")  text("Note", "G", "A-", "Bb", "C", "E-", "D-", "F", "A", "B", "Gb", "D")   value(2)
 combobox bounds(318, 174, 105, 25) channel("scale2")  text("Scale", "pythagorean", "shur", "abuata", "bayat tork", "afshari", "dashti", "nava", "segah", "chargah",  "homayun", "bayat esf") value(2) 
 combobox bounds(58, 376, 68, 22)   channel("sound1")  text("Instr", "Dahina", "Wood", "Tibetan", "Albert", "sine", "Tri", "Saw", "Square", "myset", "Pick", "VCO")   value(6)
 combobox bounds(58, 399, 68, 22)   channel("sound2")  text("Instr", "Dahina", "Wood", "Tibetan", "Albert", "sine", "Tri", "Saw", "Square", "myset", "Pick", "VCO")  value(4)
@@ -359,11 +361,14 @@ iQ = 0
 elseif iBaseNoteIn == 11 then
 SbaseNote = "0Gb"
 iQ = 0
+elseif iBaseNoteIn == 12 then
+SbaseNote = "0D"
+iQ = 0
 endif
 iBaseNote ntom SbaseNote
 iScale      cabbageGetValue "scale"
 if iScale == 1 then
-iFrq mtof iMidiNote
+iMidiOut = iMidiNote
 elseif iScale == 2 then
 iMidiOut pythagorean iBaseNote,iMidiNote
 SnoteName mton iMidiOut
@@ -389,6 +394,13 @@ elseif iScale == 12 then
 iMidiOut dastgah giBayatEsArr,  iBaseNote,iMidiNote, iQ
 endif
 
+
+Snote mton iMidiOut
+Snote strsub Snote, 1
+if changed(Snote) == 1 then
+    SnoteShow     sprintf "text(%s)", Snote
+    cabbageSet "noteshow1",SnoteShow
+endif
 iFrq mtof iMidiOut
 
 iAtt = p6
@@ -396,9 +408,9 @@ iAtt = p6
 
 iRvrs cabbageGetValue "rvrs1"
 if iRvrs == 0 then
- aEnv transeg 0, iAtt,6, iAmp, p3-iAtt,-13, 0
+ aEnv transeg 0, iAtt,6, iAmp, p3-iAtt,-6, 0
 elseif iRvrs == 1 then
- aEnv transeg 0, p3*0.99,4, iAmp*0.1,p3*0.01,-6,0
+ aEnv transeg 0, p3*(1-iAtt),4, iAmp,p3*iAtt,-4,0
 endif
 
 
@@ -624,11 +636,14 @@ iQ = 0
 elseif iBaseNoteIn == 11 then
 SbaseNote = "0Gb"
 iQ = 0
+elseif iBaseNoteIn == 12 then
+SbaseNote = "0D"
+iQ = 0
 endif
 iBaseNote ntom SbaseNote
 iScale      cabbageGetValue "scale2"
 if iScale == 1 then
-iFrq mtof iMidiNote
+iMidiOut = iMidiNote
 elseif iScale == 2 then
 iMidiOut pythagorean iBaseNote,iMidiNote
 SnoteName mton iMidiOut
@@ -653,7 +668,12 @@ iMidiOut dastgah giHomayunArr,  iBaseNote,iMidiNote, iQ
 elseif iScale == 12 then
 iMidiOut dastgah giBayatEsArr,  iBaseNote,iMidiNote, iQ
 endif
-
+Snote mton iMidiOut
+Snote strsub Snote, 1
+if changed(Snote) == 1 then
+    SnoteShow     sprintf "text(%s)", Snote
+    cabbageSet "noteshow2",SnoteShow
+endif
 iFrq mtof iMidiOut
 
 iAtt = p6
@@ -661,9 +681,9 @@ iAtt = p6
 
 iRvrs cabbageGetValue "rvrs2"
 if iRvrs == 0 then
- aEnv transeg 0, iAtt,6, iAmp, p3-iAtt,-13, 0
+ aEnv transeg 0, iAtt,6, iAmp, p3-iAtt,-6, 0
 elseif iRvrs == 1 then
- aEnv transeg 0, p3*0.99,4, iAmp*0.1,p3*0.01,-6,0
+ aEnv transeg 0, p3*(1-iAtt),4, iAmp,p3*iAtt,-4,0
 endif
 
 
@@ -789,7 +809,7 @@ iVibIn cabbageGetValue "vib"
 	aSound  atone    aSound,500
 	aAtt transeg 0, iAttEnv, 4, 1
     aRel transegr 1, iRelEnv, -4, 0
-	aOut = aSound*aAtt*aRel
+	aOut = aSound*aAtt*aRel*1.3
 	chnmix aOut, "sndpad"
 endin
 
@@ -827,7 +847,7 @@ iVibIn cabbageGetValue "vib"
 	aFilter  atone    aFilter,200
 	aAtt transeg 0, iAttEnv, 4, 1
     aRel transegr 1, iRelEnv, -4, 0
-	aOut = aFilter*aAtt*aRel*iGain
+	aOut = aFilter*aAtt*aRel*iGain*0.5
 	chnmix aOut, "sndpad"
 endin
 
@@ -879,7 +899,7 @@ endif
 	aSound clfilt aSound, 350, 1, 10
 	aAtt transeg 0, iAttEnv, 4, 1
     aRel transegr 1, iRelEnv, -4, 0
-	aOut = aSound*aAtt*aRel
+	aOut = aSound*aAtt*aRel*0.8
 	chnmix aOut, "sndpad"
 endin
 
@@ -1158,7 +1178,9 @@ instr saveWidgets
 
     Spreset sprintf "preset%s.txt",Sp4
 ;    Spreset sprintf "d:/preset%s.txt",Sp4
+if metro(0) == 1 then
     fprintks Spreset, ""
+endif
     fprints Spreset, "%s \n", Sseqtxt1
     fprints Spreset, "%s \n", Sacctxt1
     fprints Spreset, "%s \n", Sreptxt1
@@ -1336,7 +1358,7 @@ gSfile2    cabbageGet    "sampleB"
     
     
     aInL,aInR monitor
-    fout "record.wav", 8, aInL, aInR
+;    fout "record.wav", 8, aInL, aInR
 endin
 
 
