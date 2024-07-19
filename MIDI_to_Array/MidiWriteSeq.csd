@@ -110,13 +110,15 @@ endin
 ;i 2 0 999
 </CsScore>
 </CsoundSynthesizer>
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
- <x>0</x>
- <y>0</y>
- <width>0</width>
- <height>0</height>
+ <x>609</x>
+ <y>191</y>
+ <width>400</width>
+ <height>300</height>
  <visible>true</visible>
  <uuid/>
  <bgcolor mode="nobackground">

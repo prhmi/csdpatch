@@ -80,6 +80,8 @@ i1 + .1 25.6
 
 
 
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
