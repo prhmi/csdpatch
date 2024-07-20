@@ -16,7 +16,7 @@ opcode ArrToStrg, S,i[]
   Sprint init ""
   indx = 0
   while indx < lenarray(iArrIn) do
-    Sscale     sprintf "%d ",iArrIn[indx]
+    Sscale     sprintf "%d ", iArrIn[indx]
     Sprint strcat Sprint, Sscale
   indx += 1
   od
@@ -43,7 +43,7 @@ while iReadChar < iLen do
 iReadChar += 1
 iLenCount += 1
 od
-iArrOut [] init iLenCount
+iArrOut[] init iLenCount
 
 iWrite = 0
 iRead = 0
@@ -58,7 +58,7 @@ iStart = iRead
 	if strchar(Schar,0) != 0 then
 	inum strtod Schar
 	;print inum
-	iArrOut [iWrite] = inum
+	iArrOut[iWrite] = inum
 	iWrite += 1
 	endif
 iRead += 1
@@ -221,6 +221,8 @@ endin
 i1 0 1
 </CsScore>
 </CsoundSynthesizer>
+
+
 
 
 

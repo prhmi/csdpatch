@@ -88,6 +88,7 @@ combobox bounds(318, 174, 105, 25) channel("scale2")  text("Scale", "pythagorean
 combobox bounds(58, 376, 68, 22)   channel("sound1")  text("Instr", "Dahina", "Wood", "Tibetan", "Albert", "sine", "Tri", "Saw", "Square", "myset", "Pick", "VCO")   value(6)
 combobox bounds(58, 399, 68, 22)   channel("sound2")  text("Instr", "Dahina", "Wood", "Tibetan", "Albert", "sine", "Tri", "Saw", "Square", "myset", "Pick", "VCO")  value(4)
 combobox bounds(718, 12, 71, 26)   channel("sound3")  text("Instr", "Sine", "Tri", "Saw", "Square")   value(2)
+combobox bounds(8, 388, 42, 19)   channel("midichn")  text("1", "15")   value(1)
 
 
 button   bounds(568, 432, 60, 25)  channel("saveA") text("Save A", "Save A") colour:0(120, 45, 113, 255)  colour:1(120, 45, 113, 255)
@@ -114,7 +115,6 @@ nchnls = 2
 
 
 seed 0
-
 
 massign 1,1
 massign 2,11
@@ -826,7 +826,7 @@ iVibIn cabbageGetValue "vib"
  iSpeedMin cabbageGetValue "spdstrngmin"
  
  iNum notnum
- iAtt = 0.01
+ iAtt random 0.01, 0.1
   	iFrqMin mtof iNum
  	iFilter cabbageGetValue "pdfltr"
     iCent cabbageGetValue "cnt"
@@ -1271,10 +1271,7 @@ iValue table indxtxt,iLoad
 cabbageSetValue SwidgetArr2[iRead],iValue
 indxtxt += 1
 iRead += 1
-od
-    
-  
-    
+od 
     
 endin
 
@@ -1327,7 +1324,6 @@ turnoff2 "seq2",0,0
 endif
 
 
-
 kFx cabbageGet "fx"
 
 if kFx == 1 && changed(kFx) == 1 then
@@ -1345,7 +1341,6 @@ turnoff2 "PadFx",0,0
 endif
 
   kWidgetLoad   ctrl7    1,63,0,1
-  printk2 kWidgetLoad
   if kWidgetLoad == 0 && changed(kWidgetLoad) == 1 then
   schedulek "loadWidgets", 0, 1, "A"
   elseif kWidgetLoad == 1 && changed(kWidgetLoad) == 1 then
