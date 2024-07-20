@@ -27,7 +27,7 @@ while iReadChar < iLen do
 iReadChar += 1
 iLenCount += 1
 od
-iArrOut [] init iLenCount
+iArrOut[] init iLenCount
 
 iWrite = 0
 iRead = 0
@@ -42,7 +42,7 @@ iStart = iRead
 	if strchar(Schar,0) != 0 then
 	inum strtod Schar
 	;print inum
-	iArrOut [iWrite] = inum
+	iArrOut[iWrite] = inum
 	iWrite += 1
 	endif
 iRead += 1
@@ -54,7 +54,7 @@ endop
 instr 1
  ;Sseq  = "1 34 64258 -2 77 342"
   Sseq = "1   1 546   23"
-iArr [] StrToArr Sseq
+iArr[] StrToArr Sseq
 printarray iArr, "%d"
 endin
 
@@ -64,6 +64,8 @@ endin
 i1 0 1
 </CsScore>
 </CsoundSynthesizer>
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
