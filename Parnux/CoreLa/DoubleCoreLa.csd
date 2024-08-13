@@ -153,7 +153,6 @@ giBassArr2[]    init giSteps
 
 
 
-
 instr GetMidi ;1
  iActive1 active 1
  iHold cabbageGetValue "hold"
@@ -815,39 +814,37 @@ endin
 
 
 instr Brass
-iAttEnv cabbageGetValue "attpad"
-iRelEnv cabbageGetValue "relpad"
-iGain cabbageGetValue "ginpad"
-iTenseIn cabbageGetValue "pres"
-iVampIn cabbageGetValue "pos"
-iVibIn cabbageGetValue "vib"
 
- iSpdFrq cabbageGetValue "spdfrq"
- iSpeedMin cabbageGetValue "spdstrngmin"
- 
- iNum notnum
- iAtt random 0.01, 0.1
-  	iFrqMin mtof iNum
- 	iFilter cabbageGetValue "pdfltr"
-    iCent cabbageGetValue "cnt"
- 	iFrq = iFrqMin+cent(1200)
+ iMidi		notnum
+ ivelin veloc 0, 2
+ iRng  cabbageGetValue "spdfrq"
+ iWave     ftgenonce 1,0,2048,10  ,  1, .4,0,0,10
+ iAtt cabbageGetValue "attpad" 
+ iRel cabbageGetValue "relpad"
+ iFilter cabbageGetValue "pdfltr" 
+ iAmp = .3
  iSpeed cabbageGetValue "spdstrng"
+ aEnv	transegr	0,iAtt,4, iAmp,p3,4,iAmp,p3,4,iAmp, iRel,-6,0
+ iFrq mtof iMidi ;2000 ;300- 1600
 
- 
-	kAmp    rspline  0.1, 0.2, 0.7, 1
-	kFrq    rspline  iFrq, iFrq*cent(iCent), 0.4,iSpdFrq
-	kTens   rspline  0.1, iTenseIn, iSpeedMin, iSpeed
-	kVib    = kFrq-cent(iVibIn*1000)
+ kfrq = jspline:k(iRng, 1,iSpeed)+iFrq
+ iTens cabbageGetValue "pres"
+ iPos  cabbageGetValue "pos"
+ ktens = jspline:k( iTens, .9, iSpeed) +iTens+iPos
+ iatt = 3
+ iVib = 2.8 ;chnget "vibr"
+ kvibf = jspline:k(iVib, 3,12)+iVib+0.01
 
-	kvamp   rspline  0.1, iVampIn, iSpeedMin, iSpeed
-	aSound	wgbrass    kAmp,kFrq,kTens,iAtt,kVib,kvamp,giSine,iFrqMin
+  kVamp = jspline:k( ivelin, .8, iSpeed*0.7) +ivelin+(iPos-0.15)
 
-	
-	aFilter  tone     aSound,iFilter
-	aFilter  atone    aFilter,200
-	aAtt transeg 0, iAttEnv, 4, 1
-    aRel transegr 1, iRelEnv, -4, 0
-	aOut = aFilter*aAtt*aRel*iGain*0.5
+
+ aSound wgbrass iAmp, kfrq, ktens, iatt, kvibf, kVamp , iWave
+ aSound = aSound*aEnv*0.3
+ aRvrbL, aRvrbR reverbsc aSound, aSound, 0.56, 600
+ aOut clfilt aSound, 200, 1,10
+ aOut clfilt aOut, iFilter, 0,10
+; outs aoutL,aoutR
+
 	chnmix aOut, "sndpad"
 endin
 
