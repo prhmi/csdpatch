@@ -2,13 +2,13 @@
 ; Written by Parham Izadyar, 2023
 ; github.com/prhmi
 <Cabbage>
-form caption("Freeze") size(300,215) pluginId("frze") guiMode("queue")
-image bounds(0, 0, 300, 215) file("back.jpg")
+form caption("Freeze") size(300,215) pluginId("frze") guiMode("queue") colour(30,30, 50)
+;image bounds(0, 0, 300, 215) file("back.jpg")
 
 checkbox  bounds(116, 12, 75, 21) text("Random")  channel("metro")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)
 checkbox  bounds(18, 12, 73, 21) text("Freeze")  channel("frznow")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)
 checkbox  bounds(206, 12, 77, 21) text("AmpRnd")  channel("ampnow")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)
-rslider bounds(10, 82, 85, 85) channel("frztme") text("Freeze Time") range(5, 50, 7, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1)
+rslider bounds(10, 82, 85, 85) channel("frztme") text("Freeze Time") range(0.5, 30, 7, 1, 0.1) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1)
 nslider bounds(24, 42, 56, 32) range(0, 100, 40, 1, 1) velocity(50) channel("frzmss") text("Frz moses") colour(56, 63, 79, 255)
 rslider bounds(202, 82, 85, 85) channel("amptme") text("Amp Time") range(5, 50, 12, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1)
 nslider bounds(216, 42, 56, 32) range(0, 100, 70, 1, 1) velocity(50) channel("ampmss") text("Amp moses") colour(56, 63, 79, 255)
@@ -47,6 +47,11 @@ aInL,aInR,kTrig,kFFTSize xin
     f_analR  	pvsanal	aInR, iFFTsize, ioverlap, iwinsize, iwintype		;ANALYSE AUDIO INPUT SIGNAL AND OUTPUT AN 
 	f_freezeR	pvsfreeze f_analR, kfreeza, kfreezf
 	aFR		pvsynth f_freezeR  
+	
+;	if kTrig == 0 then
+;	aFL = aInL
+;	aFR = aInR
+;	endif
 aOutL = aFL
 aOutR = aFR
 xout aOutL,aOutR
@@ -57,7 +62,7 @@ instr	1
 kAmpRnd cabbageGet "ampnow"
 kfrznow cabbageGet "frznow"
 kmetro cabbageGet "metro"
-kmix	cabbageGet	"mix"
+kMix	cabbageGet	"mix"
 kAmpSpeed cabbageGet "amptme"
 kAmpMoses cabbageGet "ampmss"
 
@@ -78,48 +83,60 @@ kFrzM = kfrznow
 elseif kFrzMod == 2 then
 kFrzM = 1
 endif
-aAmp = 1
+
+kAmp = 1
 if kAmpRnd == 1 && kFrzM == 1 then
 
     if kAmpMod == 1 then
     kAmp = ((randi:k(50,kAmpSpeed,2)+50) > kAmpMoses) ? 0 : 1
-;    kAmp port kAmp, 0.001
-    aAmp interp kAmp
+
+
     elseif kAmpMod == 2 then
     kRng = (kAmpSpeed/5)
     kSpeedMin = ((kAmpMoses/100)*5)+1
     kSpeedMax = ((kRng*kSpeedMin)/10)+5
     kAmp = jspline:k(kRng,kSpeedMin,12)+kRng
-    aAmp  lfo  1, kAmp,1
+    kAmp  lfo  1, kAmp,1
     elseif kAmpMod == 3 then
     kRng = (kAmpSpeed/5)
     kSpeedMin = ((kAmpMoses/100)*5)+1
     kSpeedMax = ((kRng*kSpeedMin)/10)+5
     kAmp = jspline:k(kRng,kSpeedMin,12)+kRng
-    aAmp  lfo  1, kAmp,1
-    aAmp  lfo  1, kAmp,3
+    kAmp  lfo  1, kAmp,3
     endif
+
 endif
+   kAmp port kAmp, 0.003
+    aAmp interp kAmp
 
 
 
+;aInL,aInR	ins
+aInL,aInR	diskin2	"../flute.wav",1,0,1
 
-
-aInL,aInR	ins
-;aInL,aInR	diskin2	"fox.wav",1,0,1
 
 kFFTSize cabbageGet "FFTSize"
 kFFTSize	init	4 
+
 	 if changed(kFFTSize)==1 then
 	  reinit UPDATE
 	 endif
 	 UPDATE:
+
 aFrzL,aFrzR Freeze aInL,aInR,kfrznow,kFFTSize
-rireturn	
+rireturn
+
+kmix port kfrznow, 0.08
 		
-	amixL		ntrpol		aInL, aFrzL*aAmp, kmix
-	amixR		ntrpol		aInR, aFrzR*aAmp, kmix
-			out amixL,amixR
+	amixL		ntrpol		aInL, aFrzL, kmix
+	amixR		ntrpol		aInR, aFrzR, kmix
+	aOutOutL = amixL*aAmp
+	aOutOutR = amixR*aAmp
+			
+kMix port kMix, 0.1
+	aMixOutL		ntrpol		aInL, aOutOutL, kMix
+	aMixOutR		ntrpol		aInR, aOutOutR, kMix
+			out aMixOutL,aMixOutR
 endin
 
 
