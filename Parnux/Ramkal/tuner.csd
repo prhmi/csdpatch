@@ -2,8 +2,8 @@
 ; Written by Parham Izadyar, 2023
 ; github.com/prhmi
 <Cabbage> 
-form caption("Tuner") size(480, 250) pluginId("tunr") guiMode("queue")
-image bounds(0, 0, 480, 300) file("back.jpg") channel("image2")
+form caption("Tuner") size(480, 250) pluginId("tunr") guiMode("queue") colour( 30, 30, 50)
+;image bounds(0, 0, 480, 300) file("back.jpg") channel("image2")
 label bounds(14, 16, 62, 16)   text("4A+47") channel("tuner") align("left") fontColour(147, 207, 207, 255)
 hslider bounds(254, 210, 216, 33), channel("pxl"), text("plck/s"), range(10, 300, 130, 1, 1)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
 hslider bounds(14, 212, 157, 31), channel("frfl"), text("frq"), range(150, 1500, 350, 1, 1)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
@@ -71,7 +71,7 @@ kpxl cabbageGet "pxl"
 kpcka cabbageGet "picka"
 kSoundMod cabbageGet "snds"
 kTunerOnOff cabbageGet "TunerOnOff"
-aInL,aInR diskin2 "test.wav", 1,0,1
+aInL,aInR diskin2 "../flute.wav", 1,0,1
 ;ainR = ainL
 ;aInL, aInR ins
 aIn = (aInL+aInR)/2
@@ -109,7 +109,8 @@ endif
 kEnv port kEnv, 0.07
 aEnv interp kEnv
 kmix  cabbageGet "mix"
-kmix port kmix, 0.1
+kPortTime linseg 0, 0.001, 0.1
+kmix portk kmix, kPortTime
 aEnv2 interp (kmix+1)
 ;printk2 kSoundMod
 
@@ -265,6 +266,8 @@ endin
 i "Start" 0 [6^6]
 </CsScore>
 </CsoundSynthesizer>
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>

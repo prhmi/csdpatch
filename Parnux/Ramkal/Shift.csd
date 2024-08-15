@@ -1,5 +1,5 @@
 <Cabbage>
-form caption("Shift") size(550, 400)  guiMode("queue")  colour(20,30,40) style("legacy") pluginId("shft")
+form caption("Shift") size(550, 400)  guiMode("queue")  colour(20,30,40)  pluginId("shft")
 
 checkbox bounds(24, 282, 30, 30) channel("metro") colour:0(111, 103, 103, 255) colour:1(0, 255, 154, 255)
 label bounds(54, 292, 80, 16) channel("label10002") text("Random")

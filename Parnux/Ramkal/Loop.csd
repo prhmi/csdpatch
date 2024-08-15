@@ -2,8 +2,8 @@
 ; Written by Parham Izadyar, 2023
 ; github.com/prhmi
 <Cabbage>
-form caption("Loop") size(350,200), pluginId("Loop") guiMode("queue")
-image  bounds(0, 0, 350, 200), outlineThickness(6), , colour(45, 61, 87, 255) file("back.jpg") channel("image2")
+form caption("Loop") size(350,200), pluginId("Loop") guiMode("queue") colour(30,30,50)
+;image  bounds(0, 0, 350, 200), outlineThickness(6), , colour(45, 61, 87, 255) file("back.jpg") channel("image2")
 checkbox  bounds(12, 10, 68, 21), text("Loop") , channel("loop"),   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
 checkbox  bounds(260, 10, 77, 21), text("Random") , channel("metro"),   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
 rslider bounds(258, 48, 85, 85), channel("mix"), text("mix"), range(0, 1, 1, 1, 0.001), trackerColour(147, 207, 207, 255) outlineColour(3, 29, 29, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
@@ -40,34 +40,33 @@ giTableLength = ftlen(giTableL) / sr
 
 
 instr Start
- ;aInL,aInR diskin2 "test.wav",1,0,1
- aInL,aInR ins
+aInL,aInR diskin2 "../flute.wav",1,0,1
+; aInL,aInR ins
  kTime init 0
- kTime chnget "looptime"
- kMetroMoses chnget "mtromss"
+ kTime cabbageGet "looptime"
+ kMetroMoses cabbageGet "mtromss"
  kMetroTime init 0
- kMetro chnget "metro"
- kLoop chnget "loop"
- kSwift chnget "swft"
- kRndStp chnget "rndstp"
- kPitch chnget "pitch"
- kStepsMin chnget "stepsmin"
- kStepsMax chnget "stepsmax"
- kRndPch chnget "rndpch"
- kPitchMin chnget "pitchmin"
- kPitchMax chnget "pitchmax"
- kMix chnget "mix"
+ kMetro cabbageGet "metro"
+ kLoop cabbageGet "loop"
+ kSwift cabbageGet "swft"
+ kRndStp cabbageGet "rndstp"
+ kPitch cabbageGet "pitch"
+ kStepsMin cabbageGet "stepsmin"
+ kStepsMax cabbageGet "stepsmax"
+ kRndPch cabbageGet "rndpch"
+ kPitchMin cabbageGet "pitchmin"
+ kPitchMax cabbageGet "pitchmax"
+ kMix cabbageGet "mix"
  
  if kMetro == 1 then
     if metro(1/kTime) == 1 then
       kMetroTirg = (random:k(0, 100) > kMetroMoses ) ? 0 : 1
+      cabbageSetValue "loop",kMetroTirg
     endif
 
  elseif kMetro == 0 then
     kMetroTirg = 0
  endif
-;printk2 kMetroTirg
-cabbageSetValue "loop",kMetroTirg
  
 	if kMetroTirg == 1 then
 		if metro:k(1/kMetroTime) == 1 then
@@ -171,8 +170,7 @@ endin
 
 instr Play
  iSpeed = p4/giTableLength
- ;print iSkip
- iFade chnget "fde" 
+ iFade cabbageGetValue "fde" 
  iAtt = p3/iFade
  iRel = p3/iFade
  aEnv	transegr	0,iAtt,6, 1,p3,4,1, iRel,-6,0
@@ -189,4 +187,5 @@ endin
 <CsScore>
 i "Start" 0 [6^6]
 </CsScore>
+
 </CsoundSynthesizer>

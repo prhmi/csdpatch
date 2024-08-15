@@ -2,16 +2,27 @@
 ; Written by Parham Izadyar, 2023
 ; github.com/prhmi
 <Cabbage>
-form     caption("Speed") size(280,153), pluginId("sped")
-image    bounds(0, 0, 280, 153), outlineThickness(6), , colour(45, 61, 87, 255) file("back.jpg") channel("image2")
-checkbox bounds(106, 114, 68, 21), text("Lock") , channel("lock"), colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255) value(1)
-nslider  bounds(194, 106, 56, 32) range(0.3, 1.5, 0.3, 1, 0.01) velocity(50) channel("spdpnt") text("Speed Point") colour(56, 63, 79, 255)
-nslider  bounds(18, 104, 70, 32) range(1, 23, 17, 1, 1) velocity(50) channel("spdrnd") text("Random Speed") colour(56, 63, 79, 255)
-rslider  bounds(8, 12, 85, 85), channel("spdrng"), text("Speed Range"), range(0.01, 1, 0.5, 1, 0.001)   trackerColour(147, 207, 207, 255)      textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
-rslider  bounds(180, 14, 85, 85), channel("mix"), text("mix"), range(0, 1, .5, 1, 0.001)     trackerColour(147, 207, 207, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
-checkbox bounds(106, 52, 68, 21), text("Record") , channel("record") colour:1(236, 255, 0, 255)  colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
-checkbox bounds(106, 14, 74, 21), text("Random") , channel("metro"), colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
-checkbox bounds(106, 74, 68, 21), text("Play") , channel("play") colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+form     caption("Speed") size(380,350), pluginId("sped"), colour(30,30,50) guiMode("queue")
+;image    bounds(0, 0, 280, 153), outlineThickness(6), , colour(45, 61, 87, 255) file("back.jpg") channel("image2")
+
+
+
+rslider  bounds(296, 62, 80, 80), channel("spdp"), text("Speed Point"), range(0.1, 2, 0.7, 1, 0.001)   trackerColour(147, 207, 207, 255)      textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
+rslider  bounds(296, 256, 80, 80), channel("pitch"), text("Pitch Point"), range(0.1, 2, 1, 1, 0.001)   trackerColour(147, 207, 207, 255)      textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
+rslider  bounds(296, 160, 80, 80), channel("mix"), text("mix"), range(0, 1, 1, 1, 0.001)     trackerColour(147, 207, 207, 255)  textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255) valueTextBox(1)
+checkbox bounds(310, 4, 68, 21), text("Record") , channel("record") colour:1(236, 255, 0, 255)  colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+checkbox bounds(12, 8, 74, 21), text("Random") , channel("metro"), colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+checkbox bounds(310, 28, 68, 21), text("Play") , channel("play") colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+hslider bounds(10, 38, 251, 25) channel("rngmin") range(0.1, 1, 0.7, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("rng min")
+hslider bounds(10, 64, 251, 25) channel("rngmax") range(0.7, 2, 1, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("rng max")
+hslider bounds(10, 106, 251, 25) channel("spdmin") range(0.4, 3, 0.7, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("spd min")
+hslider bounds(10, 132, 251, 25) channel("spdmax") range(0.7, 12, 1, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("spd max")
+
+combobox bounds(182, 10, 75, 22) channel("mod") text("line", "rnd") value(2)
+checkbox bounds(10, 230, 95, 21), text("Rnd Pitch") , channel("rndpitch"), colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255) value(0)
+hslider bounds(10, 284, 251, 25) channel("pchmin") range(0.4, 10, 0.7, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("pch min")
+hslider bounds(10, 312, 251, 25) channel("pchmax") range(0.7, 15, 1, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("pch max")
+hslider bounds(10, 256, 251, 25) channel("rngpch") range(0.01, 0.5, 0.1, 1, 0.01) trackerColour(198, 231, 231, 255) valueTextBox(1) text("rng pch")
 
 </Cabbage>
 <CsoundSynthesizer>
@@ -42,8 +53,8 @@ kMix cabbageGet "mix"
 
 
 
-;aInL,aInR diskin "test.wav",1,0,1
-aInL,aInR ins
+aInL,aInR diskin "Ninotchka 1_1.wav",1,3,1
+;aInL,aInR ins
 
 if kMetro == 0 && changed(kMetro) == 1 then
 turnoff2 "Record",0,0
@@ -90,22 +101,40 @@ tablew aInR, aPointer, giSoundFileR
 endin
 
 instr Play
-kLock cabbageGet "lock"
-kSpeedPoint cabbageGet "spdpnt"
-kSpeedRange cabbageGet "spdrng"
-kRndSpd cabbageGet "spdrnd"
+kRngMin cabbageGet "rngmin"
+kRngMax cabbageGet "rngmax"
+kSpeedMin cabbageGet "spdmin"
+kSpeedMax cabbageGet "spdmax"
+kSpeedPoint cabbageGet "spdp"
+iSpeedPoint = i(kSpeedPoint)
+iSpdEnd = 1.3-iSpeedPoint
+print iSpdEnd, iSpdEnd+0.7
+kMod cabbageGet "mod"
 kBox = p4
 if kBox == 0 then
 kSpeed = kSpeedPoint
 elseif kBox == 1 then
-kSpeed = randi:k( kSpeedRange,kRndSpd,2)+(kSpeedPoint/2)+kSpeedRange
+    if kMod == 1 then  
+    kSpeed = (line:k( 0, i(kSpeedMax), iSpdEnd) % iSpdEnd) + iSpeedPoint
+    elseif kMod == 2 then
+    kSpeed rspline kRngMin, kRngMax, kSpeedMin, kSpeedMax
+    endif
 endif
 
 iAmp = 1
-kPitch = 1
-;printk2 kSpeed
-aSpeedL   temposcal kSpeed, iAmp, kPitch, giSoundFileL, kLock
-aSpeedR   temposcal kSpeed, iAmp, kPitch, giSoundFileR, kLock
+kPitchIn cabbageGet "pitch"
+kPchRng cabbageGet "rngpch"
+kPchMin cabbageGet "pchmin"
+kPchMax cabbageGet "pchmax"
+kRndPitch cabbageGet "rndpitch"
+
+if kRndPitch == 0 then
+kPitch = kPitchIn
+elseif kRndPitch == 1 then
+kPitch = jspline:k( kPchRng, kPchMin, kPchMax) + kPitchIn
+endif
+aSpeedL   temposcal kSpeed, iAmp, kPitch, giSoundFileL, 1
+aSpeedR   temposcal kSpeed, iAmp, kPitch, giSoundFileR, 1
  chnmix	aSpeedL,"SpeedL"
  chnmix	aSpeedR,"SpeedR"
 
