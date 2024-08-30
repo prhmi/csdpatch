@@ -1,6 +1,6 @@
-; Ramkal_VSTe_V_5.1, Cabbage_V_2.9.0
-; Written by Parham Izadyar, 2024
-; github.com/prhmi
+; parnux VSTe v5.2, Cabbage v2.9.0
+; Written by Parham Izadyar, 2022-2024
+; parhamizadyar.net
 <Cabbage>
 form caption("Shift") size(520, 250)  guiMode("queue")  colour(30,30,50)  pluginId("shft")
 rslider bounds(14, 10, 73, 72), channel("psh"), text("Pitch"), range(-1200, 1200, 0, 1, 1) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1) 
@@ -32,7 +32,7 @@ combobox   bounds(86, 212, 80, 20), text("Line", "Rnd Pitch", "Rnd timb"), chann
 
 ;sr = 44100
 ksmps = 64
-nchnls = 2
+;nchnls = 2
 0dbfs = 1
 
 
@@ -93,8 +93,6 @@ endop
 ;;instruments
 
 instr ordplay
-;aInL, aInR diskin2 "../harf4.wav", 1,0,1
-;aInL, aInR ins
 aInL chnget "sndL"
 aInR chnget "sndR"
 
@@ -244,8 +242,14 @@ endin
 
 
 instr widgets
-;aInL, aInR diskin2 "../harf4.wav", 1,1,1
+;aInL, aInR diskin2 "../myvoice.wav", 1,0,1
+iCh = nchnls
+if iCh == 1 then
+aInL inch 1
+aInR inch 1
+elseif  iCh == 2 then
 aInL, aInR ins
+endif
 chnmix aInL, "sndL"
 chnmix aInR, "sndR"
  kMetro    cabbageGet "metro"
@@ -282,9 +286,15 @@ endif
  aOutL chnget "outl"
  aOutR chnget "outr"
  kMix cabbageGet "mix"
+   kPortTime linseg 0, 0.001, 0.05
+  kMix portk kMix,kPortTime
  	aMixL		ntrpol		aInL, aOutL, kMix
 	aMixR		ntrpol		aInR, aOutR, kMix
-	out aMixL,aMixR
+	    if iCh == 1 then
+    out (aMixL+aMixR)/2
+    elseif  iCh == 2 then
+	outs aMixL,aMixR
+    endif
 	chnclear "outl", "outr"
  endif
 endin

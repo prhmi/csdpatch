@@ -1,6 +1,6 @@
-; Ramkal_VSTe_V_5.1, Cabbage_V_2.9.0
-; Written by Parham Izadyar, 2024
-; github.com/prhmi
+; parnux VSTe v5.2, Cabbage v2.9.0
+; Written by Parham Izadyar, 2022-2024
+; parhamizadyar.net
 <Cabbage>
 form caption("Blur") size(500,300), pluginId("blur") colour( 30, 30, 50) guiMode("queue")
 ;image bounds(0, 0, 220, 150) file("back.jpg")
@@ -37,7 +37,7 @@ hslider bounds(260, 246, 150, 25) channel("rvrbmax") range(1, 12, 3, 1, 0.1) tra
 ;sr = 44100
 ksmps = 64
 0dbfs = 1
-nchnls = 2
+;nchnls = 1
 
 giTableL    ftgen  0, 0, 60*sr, 2, 0
 giTableR    ftgen  0, 0, 60*sr, 2, 0
@@ -139,7 +139,17 @@ endin
 
 instr Widgets
 ;aInL,aInR diskin2 "../flute.wav", 1, 0, 1
+
+
+iCh = nchnls
+
+if iCh == 1 then
+aInL inch 1
+aInR inch 1
+elseif  iCh == 2 then
 aInL, aInR ins
+endif
+
 chnmix aInL, "sndl"
 chnmix aInR, "sndr"
  kSize cabbageGet "size" 
@@ -174,11 +184,17 @@ chnmix aInR, "sndr"
 kMix cabbageGet "mix"
 aOutL chnget "outl" 
 aOutR chnget "outr" 
-kPortTime linseg 0, 0.001, 0.1
+kPortTime linseg 0, 0.001, 0.05
  kMix portk kMix, kPortTime
 	aMixL		ntrpol		aInL, aOutL, kMix
 	aMixR		ntrpol		aInR, aOutR, kMix
-	out aMixL, aMixR
+	
+	if iCh == 1 then
+out aMixL
+elseif  iCh == 2 then
+	outs aMixL, aMixR
+endif
+
  chnclear "outl"
  chnclear "outr"
 

@@ -1,6 +1,6 @@
-; Ramkal_VSTe_V_5.1, Cabbage_V_2.9.0
-; Written by Parham Izadyar, 2024
-; github.com/prhmi
+; parnux VSTe v5.2, Cabbage v2.9.0
+; Written by Parham Izadyar, 2022-2024
+; parhamizadyar.net
 <Cabbage>
 form caption("Tremolo") size(420, 100)  guiMode("queue")  colour(30,30,50)  pluginId("trml")
 ;image bounds(0, 142, 300, 150) file("3DPan.jpg") channel("image3")
@@ -18,14 +18,20 @@ combobox bounds(322, 12, 62, 27) channel("mod") text("mod1", "mod2") value(1)
 <CsInstruments>
 ;sr     = 44100	
 ksmps 	= 64		
-nchnls 	= 2		
+;nchnls 	= 2		
 0dbfs	= 1		
 
 
 instr 1
 
 ;aInL,aInR diskin "../flute.wav",1,0,1
-aInL,aInR ins
+iCh = nchnls
+if iCh == 1 then
+aInL inch 1
+aInR inch 1
+elseif  iCh == 2 then
+aInL, aInR ins
+endif
 kSpeedMin cabbageGet "spdmin"
 kSpeedMax cabbageGet "spdmax"
 kMod	cabbageGet	"mod"
@@ -47,12 +53,21 @@ rireturn
 
 
 
-aoutL = aInL*aLFO
-aoutR = aInR*aLFO
+aOutL = aInL*aLFO
+aOutR = aInR*aLFO
 
-   	amixL		ntrpol		aInR, aoutL, kMix	
-	amixR		ntrpol		aInR, aoutR, kMix	
-out amixL,amixR
+  kPortTime linseg 0, 0.001, 0.05
+  kMix portk kMix,kPortTime
+   	aMixL		ntrpol		aInR, aOutL, kMix	
+	aMixR		ntrpol		aInR, aOutR, kMix
+	
+		
+    if iCh == 1 then
+    out (aMixL+aMixR)/2
+    elseif  iCh == 2 then
+	outs aMixL,aMixR
+    endif	
+
 endin
 </CsInstruments>
 <CsScore>

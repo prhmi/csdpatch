@@ -1,6 +1,6 @@
-; Ramkal_VSTe_V_5.1, Cabbage_V_2.9.0
-; Written by Parham Izadyar, 2024
-; github.com/prhmi
+; parnux VSTe v5.2, Cabbage v2.9.0
+; Written by Parham Izadyar, 2022-2024
+; parhamizadyar.net
 <Cabbage>
 form     caption("Speed") size(380,350), pluginId("sped"), colour(30,30,50) guiMode("queue")
 
@@ -30,7 +30,7 @@ hslider bounds(10, 256, 251, 25) channel("rngpch") range(0.01, 0.5, 0.1, 1, 0.01
 
 ;sr = 44100
 ksmps = 64
-nchnls = 2
+;nchnls = 2
 0dbfs = 1
 
 giSoundFileL      	ftgen   0, 0, 60*sr, 10, 0
@@ -51,7 +51,13 @@ kMix cabbageGet "mix"
 
 
 ;aInL,aInR diskin "Ninotchka 1_1.wav",1,3,1
-aInL,aInR ins
+iCh = nchnls
+if iCh == 1 then
+aInL inch 1
+aInR inch 1
+elseif  iCh == 2 then
+aInL, aInR ins
+endif
 
 if kMetro == 0 && changed(kMetro) == 1 then
 turnoff2 "Record",0,0
@@ -72,13 +78,17 @@ endif
  chnmix	aInR,"AudioR"
 aSpeedL chnget "SpeedL"
 aSpeedR chnget "SpeedR"
-;if kPly == 0 && kMetro == 0 then
-;kMix = 0
-;endif
+
+  kPortTime linseg 0, 0.001, 0.05
+  kMix portk kMix,kPortTime
 aMixL ntrpol aInL,aSpeedL,kMix
 aMixR ntrpol aInR,aSpeedR,kMix
 
-out aMixL,aMixR
+    if iCh == 1 then
+    out (aMixL+aMixR)/2
+    elseif  iCh == 2 then
+	outs aMixL,aMixR
+    endif
  chnclear	"SpeedL"
  chnclear	"SpeedR"
 endin

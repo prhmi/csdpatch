@@ -1,6 +1,6 @@
-; Ramkal_VSTe_V_5.1, Cabbage_V_2.9.0 bounds(0, 0, 0, 0)
-; Written by Parham Izadyar, 2024
-; github.com/prhmi
+; parnux VSTe v5.2, Cabbage v2.9.0
+; Written by Parham Izadyar, 2022-2024
+; parhamizadyar.net
 <Cabbage>
 form caption("Loop") size(500,250), pluginId("Loop") guiMode("queue") colour(30,30,50)
 ;image  bounds(0, 0, 350, 200), outlineThickness(6), , colour(45, 61, 87, 255) file("back.jpg") channel("image2")
@@ -37,7 +37,7 @@ hslider bounds(116, 138, 260, 25) channel("linetime") range(1, 15, 5, 1, 0.01)  
 
 ;sr = 48000
 ksmps = 64
-nchnls = 2
+;nchnls = 2
 0dbfs = 1
 
 seed 0
@@ -49,7 +49,15 @@ giTableLength = ftlen(giTableL) / sr
 
 instr Start
 ;aInL,aInR diskin2 "../harf4.wav",1,0,1
- aInL,aInR ins
+iCh = nchnls
+
+if iCh == 1 then
+aInL inch 1
+aInR inch 1
+elseif  iCh == 2 then
+aInL, aInR ins
+endif
+
  kTimeLoop cabbageGet "loopdur"
  kMetro cabbageGet "metro"
  kLoop cabbageGet "loop"
@@ -89,6 +97,9 @@ cabbageSetValue "loop",kActive
  aLoopL chnget "LoopL"
  aLoopR chnget "LoopR"
   
+  kPortTime linseg 0, 0.001, 0.05
+  kMix portk kMix,kPortTime
+  
   aMixL ntrpol aInL,aLoopL,kMix
   aMixR ntrpol aInR,aLoopR,kMix
   
@@ -103,12 +114,17 @@ aIn interp kIn
 aOut interp kOut
 
 
-aoutL sum (aMixL*aOut),(aInL*aIn)
-aoutR sum (aMixR*aOut),(aInR*aIn)
+aOutL sum (aMixL*aOut*kGain),(aInL*aIn*kGain)
+aOutR sum (aMixR*aOut*kGain),(aInR*aIn*kGain)
 
 
-  out aoutL*kGain,aoutR*kGain
-;  out aMixL, aMixR
+    if iCh == 1 then
+    out aOutL
+    elseif  iCh == 2 then
+	outs aOutL,aOutR
+    endif
+
+
  chnclear	"LoopL"
  chnclear	"LoopR"
 endin

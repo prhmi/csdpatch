@@ -1,6 +1,6 @@
-; Ramkal_VSTe_V_5.1, Cabbage_V_2.9.0
-; Written by Parham Izadyar, 2024
-; github.com/prhmi
+; parnux VSTe v5.2, Cabbage v2.9.0
+; Written by Parham Izadyar, 2022-2024
+; parhamizadyar.net
 <Cabbage>
 form caption("Freeze") size(300,215) pluginId("frze") guiMode("queue") colour(30,30, 50)
 ;image bounds(0, 0, 300, 215) file("back.jpg")
@@ -25,7 +25,7 @@ combobox   bounds(16, 174, 71, 23), text("on Frz","anyway"), channel("frzmd"), v
 <CsInstruments>
 ;sr 		= 	44100
 ksmps 		= 	64
-nchnls 		= 	2
+;nchnls 		= 	2
 0dbfs		=	1	
 
 
@@ -107,8 +107,17 @@ endif
 
 
 
-aInL,aInR	ins
+
 ;aInL,aInR	diskin2	"../flute.wav",1,0,1
+
+iCh = nchnls
+
+if iCh == 1 then
+aInL inch 1
+aInR inch 1
+elseif  iCh == 2 then
+aInL, aInR ins
+endif
 
 
 kFFTSize cabbageGet "FFTSize"
@@ -129,10 +138,18 @@ kmix port kfrznow, 0.08
 	aOutOutL = amixL*aAmp
 	aOutOutR = amixR*aAmp
 			
-kMix port kMix, 0.1
+  kPortTime linseg 0, 0.001, 0.05
+  kMix portk kMix,kPortTime
 	aMixOutL		ntrpol		aInL, aOutOutL, kMix
 	aMixOutR		ntrpol		aInR, aOutOutR, kMix
-			out aMixOutL,aMixOutR
+	
+	
+		if iCh == 1 then
+out aMixOutL
+elseif  iCh == 2 then
+	outs aMixOutL,aMixOutR
+endif
+
 endin
 
 

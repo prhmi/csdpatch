@@ -1,20 +1,23 @@
-; Ramkal_VSTe_V_5.1, Cabbage_V_2.9.1
-; Written by Parham Izadyar, 2024
-; github.com/prhmi
+; parnux VSTe v5.2, Cabbage v2.9.0
+; Written by Parham Izadyar, 2022-2024
+; parhamizadyar.net
 <Cabbage> 
-form caption("Tuner") size(480, 250) pluginId("tunr") guiMode("queue") colour( 30, 30, 50)
+form caption("Tuner") size(480, 300) pluginId("tunr") guiMode("queue") colour( 30, 30, 50)
 ;image bounds(0, 0, 480, 300) file("back.jpg") channel("image2")
 label bounds(14, 16, 62, 16)   text("4A+47") channel("tuner") align("left") fontColour(147, 207, 207, 255)
 hslider bounds(254, 210, 216, 33), channel("pxl"), text("plck/s"), range(10, 300, 130, 1, 1)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
-hslider bounds(14, 212, 157, 31), channel("frfl"), text("frq"), range(150, 1500, 350, 1, 1)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
+hslider bounds(14, 212, 238, 31), channel("frflu"), text("frqUp"), range(150, 2500, 350, 1, 1)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
+hslider bounds(14, 244, 238, 31), channel("frfld"), text("frqDown"), range(50, 800, 120, 1, 1)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
+
+
 rslider bounds(88, 132, 69, 77), channel("mix"), text("mix"), range(0, 1, 1, 1, 0.001)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
 rslider bounds(158, 52, 69, 77), channel("hfltr"), text("High Cut"), range(400, 6000, 1200, 1, 1)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
 rslider bounds(88, 52, 69, 77), channel("lfltr"), text("Low Cut"), range(100, 2000, 300, 1, 1)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
-rslider bounds(18, 132, 69, 77), channel("dtn"), text("Detune"), range(0.5, 2.5, 2, 2, 0.001)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
+rslider bounds(18, 132, 69, 77), channel("dtn"), text("Detune"), range(-1200, 2000, 1200, 1, 1)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
 rslider bounds(18, 52, 69, 77), channel("velocity"), text("Gate"), range(0.01, 0.7, 0.1, 1, 0.001)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
 combobox   bounds(102, 14, 57, 23), text("128","256","512","1024","2048","4096"), channel("FFTSize"), value(4), fontColour(255,255,255) colour(56, 63, 79, 255)
-combobox   bounds(172, 218, 57, 23), text("5","7","10","12","15","17"), channel("NumPeaks"), value(4), fontColour(255,255,255) colour(56, 63, 79, 255)
-rslider bounds(158, 132, 69, 77) channel("gain") range(0, 90, 60, 1, 0.001) trackerColour(147, 207, 207, 255) valueTextBox(1)  text("Valume") fontColour(255, 255, 255, 255) textColour(255, 255, 255, 255)
+combobox   bounds(260, 248, 57, 23), text("5","7","10","12","15","17"), channel("NumPeaks"), value(4), fontColour(255,255,255) colour(56, 63, 79, 255)
+rslider bounds(158, 132, 69, 77) channel("gain") range(0, 90, 60, 1, 1) trackerColour(147, 207, 207, 255) valueTextBox(1)  text("Valume") fontColour(255, 255, 255, 255) textColour(255, 255, 255, 255)
 checkbox   bounds(78, 14, 20, 20) colour:1(236, 255, 0, 255) colour:0(103, 103, 103, 255) channel("TunerOnOff") value(1)
 combobox   bounds(162, 14, 70, 23), text("Saw", "Square", "Tri", "Imp1","Imp2","Imp3","Imp4", "Pick", "VCO"), channel("snds"), value(2), fontColour(255,255,255) colour(56, 63, 79, 255)
 rslider bounds(324, 132, 69, 77), channel("dur"), text("Duration"), range(0.1, 2.5, 0.5, 2, 0.001)     trackerColour(147, 207, 207, 255) valueTextBox(1) textColour(255, 255, 255, 255) fontColour(255, 255, 255, 255)
@@ -29,6 +32,7 @@ rslider    bounds(394, 132, 69, 77) channel("gainp") range(0, 90, 60, 1, 0.001) 
 label bounds(280, 16, 54, 14) channel("label10006") text("on/off")
 label bounds(406, 16, 35, 14) channel("label10005") text("Rnd")
 
+label bounds(320, 254, 123, 15) channel("label10025") text("number peaks")
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
@@ -37,7 +41,7 @@ label bounds(406, 16, 35, 14) channel("label10005") text("Rnd")
 <CsInstruments>
 ; Initialize the global variables. 
 ksmps = 64
-nchnls = 2
+;nchnls = 2
 0dbfs = 1
 
 seed 0
@@ -58,7 +62,8 @@ instr Start
 kVelocity cabbageGet "velocity"
 kHFltr  cabbageGet "hfltr"
 kLFltr  cabbageGet "lfltr"
-kDetune cabbageGet "dtn"
+kDetuneIn cabbageGet "dtn"
+kDetune cent kDetuneIn
 kGainIn cabbageGet "gain"
 kGainP cabbageGet "gainp"
 kGain ampdb kGainIn-60
@@ -71,9 +76,14 @@ kpxl cabbageGet "pxl"
 kpcka cabbageGet "picka"
 kSoundMod cabbageGet "snds"
 kTunerOnOff cabbageGet "TunerOnOff"
-;aInL,aInR diskin2 "../flute.wav", 1,0,1
-;ainR = ainL
+;aInL,aInR diskin2 "../flute_mono.wav", 1,0,1
+iCh = nchnls
+if iCh == 1 then
+aInL inch 1
+aInR inch 1
+elseif  iCh == 2 then
 aInL, aInR ins
+endif
 aIn = (aInL+aInR)/2
 
 kFFTSize cabbageGet "FFTSize"
@@ -125,17 +135,18 @@ kFrqTime = 2
 elseif kFrqTime == 5 then
 kFrqTime = 3
 endif
+kFrq = kfr;*kFrqTime
 
-printk2 kFrqTime
-kFrq = kfr*kFrqTime
 
-kFrqFilter cabbageGet "frfl"
-until kfr < kFrqFilter do
-kfr = kfr/2
+kFrqFltrUp cabbageGet "frflu"
+kFrqFltrDown cabbageGet "frfld"
+
+until kFrq < kFrqFltrUp do
+kFrq = kFrq/2
 od
 
-until kfr > 120 do
-kfr = kfr*2
+until kFrq > kFrqFltrDown do
+kFrq = kFrq*2
 od
 
 
@@ -210,10 +221,18 @@ aoutL		ntrpol		aInL, aRvbMix*aEnv*aEnv2 , kmix
 aoutR		ntrpol		aInR, aRvbMix*aEnv*aEnv2 , kmix
 aGainL = aoutL*aGain
 aGainR = aoutR*aGain
-out aGainL,aGainR
+
+
+
+    if iCh == 1 then
+    out (aGainL+aGainR)/2
+    elseif  iCh == 2 then
+	outs aGainL,aGainR
+    endif
+
 
 plk:
-kFrqOut = kfr*kFrqTime
+kFrqOut = kFrq*kFrqTime
 ;if kFrqOut < kLFltr then
 ;kFrqOut = 0
 ;elseif kFrqOut > kHFltr then
@@ -228,7 +247,7 @@ endif
 if ktrig == 1 then
     if kSoundMod == 8 || kpcka == 1 then
         if changed(kFrqpx) == 1 then
-        schedulek "plck", 0, kDur, kFrq*kFrqTime*2,kGainPout
+        schedulek "plck", 0, kDur, kFrqOut,kGainPout
         endif
     endif
 endif
@@ -251,12 +270,18 @@ irefl random 0.1, 0.9
 endif
 aPick wgpluck2 iplk,.3, iFrq, ipick, irefl-0.01
 aout = aPick*aEnv*aGain
-out aout,aout
+
+iCh = nchnls
+    if iCh == 1 then
+    out aout
+    elseif  iCh == 2 then
+	outs aout,aout
+    endif
 endin
 
 instr NoteShow
- knum = p4
-SNoteIn  mton knum
+ inum = p4
+SNoteIn  mton inum
 SNote   sprintf "text(%s)", SNoteIn
 cabbageSet "tuner",SNote
 endin
@@ -267,21 +292,3 @@ i "Start" 0 [6^6]
 </CsScore>
 </CsoundSynthesizer>
 
-
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>0</x>
- <y>0</y>
- <width>0</width>
- <height>0</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="background">
-  <r>240</r>
-  <g>240</g>
-  <b>240</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>
