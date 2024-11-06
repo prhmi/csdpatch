@@ -11,29 +11,26 @@ nchnls = 2
 
 
 
-opcode MtoName, S,i
+opcode MtoNameInt, S,i
 iMidi xin 
 SNoteArr [] fillarray "C", "C#", "D", "D#","E","F", "F#", "G","G#", "A", "A#", "B"
 iAraziArr[] fillarray 1, 3, 6, 8, 10
 iNoteIndex = (iMidi) % 12
 iNoteIndxInt = int(iNoteIndex)
-iOctave = int(iMidi/12)-1
 iSCent = int((iMidi-int(iMidi))*100.5)
 if iSCent  == 0 then
-Sout sprintf "%d%s",iOctave,SNoteArr[iNoteIndex]
+Sout sprintf "%s",SNoteArr[iNoteIndex]
 elseif iSCent == 100 then
-Sout sprintf "%d%s",iOctave,SNoteArr[iNoteIndex+1]
+Sout sprintf "%s",SNoteArr[iNoteIndex+1]
 elseif iSCent != 0 then
 		if iSCent > 50 then
-		Sout sprintf "%d%s-%d",iOctave,SNoteArr[iNoteIndex+1],(100-iSCent)
-		elseif iSCent < 50 then
-		Sout sprintf "%d%s+%d",iOctave,SNoteArr[iNoteIndex],iSCent
-		elseif iSCent == 50 then
-		Sout sprintf "%d%s+",iOctave,SNoteArr[iNoteIndex]
+		Sout sprintf "%s-",SNoteArr[iNoteIndex+1]
+		elseif iSCent <= 50 then
+		Sout sprintf "%s+",SNoteArr[iNoteIndex]
 			indx = 0			
 			while indx < lenarray(iAraziArr) do
 				if iNoteIndxInt = iAraziArr[indx] then
-				Sout sprintf "%d%s-",iOctave,SNoteArr[iNoteIndex+1]
+				Sout sprintf "%s-",SNoteArr[iNoteIndex+1]
 				endif
 			indx += 1
 			od
@@ -45,7 +42,7 @@ endop
 
 instr 1
 
-iNum = 70.56
+iNum = 77.56
 S1 MtoName iNum
 S2 mton iNum
 
