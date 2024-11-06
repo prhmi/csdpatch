@@ -43,7 +43,7 @@ endop
 instr 1
 
 iNum = 77.56
-S1 MtoName iNum
+S1 MtoNameInt iNum
 S2 mton iNum
 
 itest = int(-4.5)
@@ -61,6 +61,8 @@ i1 + .1 25.6
 ;i1 + 99 38
 </CsScore>
 </CsoundSynthesizer>
+
+
 
 
 
