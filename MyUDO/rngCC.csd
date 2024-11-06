@@ -13,7 +13,7 @@ nchnls = 2
 opcode ztoi, i, iii
 iValue, iMin, iMax xin
 iRange = iMax-iMin
-iOut = (iValue-iRange)/iRange
+iOut = abs((iValue-iMin)/iRange) % 1.00001
 xout iOut
 endop 
 
@@ -21,7 +21,7 @@ endop
 opcode ztok, k, kii
 kValue, iMin, iMax xin
 iRange = iMax-iMin
-kOut = (kValue-iRange)/iRange
+kOut = abs((kValue-iMin)/iRange) % 1.00001
 xout kOut
 endop 
 
@@ -70,9 +70,9 @@ endin
 instr 3
 ;;slider one range is iMin to iMax
 ;;slider two range is 0 to 1
-iCC = 7
-iMin = 4
-iMax = 8
+iCC =  42
+iMin = 20
+iMax = 40
 iOut ztoi iCC, iMin, iMax
 print iOut
 endin
@@ -81,18 +81,20 @@ endin
 instr 4
 ;;slider one range is iMin to iMax
 ;;slider two range is 0 to 1
-kCC = 7
-iMin = 4
-iMax = 8
+kCC = 10
+iMin = 2
+iMax = 10
 kOut ztok kCC, iMin, iMax
 printk2 kOut
 endin
 
 </CsInstruments>
 <CsScore>
-i4 0 1
+i3 0 1
 </CsScore>
 </CsoundSynthesizer>
+
+
 
 
 <bsbPanel>
