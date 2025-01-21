@@ -36,42 +36,54 @@ iActive active "upDown"
 iPrgNum = p4
 if iPrgNum == 1 then
 giUpDown1 -= 1
+print giUpDown1
 elseif iPrgNum == 5 then
 giUpDown1 += 1
+print giUpDown1
 endif
 if iActive >= 2 && (iPrgNum == 1 || iPrgNum == 5 ) then
 giUpDown1 = 0
+print giUpDown1
 endif
 
 
 if iPrgNum == 2 then
 giUpDown2 -= 1
+print giUpDown2
 elseif iPrgNum == 6 then
 giUpDown2 += 1
+print giUpDown2
 endif
 if iActive >= 2 && (iPrgNum == 2 || iPrgNum == 6 ) then
 giUpDown2 = 0
+print giUpDown2
 endif
 
 if iPrgNum == 3 then
 giUpDown3 -= 1
+print giUpDown3
 elseif iPrgNum == 7 then
 giUpDown3 += 1
+print giUpDown3
 endif
 if iActive >= 2 && (iPrgNum == 3 || iPrgNum == 7 ) then
 giUpDown3 = 0
+print giUpDown3
 endif
 
 if iPrgNum == 4 then
 giUpDown4 -= 1
+print giUpDown4
 elseif iPrgNum == 8 then
 giUpDown4 += 1
+print giUpDown4
 endif
 if iActive >= 2 && (iPrgNum == 4 || iPrgNum == 8 ) then
 giUpDown4 = 0
+print giUpDown4
 endif
 
-print giUpDown1,giUpDown2,giUpDown3,giUpDown4
+;print giUpDown1,giUpDown2,giUpDown3,giUpDown4
 endin
 
 </CsInstruments>
@@ -79,6 +91,8 @@ endin
 i 1 0 9999 
  </CsScore>
 </CsoundSynthesizer>
+
+
 
 
 
