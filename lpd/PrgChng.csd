@@ -126,6 +126,8 @@ i 1 0 9999
 
 
 
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
