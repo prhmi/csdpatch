@@ -1,38 +1,62 @@
 ;v4
 <Cabbage>
 form caption("CoreLa")    size(1080, 615)   guiMode("queue") colour(10,45,35) pluginId("crla") ; style("legacy")
-image bounds(372, 36, 20, 20) channel("metronom") colour(10, 10, 10, 255)
-texteditor bounds(46, 64, 378, 37) channel("seqarr") colour:0(71, 137, 100, 255)fontSize(27) text("1 1 2 1 2 4") colour(71, 137, 100, 255)
+image bounds(372, 36, 20, 20) channel("metronom") colour(10, 60, 10)
+texteditor bounds(46, 64, 378, 37) channel("seqarr") fontSize(27) text("1 1 2 1 2 4") colour(70, 130, 100)
 combobox bounds(502, 64, 77, 37)   channel("BNote")   text("Note", "G", "A-", "Bb", "C", "E-", "D-", "F", "A", "B", "Gb", "D", "E")  colour(49, 79, 62, 255)  value(2)
 combobox bounds(470, 22, 109, 39)   channel("scale")   text("Scale", "pythagorean", "shur", "abuata", "bayat tork", "afshari", "dashti", "nava", "segah", "chargah", "homayun", "bayat esf") colour(49, 79, 62, 255) value(2) 
-combobox bounds(502, 106, 77, 31)   channel("instrmod")   text("sine", "mySet1", "mySet2", "mySet3", "mySet4", "mySet5", "mySet6")  colour(49, 79, 62, 255)  value(6)
+combobox bounds(502, 106, 77, 31)   channel("instrmod")   text("sine", "vco", "tri", "saw", "square")  colour(49, 79, 62, 255)  value(4)
+combobox bounds(708, 356, 83, 34) channel("delayt") text("sec", "sync")  colour(49, 79, 62, 255) value(2)
+label bounds(10, 64, 37, 15) channel("label1") text("seq")
+hmeter bounds(694, 290, 357, 20) channel("timeline")  outlineColour(0, 0, 0, 255), overlayColour(59, 63, 59, 255)   value(1) corners(5)   outlineThickness(2) meterColour:0(139, 200, 145, 255)
+combobox bounds(428, 64, 71, 37) channel("seqmod") colour(49, 79, 62, 255) text("seq", "tala", "Brk", "aRnd", "iRnd", "RndL"), value(1)
+combobox bounds(428, 104, 71, 37) channel("notemod") colour(49, 79, 62, 255) text("note", "tala", "aRnd", "iRnd"), value(1)
+checkbox bounds(166, 32, 25, 25) channel("hold") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255), 
+combobox bounds(298, 20, 71, 37) channel("wgseq") colour(49, 79, 62, 255) text("none", "Bow", "Flute", "both"), value(1)
+checkbox bounds(584, 32, 25, 25) channel("ratiornd") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255), 
+checkbox bounds(256, 32, 25, 25) channel("drump") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255) value(1)
+checkbox bounds(660, 338, 20, 20) channel("tbrs") colour:0(99, 94, 94, 255) colour:1(211, 214, 40, 255) value(1)
+checkbox bounds(1024, 316, 25, 25) channel("rvrs") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255), value(0)
+checkbox bounds(696, 316, 25, 25) channel("strt") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255), value(1)
+checkbox bounds(832, 380, 20, 20) channel("rcrd") colour:0(99, 94, 94, 255) colour:1(250, 100, 100), value(0)
+nslider bounds(502, 144, 88, 39) channel("swift") range(0, 0.5, 0, 1, 0.01) colour(49, 79, 62, 255) fontColour(176, 231, 182, 255) text("swift")
+label bounds(196, 34, 47, 19) channel("label2") text("hold")
+label bounds(612, 38, 37, 15) channel("labelr2") text("ratio")
+label bounds(724, 320, 62, 15) channel("labelsm1") text("startRnd")
+label bounds(982, 318, 37, 15) channel("labelsm2") text("rvrs")
+nslider bounds(45, 11, 62, 49) channel("bpm") range(10, 210, 90, 1, 1) colour(71, 137, 100, 255) fontColour(0, 0, 0, 255)
+nslider bounds(128, 30, 31, 30) channel("dv") range(1, 16, 4, 1, 1) colour(71, 137, 100, 255) fontColour(0, 0, 0, 255)
+label bounds(112, 42, 10, 15) channel("label3") text("x")
+label bounds(396, 24, 70, 33) channel("noteshow")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255), text(" ")
+label bounds(44, 144, 454, 31) channel("narrshow")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255)text("") align("left")  
+label bounds(46, 106, 377, 22) channel("sarrshow")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255) align("left")  text("") 
+label bounds(830, 10, 70, 33) channel("data")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255) text("0")
+label bounds(779, 12, 49, 31) channel("chndata")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255) text("0")
+combobox bounds(918, 344, 70, 35), populate("*.snaps"), channelType("string") automatable(0) channel("combo99") value("0")colour(68, 103, 63, 255) text("t2", "t1")
+filebutton bounds(856, 354, 60, 25), text("Save", "Save"), populate("*.snaps", "test"), mode("named preset") channel("filebutton8") colour:0(68, 103, 63, 255)
+filebutton bounds(990, 352, 60, 25), text("Remove", "Remove"), populate("*.snaps", "test"), mode("remove preset") channel("filebutton101") colour:0(68, 103, 63, 255)
+label bounds(70, 370, 90, 40) channel("data1") fontColour(245, 220, 245, 255) colour(53, 67, 60, 255) text("")
+label bounds(164, 370, 90, 40) channel("data2") fontColour(245, 220, 245, 255) colour(53, 67, 60, 255)  text("")
+label bounds(258, 370, 90, 40) channel("data3") fontColour(245, 220, 245, 255) colour(53, 67, 60, 255)   text("")
+label bounds(352, 370, 90, 40) channel("data4") fontColour(245, 220, 245, 255) colour(53, 67, 60, 255)  text("")
+nslider bounds(792, 412, 40, 35) channel("outn1") range(-90, 50, -45, 1, 1) colour(49, 79, 62, 255)
+nslider bounds(832, 412, 40, 35) channel("outn2") range(-90, 50, -45, 1, 1) colour(49, 79, 62, 255)
+nslider bounds(872, 412, 40, 35) channel("outn3") range(-90, 50, -60, 1, 1) colour(49, 79, 62, 255)
+nslider bounds(912, 412, 40, 35) channel("outn4") range(-90, 50, -60, 1, 1) colour(49, 79, 62, 255)
+label bounds(790, 46, 239, 66) channel("sec") text("00 : 08") fontColour(135, 226, 127, 255)
+button bounds(910, 14, 116, 27) channel("start") text("S  T  A  R  T", "S  T  O  P") colour:0(53, 67, 60, 255) colour:1(96, 69, 69, 255) value(1)
+combobox bounds(712, 402, 66, 31)  channel("tune")  text("440", "432")   value(2)  colour(49, 79, 62, 255)
 vslider bounds(786, 448, 50, 150) channel("out1") range(0, 80, 20, 1, 1) trackerColour(71, 137, 100, 255) 
 vslider bounds(828, 448, 50, 150) channel("out2") range(0, 80, 20, 1, 1) trackerColour(71, 137, 100, 255) 
 vslider bounds(868, 448, 50, 150) channel("out3") range(0, 80, 0, 1, 1) trackerColour(71, 137, 100, 255) 
 vslider bounds(910, 448, 50, 150) channel("out4") range(0, 80, 0, 1, 1) trackerColour(71, 137, 100, 255) 
 nslider bounds(960, 380, 93, 44) channel("gain") range(-90, 50, 0, 1, 1) colour(49, 79, 62, 255) text("Master Gain (dB)")
-hslider bounds(46, 186, 316, 40) channel("dur") range(0.1, 10, 3, 1, 0.1) trackerColour(71, 137, 100, 255) text("dur")
-hslider bounds(694, 194, 222, 40) channel("vcoFilt") range(400, 1500, 500, 1, 1) trackerColour(71, 137, 100, 255) text("Filt")
-hslider bounds(694, 238, 222, 40) channel("resspd") range(300, 900, 300, 1, 1) trackerColour(71, 137, 100, 255) text("resSpd")
-nslider bounds(984, 234, 65, 35) channel("vcoamps") range(1, 50, 10, 1, 1) colour(49, 79, 62, 255)
-hslider bounds(46, 226, 316, 40) channel("att") range(0.003, 0.3, 0.003, 1, 0.0001) trackerColour(71, 137, 100, 255) text("Att")
-label bounds(440, 570, 59, 18) channel("label22") text("CC-13") fontColour(224, 219, 219, 255)
-nslider bounds(430, 184, 65, 35) channel("durs") range(0.1, 10, 3, 1, 0.1) colour(49, 79, 62, 255)
-nslider bounds(984, 192, 65, 35) channel("vcoFilts") range(200, 3000, 892, 1, 1) colour(49, 79, 62, 255)
-nslider bounds(430, 224, 65, 35) channel("atts") range(0.0001, 1, 0.01, 1, 0.0001) colour(49, 79, 62, 255)
 nslider bounds(584, 64, 65, 35) channel("ratiomin") range(0.4, 2, 0.43, 1, 0.01) colour(49, 79, 62, 255) text("ratio min")
 nslider bounds(584, 100, 65, 35) channel("ratiomax") range(1, 2, 1.2, 1, 0.01) colour(49, 79, 62, 255) text("ratio max")
-label bounds(592, 306, 59, 18) channel("label7") text("CC-13") fontColour(224, 219, 219, 255)
-hslider bounds(46, 438, 391, 40) channel("pos") range(0, 1, 0.1, 1, 0.01) trackerColour(71, 137, 100, 255) text("pos")
-hslider bounds(18, 478, 420, 40) channel("spdmin") range(0, 1, 0.4, 1, 0.01) trackerColour(71, 137, 100, 255) text("spd min")
-hslider bounds(14, 518, 424, 40) channel("spdmax") range(0, 1, 0.2, 1, 0.01) trackerColour(71, 137, 100, 255) text("spd max")
-hslider bounds(48, 560, 392, 40) channel("wgfilt") range(0, 1, 0.7, 1, 0.001) trackerColour(71, 137, 100, 255) text("Filt")
-vslider bounds(596, 142, 50, 157) channel("ampseq") range(0, 20, 10, 1, 1) trackerColour(71, 137, 100, 255) text("sAmp")
-nslider bounds(504, 518, 65, 35) channel("spdmaxs") range(0, 12, 5, 1, 0.01) colour(49, 79, 62, 255)
-nslider bounds(504, 478, 65, 35) channel("spdmins") range(0, 12, 0, 1, 0.01) colour(49, 79, 62, 255)
-nslider bounds(504, 438, 65, 35) channel("poss") range(0, 5, 0.03, 1, 0.001) colour(49, 79, 62, 255)
-nslider bounds(504, 562, 65, 35) channel("wgfilts") range(500, 15000, 700, 1, 1) colour(49, 79, 62, 255)
-combobox bounds(264, 286, 83, 34) channel("delayt") text("sec", "sync")  colour(49, 79, 62, 255) value(2)
+vslider bounds(496, 216, 50, 157) channel("amp1") range(0, 20, 10, 1, 1) trackerColour(71, 137, 100, 255) text("sAmp")
+vslider bounds(546, 216, 50, 157) channel("amp2") range(0, 20, 10, 1, 1) trackerColour(71, 137, 100, 255) text("sAmp")
+vslider bounds(598, 216, 50, 157) channel("amp3") range(0, 20, 10, 1, 1) trackerColour(71, 137, 100, 255) text("sAmp")
+vslider bounds(624, 438, 50, 157) channel("amp4") range(0, 20, 10, 1, 1) trackerColour(71, 137, 100, 255) text("sAmp")
 vmeter bounds(964, 448, 15, 150) channel("meter1")  outlineColour(0, 0, 0, 255), overlayColour(0, 0, 0, 255)    outlineThickness(0) meterColour:0(250, 10, 0, 255) meterColour:1(10, 120, 40, 255) meterColour:2(10, 70, 200, 255)
 vmeter bounds(988, 448, 15, 150) channel("meter2")  outlineColour(0, 0, 0, 255), overlayColour(0, 0, 0, 255)    outlineThickness(0) meterColour:0(250, 10, 0, 255) meterColour:1(10, 120, 40, 255) meterColour:2(10, 70, 200, 255)
 vmeter bounds(1012, 448, 15, 150) channel("meter3")  outlineColour(0, 0, 0, 255), overlayColour(0, 0, 0, 255)    outlineThickness(0) meterColour:0(250, 10, 0, 255) meterColour:1(10, 120, 40, 255) meterColour:2(10, 70, 200, 255)
@@ -41,73 +65,7 @@ image bounds(964, 434, 15, 15) channel("clip1") colour(0, 0, 0, 255)
 image bounds(988, 434, 15, 15) channel("clip2") colour(0, 0, 0, 255)
 image bounds(1012, 434, 15, 15) channel("clip3") colour(0, 0, 0, 255)
 image bounds(1036, 434, 15, 15) channel("clip4") colour(0, 0, 0, 255)
-label bounds(10, 64, 37, 15) channel("label1") text("seq")
-hmeter bounds(694, 290, 357, 20) channel("timeline")  outlineColour(0, 0, 0, 255), overlayColour(59, 63, 59, 255)   value(1) corners(5)   outlineThickness(2) meterColour:0(139, 200, 145, 255)
-combobox bounds(428, 64, 71, 37) channel("seqmod") colour(49, 79, 62, 255) text("seq", "tala", "Brk", "aRnd", "iRnd", "RndL"), value(1)
-combobox bounds(428, 104, 71, 37) channel("notemod") colour(49, 79, 62, 255) text("note", "tala", "aRnd", "iRnd"), value(1)
-checkbox bounds(166, 32, 25, 25) channel("hold") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255), 
-combobox bounds(298, 20, 71, 37) channel("wgseq") colour(49, 79, 62, 255) text("none", "Bow", "Flute", "both"), value(1)
-checkbox bounds(584, 32, 25, 25) channel("ratiornd") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255), 
-checkbox bounds(704, 162, 25, 25) channel("vcopad") colour:0(99, 94, 94, 255) colour:1(214, 40, 149, 255), 
-checkbox bounds(704, 132, 25, 25) channel("analogpad") colour:0(99, 94, 94, 255) colour:1(66, 204, 221, 255), 
-checkbox bounds(256, 32, 25, 25) channel("drump") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255) value(1)
-checkbox bounds(672, 248, 20, 20) channel("tbrs") colour:0(99, 94, 94, 255) colour:1(211, 214, 40, 255) value(1)
-checkbox bounds(1024, 316, 25, 25) channel("rvrs") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255), value(0)
-checkbox bounds(696, 316, 25, 25) channel("strt") colour:0(99, 94, 94, 255) colour:1(71, 137, 100, 255), value(1)
-checkbox bounds(832, 380, 20, 20) channel("rcrd") colour:0(99, 94, 94, 255) colour:1(250, 100, 100), value(0)
 
-label bounds(732, 164, 40, 18) channel("labelpad") text("vco")
-label bounds(732, 136, 46, 13) channel("labelpad2") text("analog")
-nslider bounds(784, 134, 63, 53) channel("padcent") range(0, 500, 0, 1, 1) colour(49, 79, 62, 255) fontColour(176, 231, 182, 255) text("Pad Cent")
-nslider bounds(984, 134, 63, 53) channel("ambamp") range(-20, 10, -3, 1, 1) colour(49, 79, 62, 255) fontColour(176, 231, 182, 255) text("Pad Amp")
-nslider bounds(920, 134, 63, 53) channel("analogamp") range(-20, 10, -3, 1, 1) colour(49, 79, 62, 255) fontColour(176, 231, 182, 255) text("anlg Amp")
-nslider bounds(514, 192, 63, 53) channel("drumamp") range(-20, 10, 0, 1, 1) colour(49, 79, 62, 255) fontColour(176, 231, 182, 255) text("DrumAmp")
-nslider bounds(502, 144, 88, 39) channel("swift") range(0, 0.5, 0, 1, 0.01) colour(49, 79, 62, 255) fontColour(176, 231, 182, 255) text("swift")
-label bounds(852, 170, 59, 18) channel("label25") text("CC-00") fontColour(224, 219, 219, 255)
-nslider bounds(264, 322, 83, 39) channel("seqfilt") range(350, 15000, 800, 1, 1) colour(49, 79, 62, 255) fontColour(176, 231, 182, 255) text("Filt")
-label bounds(196, 34, 47, 19) channel("label2") text("hold")
-label bounds(612, 38, 37, 15) channel("labelr2") text("ratio")
-label bounds(724, 320, 62, 15) channel("labelsm1") text("startRnd")
-label bounds(982, 318, 37, 15) channel("labelsm2") text("rvrs")
-nslider bounds(45, 11, 62, 49) channel("bpm") range(10, 210, 90, 1, 1) colour(71, 137, 100, 255) fontColour(0, 0, 0, 255)
-nslider bounds(128, 30, 31, 30) channel("dv") range(1, 16, 4, 1, 1) colour(71, 137, 100, 255) fontColour(0, 0, 0, 255)
-label bounds(112, 42, 10, 15) channel("label3") text("x")
-label bounds(922, 202, 59, 18) channel("labelv2") text("CC-03") fontColour(224, 219, 219, 255)
-label bounds(924, 246, 59, 18) channel("labelv3") text("CC-03") fontColour(224, 219, 219, 255)
-label bounds(366, 198, 59, 18) channel("label5") text("CC-03") fontColour(224, 219, 219, 255)
-label bounds(366, 236, 59, 18) channel("label80") text("CC-11") fontColour(224, 219, 219, 255)
-label bounds(396, 24, 70, 33) channel("noteshow")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255), text(" ")
-label bounds(44, 144, 454, 31) channel("narrshow")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255) align("left")  text("")
-label bounds(46, 106, 377, 22) channel("sarrshow")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255) align("left") text("")  
-label bounds(830, 10, 70, 33) channel("data")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255) text("0")
-label bounds(779, 12, 49, 31) channel("chndata")  fontColour(135, 226, 127, 255) colour(53, 67, 60, 255) text("0")
-label bounds(442, 450, 59, 18) channel("label9") text("CC-11") fontColour(224, 219, 219, 255)
-label bounds(440, 486, 59, 18) channel("label12") text("CC-07") fontColour(224, 219, 219, 255)
-label bounds(576, 474, 59, 18) channel("label17") text("CC-00") fontColour(224, 219, 219, 255)
-label bounds(440, 528, 59, 18) channel("label13") text("CC-15") fontColour(224, 219, 219, 255)
-combobox bounds(918, 344, 70, 35), populate("*.snaps"), channelType("string") automatable(0) channel("combo99") value("0")colour(68, 103, 63, 255) text("t2", "t1")
-filebutton bounds(856, 354, 60, 25), text("Save", "Save"), populate("*.snaps", "test"), mode("named preset") channel("filebutton8") colour:0(68, 103, 63, 255)
-filebutton bounds(990, 352, 60, 25), text("Remove", "Remove"), populate("*.snaps", "test"), mode("remove preset") channel("filebutton101") colour:0(68, 103, 63, 255)
-nslider bounds(574, 418, 64, 52) channel("cent") range(0, 500, 0, 1, 1) colour(49, 79, 62, 255) fontColour(176, 231, 182, 255) text("Vib Cent")
-vslider bounds(644, 398, 50, 196) channel("ampwg") range(0, 20, 10, 1, 1) trackerColour(71, 137, 100, 255) text("wgAmp")
-nslider bounds(792, 412, 40, 35) channel("outn1") range(-90, 50, -45, 1, 1) colour(49, 79, 62, 255)
-nslider bounds(832, 412, 40, 35) channel("outn2") range(-90, 50, -45, 1, 1) colour(49, 79, 62, 255)
-nslider bounds(872, 412, 40, 35) channel("outn3") range(-90, 50, -60, 1, 1) colour(49, 79, 62, 255)
-nslider bounds(912, 412, 40, 35) channel("outn4") range(-90, 50, -60, 1, 1) colour(49, 79, 62, 255)
-label bounds(790, 46, 239, 66) channel("sec") text("00 : 08") fontColour(135, 226, 127, 255)
-button bounds(910, 14, 116, 27) channel("start") text("S  T  A  R  T", "S  T  O  P") colour:0(53, 67, 60, 255) colour:1(96, 69, 69, 255) value(1)
-combobox bounds(704, 78, 66, 31)  channel("tune")  text("440", "432")   value(2)  colour(49, 79, 62, 255)
-
-image bounds(54, 400, 30, 30) channel("bowlight") corners(5) colour(53, 67, 60, 255)
-image bounds(138, 400, 30, 30) channel("flutelight") corners(5) colour(53, 67, 60, 255)
-label bounds(174, 400, 30, 30) channel("activeflute") corners(5) fontColour(135, 226, 127, 255) colour(53, 67, 60, 255) text("")
-label bounds(88, 400, 30, 30) channel("activestring") corners(5) fontColour(135, 226, 127, 255) colour(53, 67, 60, 255) text("")
-rslider bounds(352, 284, 70, 70) channel("delaytseq") range(0.1, 2, 1.5, 1, 0.001)trackerColour(96, 173, 99, 255) colour(160, 192, 167, 255) outlineColour(0, 0, 0, 255) markerColour(0, 0, 0, 255) text("delayT")
-rslider bounds(422, 284, 70, 70) channel("dfbseq") range(0, 1, 0.2, 1, 0.01)trackerColour(96, 173, 99, 255) colour(160, 192, 167, 255) outlineColour(0, 0, 0, 255) markerColour(0, 0, 0, 255) text("fb")
-rslider bounds(492, 284, 70, 70) channel("dmixseq") range(0, 1, 0.3, 1, 0.01) trackerColour(96, 173, 99, 255) colour(160, 192, 167, 255) outlineColour(0, 0, 0, 255) markerColour(0, 0, 0, 255) text("mix")
-rslider bounds(120, 284, 70, 70) channel("rroomeseq") range(0.1, 0.9, 0.8, 1, 0.01) trackerColour(96, 173, 99, 255) colour(160, 192, 167, 255) outlineColour(0, 0, 0, 255) markerColour(0, 0, 0, 255) text("room")
-rslider bounds(50, 284, 70, 70) channel("rsizeseq") range(0.1, 5, 0.5, 1, 0.1) trackerColour(96, 173, 99, 255) colour(160, 192, 167, 255) outlineColour(0, 0, 0, 255) markerColour(0, 0, 0, 255) text("size")
-rslider bounds(190, 284, 70, 70) channel("rmixseq") range(0, 1, 0.3, 1, 0.01) trackerColour(96, 173, 99, 255) colour(160, 192, 167, 255) outlineColour(0, 0, 0, 255) markerColour(0, 0, 0, 255) text("mix")
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
@@ -124,32 +82,6 @@ nchnls = 2
 seed 0
 
  
-opcode CsdMeter, 0, SakS
- SClip, aSig, kTrig, Smeter	xin
- iDbRange = 60
- iHoldTim = 0.5
- kOn init 0
- kTim init 0
- kStart init 0
- kEnd init 0
- kMax max_k aSig, kTrig, 1
- cabbageSetValue Smeter, kMax, metro(20)
- if kTrig == 1 then
- kMeter = (iDbRange + dbfsamp(kMax)) / iDbRange
-  if kOn == 0 && kMax > 1 then
-   kTim = 0
-   kEnd = iHoldTim
-   cabbageSet 1,SClip,"colour(250,0, 0)"
-   kOn = 1
-  endif
-  if kOn == 1 && kTim > kEnd then
-   cabbageSet 1,SClip,"colour(0,0,0)"
-   kOn =	0
-  endif
- endif
- kTim += ksmps/sr
-endop
-
 opcode countValue, i,i[]
 iArrIn[] xin
 iLen lenarray iArrIn
@@ -658,6 +590,13 @@ kOut = (kValue*iDiff)+iMin
 xout kOut
 endop 
 
+opcode rateCCi, i, iii
+iValue, iMin, iMax xin
+iDiff = iMax-iMin
+iOut = (iValue*iDiff)+iMin
+xout iOut
+endop 
+
 
 opcode StrSprd, S[],S
 SIn xin
@@ -709,18 +648,27 @@ opcode seqVis, 0, S[]
     od
 endop
 
-opcode PchSh,a,ak
-aIn, kPitch xin
-iFFTsize = 1024
- ioverlap = iFFTsize/8
- ;;Pitch
- fSound pvsanal aIn, iFFTsize, ioverlap, iFFTsize, 1
- fTranspose pvscale fSound, cent(kPitch)
- aOut pvsynth fTranspose
-xout aOut
+opcode rngMk, k, kkk 
+ kMidiIn, kMin, kMax xin 
+ kMidi = kMidiIn
+ 		kAdd = (kMidiIn < kMin) ? (kMax-kMin) : -(kMax-kMin)
+ loop:
+ kMidi += kAdd
+  		if  kMidiIn < kMin && kMidi < kMin goto loop
+ 		if  kMidiIn > kMax && kMidi > kMax goto loop
+xout kMidi
 endop
 
-
+opcode rngMi, i, iii 
+ iMidiIn, iMin, iMax xin 
+ iMidi = iMidiIn
+ 		iAdd = (iMidiIn < iMin) ? (iMax-iMin) : -(iMax-iMin)
+ loop:
+ iMidi += iAdd
+  		if  iMidiIn < iMin && iMidi < iMin goto loop
+ 		if  iMidiIn > iMax && iMidi > iMax goto loop
+xout iMidi
+endop
 
 opcode rmvtxt, S,S
 Sin xin
@@ -755,30 +703,22 @@ xout Sout
 endop
 
 giSine		ftgen       0,0,2^10,10,    1
-giMyset1	ftgen       0,0,2^10,10,    1,  0.2, 0.1
-giMyset2	ftgen       0,0,2^10,10,    1,  0,   0.2,   0,   0.1
-giMyset3    ftgen       0,0,2^10,9,     1,  3,   0,3,   1,   0,   9,      0.333,  180
-giMyset4    ftgen		0,0,2^10,10,    1,  0.7, 0,     0.3, 0,   0,      0.3
-giMyset5    ftgen		0,0,2^10,10,    1,  1/8, 1/5,   0,   0,   1/4,    1/2,    1/8
-giMyset6	ftgen	    0,0,2^10,10,    1,  0.1, 0.5,   0.8, 0.1, 0.5,0.8
+giMyset	    ftgen       0,0,2^10,10,    1,  0.2, 0.1
+ift         vco2init   -1, 10000, 0, 0, 0, giMyset
 
- massign 1,1
- massign 3,24
- massign 5,25
- massign 7,26
- massign 16,29
- 
- massign 2,0
- massign 4,0
- massign 6,0
- massign 8,0
- massign 9,0
- massign 10,0
- massign 11,0
- massign 12,0
- massign 13,0
- massign 14,0
- massign 15,0
+
+
+iGetMidi  nstrnum "GetMidi"
+iBow      nstrnum "Bow"
+iFlute    nstrnum "Flute"
+iSample   nstrnum "sample"
+
+ massign 0, 0
+ massign 1,iGetMidi
+ massign 3,iBow
+ massign 5,iFlute
+ massign 7,iSample
+
 
 iLenSeq          init 32
 giNoteArr[]      init iLenSeq
@@ -786,21 +726,18 @@ giNoteCopyArr[]  init iLenSeq
 giNoteCopyArrZ[] init iLenSeq
 giEmpty[]        init iLenSeq
 giIndxNote       init 0
-
-  gkSeqBow init 0
-  gkSeqFlute init 0 
+giTune init 0
 
 instr GetMidi ;1
  iActive active "GetMidi"
- iHold cabbageGetValue "hold"
- kHold cabbageGet "hold"
+ iHold cabbageGetValue "mpad8"
+ kHold cabbageGet "mpad8"
  kRel release
  iMidi notnum
   if iActive == 1 then
   giNoteArr[] = giEmpty
   giIndxNote = 0
   endif
- 
  giNoteArr[giIndxNote] = iMidi
  giIndxNote = (giIndxNote+1) % lenarray(giNoteArr)
  gkMaxIndx = giIndxNote
@@ -810,12 +747,9 @@ instr GetMidi ;1
  SnArrShow ArrToStrgN iNoteArrShow
      SnoteShow     sprintf "text(%s)", SnArrShow
     cabbageSet "narrshow",SnoteShow
-; puts SnArrShow,1
-; printarray giNoteCopyArr,"%d","Notes:"
  if kRel == 1 && kHold == 0  then
  schedulek "rmvMidi", 0, 0.1, iMidi
- endif
- 
+ endif 
 endin
 instr rmvMidi ;2
  iRead = 0
@@ -825,51 +759,52 @@ instr rmvMidi ;2
         endif
     iRead += 1
     od
- giNoteArr skpZ giNoteArr
-  iNoteArrShow[] rmvZ giNoteArr
-   giNoteCopyArr[] = iNoteArrShow
- SnArrShow ArrToStrgN iNoteArrShow
-      SnoteShow     sprintf "text(%s)", SnArrShow
+ giNoteArr      skpZ giNoteArr
+ iNoteArrShow[] rmvZ giNoteArr
+ giNoteCopyArr[] = iNoteArrShow
+ SnArrShow      ArrToStrgN iNoteArrShow
+    SnoteShow   sprintf "text(%s)", SnArrShow
     cabbageSet "narrshow",SnoteShow
-; puts SnArrShow,1 
-; printarray giNoteArr,"%d","Notes(R):"
  giIndxNote -= 1
  gkMaxIndx = giIndxNote
 endin
 
 instr seq
-kSeqMod cabbageGet "seqmod"
-kNoteMod cabbageGet "notemod"
-kRatio cabbageGet "ratiornd"
-kActiveMidi active "GetMidi"
-kPedal ctrl7 15,64,0,1
-SInn = p4
-SIn rmvtxt SInn
-    puts SIn,1
+ kSeqMod    cabbageGet "seqmod"
+ kNoteMod   cabbageGet "notemod"
+ kSwift     cabbageGet "swift"
+ kBPM       cabbageGet "bpm"
+ kDv        cabbageGet "dv"
+ kAmpdBIn   cabbageGet "ampseq"
+ kPad       cabbageGet "pad"
+ kDrumPlay  cabbageGet "drump"
+ kwgSeq     cabbageGet "wgseq"
+ kDurIn     cabbageGet "slider3"
+ kFiltIn    cabbageGet "slider4"
+ kFilterBs  cabbageGet "slider5"
+ kActiveMidi active "GetMidi"
+ kPedal cabbageGet "mpad8"
+ SInn = p4
+ SIn rmvtxt SInn
     SseqShow sprintf "text(%s)", SIn
     cabbageSet "seqarr",SseqShow  
     iActive active "seq"
-    print iActive
-Sarr[] StrSprd SIn
-seqVis Sarr
-iSeqArr[] StrToArr SIn
-giSeqArr[] = iSeqArr
-kLenSeq lenarray giSeqArr
-kLenNote lenarray giNoteArr
-kSwift cabbageGet "swift"
-kNoteIndx init 0
-kSeqIndx init 0
-kTime init 1
-kBPM cabbageGet "bpm"
-kDv cabbageGet "dv"
-kDurIn cabbageGet "dur"
-kAmpdBIn cabbageGet "ampseq"
-kPad cabbageGet "pad"
-kRatioMin cabbageGet "ratiomin"
-kRatioMax cabbageGet "ratiomax"
-kDrumPlay cabbageGet "drump"
-kPedal ctrl7 15,64,0,1
-kAmpdB = kAmpdBIn-25
+ Sarr[] StrSprd SIn
+ seqVis Sarr
+ iSeqArr[] StrToArr SIn
+ giSeqArr[] = iSeqArr
+ kLenSeq  lenarray giSeqArr
+ kLenNote lenarray giNoteArr
+ kNoteIndx  init 0
+ kSeqIndx   init 0
+ kTime      init 1
+
+kAmpdB rateCCk kAmpdBIn, -6, 12
+kDur rateCCk kDurIn, 0.05, 4
+kFilter rateCCk kFiltIn, 200, 8000
+kFilterBs rateCCk kFilterBs, 0, 800
+
+
 kTempo = (kBPM/60)*kDv
     if metro(1/kTime) == 1 then
     kSeq = giSeqArr[kSeqIndx]
@@ -878,14 +813,7 @@ kTempo = (kBPM/60)*kDv
         if kTime <= 0.001 then
         kTime = 0.001
         endif
-        if kRatio == 1 then
-        kRatioLen = int(random:k(2, 7))
-        kRndFrqRatio random kRatioMin, kRatioMax
-        elseif kRatio == 0 then
-        kRatioLen = 1
-        kRndFrqRatio = 1
-        endif
-    kDur = kTime*kDurIn
+    kDur = kTime*kDur
        if kSeqIndx == kLenSeq-1 && kSeqMod == 6 then
         kDur = kTime*0.5
         endif
@@ -896,21 +824,22 @@ kTempo = (kBPM/60)*kDv
     schedulek "LED",0  ,0.1,1,kSeqIndx
     schedulek "LED",0.1,0.1,2,kSeqIndx
         if kNote != 0 then
-        schedulek "soundPlay", 0, kDur, kNote, kAmpdB, kRndFrqRatio, kRatioLen
-;        schedulek "Bow", 0, kDur, kNote-12
+        schedulek "seqPlay", 0, kDur, kNote, kAmpdB, kFilter
         endif
         if kNote != 0 && kSeq == 4 then
         kRndB = int(random:k(0, 100)) > 50 ? 2 : 4
         kDelayB = kTime/kRndB
            kNoteBass = kNote
-			until kNoteBass < 45 do
+			until kNoteBass < 50 do
   			kNoteBass = kNoteBass-12
   			enduntil
-        schedulek "soundPlay", kDelayB, kDur*0.6, kNoteBass, kAmpdB-3, kRndFrqRatio, kRatioLen
+  kDurBass rateCCk kDurIn, 0.2, 2
+        schedulek "seqSound", kDelayB, kDurBass, mtof:k(kNoteBass), kAmpdB,kFilterBs
             if kSeqMod != 6  && kDrumPlay == 1 then
-            schedulek "DrumSound", (kTime/4)+(kTime/2), 1, 3
+;            schedulek "DrumSound", (kTime/4)+(kTime/2), 1, 3
             endif
         kNoteRep = kNote
+        kDurRep rateCCk kDurIn, 0.01, 0.1
         kRep = int(random:k(2, 8))
 		    until kNoteRep > 80 do
   			kNoteRep = kNoteRep+12
@@ -918,9 +847,9 @@ kTempo = (kBPM/60)*kDv
             kRepIndx = 0
             kDelayR = kTime/kRep
             while kRepIndx < (kRep/2) do
-            schedulek "soundPlay",kDelayR, 0.1, kNoteRep, kAmpdB-7,kRndFrqRatio, kRatioLen
+            schedulek "seqSound",kDelayR, kDurRep, mtof:k(kNoteRep), kAmpdB-7, kFilter
                 if kSeqMod != 6  && kDrumPlay == 1 then
-                schedulek "DrumSound", kDelayR+(kTime), 1, 2
+;                schedulek "DrumSound", kDelayR+(kTime), 1, 2
                 endif
             kDelayR += (kTime/kRep)
             kRepIndx += 1
@@ -939,7 +868,8 @@ kTempo = (kBPM/60)*kDv
         elseif kSeqIndx == 0 && kSeqMod == 6 then
         schedulek "arrLongRnd", 0, 1
         endif
-        if kNoteIndx == 0 && kActiveMidi == 0 && gkMaxIndx >= 2 && kPedal == 1 then 
+
+        if kNoteIndx == 0 && kActiveMidi == 0 && gkMaxIndx >= 2 && kPedal == 127 then 
             if kNoteMod == 1 then
             elseif kNoteMod == 2 then
             schedulek "talaNote", 0, 1
@@ -953,11 +883,6 @@ kTempo = (kBPM/60)*kDv
     if metro(kTempo) == 1 && kSeqMod == 6 && kPedal == 1 && kDrumPlay == 1 then
     schedulek "DrumSound", 0, 1, 1
     endif    
-    kwgSeq cabbageGet "wgseq"
-        if kwgSeq == 1 then
-        gkSeqBow = 0
-        gkSeqFlute = 0
-        endif
     if kNote != 0 && kwgSeq != 1 then
         if kwgSeq == 2 then
         kRndInsIndx = 0
@@ -966,26 +891,12 @@ kTempo = (kBPM/60)*kDv
         elseif kwgSeq == 4 then
         kRndInsIndx = int(random:k(0, 2))
         endif
-        if kRndInsIndx == 0 then
-        gkSeqBow = 1
-        gkSeqFlute = 0
-        kWgMin = 35
-        kWgMax = 60
-        elseif kRndInsIndx == 1 then
-        gkSeqBow = 0
-        gkSeqFlute = 1
-        kWgMin = 45
-        kWgMax = 60
-        endif
-        SwgArr[] fillarray "Bow", "Flute"
-        SwgIns =  SwgArr[kRndInsIndx]
+        iBowInstr   nstrnum "Bow"
+        iFluteInstr nstrnum "Flute"
+        iwgArr[] fillarray iBowInstr, iFluteInstr
+        kwgIns =  iwgArr[kRndInsIndx]
         kNotewg = kNote
-            until kNotewg < kWgMin do
-  	        kNotewg = kNotewg-12
-  	        enduntil
-  	        until kNotewg > kWgMax do
-  	        kNotewg = kNotewg+12
-  	        enduntil
+        kNotewgOut rngMk kNotewg, 45, 60
         kwgTime init 1
             if metro(kTempo) == 1 then
             kwgSeqOnOff = int(random:k(0,100)) < 80 ? 0 : 1
@@ -993,7 +904,7 @@ kTempo = (kBPM/60)*kDv
         if metro(kwgTime) == 1 && kwgSeqOnOff == 1 then
         kwgTime random 2, 7
         kDurwg random 0.5, 1
-        schedulek SwgIns, 0,kDurwg, kNotewg
+        schedulek kwgIns+0.5, 0,kDurwg, kNotewgOut
         endif
     endif
 endin
@@ -1068,7 +979,7 @@ if p4 == 1 then
 Scolor = "colour(10, 250, 10)"
 ScolorFont = "fontColour(100,200,100)"
 elseif p4 == 2 then
-Scolor = "colour(10, 10, 10)"
+Scolor = "colour(10, 70, 10)"
 ScolorFont = "fontColour(100,100,100)"
 endif
 cabbageSet 1,"metronom",Scolor
@@ -1111,77 +1022,76 @@ instr Reset
 endin
 
 
-instr soundPlay
-iMidi = p4
-iBaseNoteIn cabbageGetValue "BNote"
-iScale      cabbageGetValue "scale"
-
-iBaseMidi,iQ noteBase iBaseNoteIn
-iMidiOut noteScale iMidi,iBaseMidi,iScale, iQ
-Snote MtoNameInt iMidiOut
-if changed(Snote) == 1 then
+instr seqPlay
+ iMidi = p4
+ iBaseNoteIn    cabbageGetValue "BNote"
+ iScale         cabbageGetValue "scale"
+ iRatioOnOff    cabbageGetValue "ratiornd"
+ iRatioMin  cabbageGetValue "ratiomin"
+ iRatioMax  cabbageGetValue "ratiomax"
+ iFilter = p6
+ iBaseMidi,iQ   noteBase    iBaseNoteIn
+ iMidiOut       noteScale   iMidi,iBaseMidi,iScale, iQ
+ Snote          MtoNameInt  iMidiOut
+    if changed(Snote) == 1 then
     SnoteShow     sprintf "text(%s)", Snote
     cabbageSet "noteshow",SnoteShow
-endif
-
-
-iMod cabbageGetValue "instrmod"
-if iMod == 1 then
-giWave = giSine
-elseif iMod == 2 then
-giWave = giMyset1
-elseif iMod == 3 then
-giWave = giMyset2
-elseif iMod == 4 then
-giWave = giMyset3
-elseif iMod == 5 then
-giWave = giMyset4
-elseif iMod == 6 then
-giWave = giMyset5
-elseif iMod == 7 then
-giWave = giMyset6
-endif
-
-iFrqIn mtof iMidiOut
-iTuneIn cabbageGetValue "tune"
-    if iTuneIn == 1 then
-    iTune = 440
-    elseif iTuneIn == 2 then
-    iTune = 432
     endif
-iRatio = iTune/440
-iFrq = iFrqIn*iRatio
-
-iAmpIn = p5-(p7*3)
-iRndFrqRatio = p6
-iFrqOut = iFrq
-indx = 0
-while indx < p7 do
-;iAmp random iAmpIn, iAmpIn+5
-schedule "SoundSine", 0, p3, iFrqOut, iAmpIn
-iFrqOut *= iRndFrqRatio
-indx+= 1
-od
+    
+    if iRatioOnOff == 0 then
+    iLenWhile = 1
+    iRatio = 1
+    elseif iRatioOnOff = 1 then
+    iLenWhile = 5
+    iRatio random iRatioMin, iRatioMax
+    endif
+ iFrqIn mtof iMidiOut
+ iAmpIn = p5-(iLenWhile*3)
+ iFrq = iFrqIn
+    indx = 0
+    while indx < iLenWhile do
+    schedule "seqSound", 0, p3, iFrq, iAmpIn, iFilter
+    iFrq *= iRatio
+    indx+= 1
+    od
 endin
 
-instr SoundSine
-iFrq = p4
-iAtt cabbageGetValue "att"
-iAmp ampdb p5
+instr seqSound
+ iSineMod   cabbageGetValue "instrmod"
+ iAttIn       cabbageGetValue "slider2"
+ iFilter = p6
+ iAtt rateCCi iAttIn, 0.001, 0.1
+ iFrqIn = p4
+ iRatio = giTune/440
+ iFrq = iFrqIn*iRatio
+ iAmp ampdb p5
     if iAtt >= p3*0.9 then
     iAtt = p3*0.9
     endif
-aEnv transeg 0, iAtt, 4, iAmp, p3-iAtt, -6, 0
-aSound poscil aEnv, iFrq, giWave
+ aEnv transeg 0, iAtt, 4, iAmp, p3-iAtt, -6, 0
+;    print iSineMod
+    if iSineMod == 1  then
+    iMod = 14 ;sine
+    elseif iSineMod == 2  then
+    iMod = 0 ;vco
+    elseif iSineMod == 3 then
+    iMod = 12; tria
+    elseif iSineMod == 4 then
+    iMod = 4 ;saw
+    elseif iSineMod == 5 then
+    iMod = 2 ; square
+    else
+    iMod = 1
+    endif
+    
+kpw jspline 0.4, 2, 5
+aSound    vco2   1,iFrq,iMod, (kpw+0.5)
 
-iFiltIn cabbageGetValue "seqfilt"
-iFilt = iFiltIn+(iFrq*0.5)
-print iFilt
-aFilt clfilt aSound, iFilt, 0, 10
-aFilt clfilt aFilt, 150, 1, 10
-aOut = aFilt
-;outall aOut
-chnmix aOut, "sndseq"
+ aFilt clfilt aSound, iFilter+(iFrq*0.9), 0, 10
+ aFilt clfilt aFilt, 100, 1, 10
+ aOut = aFilt*aEnv
+ ;outall aOut
+ chnmix aOut, "sndseq"
 endin
 
 
@@ -1207,250 +1117,139 @@ endin
 
 
 
-instr VCOMachine
-kBPM cabbageGet "bpm"
-kTempo = (kBPM/60)
-;printk2 kTempo
+instr padMachine
 kTime init 1
 kDur init 1
     if metro(1/kTime) == 1 then
-    kTime random 5, 12
+    kTime random 0.5, 3
     kDur = kTime
-    schedulek "VCOPlay", 0, kDur
+    schedulek "padPlay", 0, kDur
     endif
 endin
 
+;schedule "padMachine", 0, 999
 
-instr VCOPlay
-iBaseNoteIn cabbageGetValue "BNote"
-iScale      cabbageGetValue "scale"
-iBaseMidi,iQ noteBase iBaseNoteIn
-iMidiNote = iBaseMidi+(12*4)
-iChord = int(random:i(3, 6))
-iNumber = int(random:i(1, 5))
-SChordArr[] init iNumber
-indx = 0
-iInterval = 0
-iRndNote = int(random:i(-2, 2))
-iNote = iMidiNote+iRndNote
-iAmpdB = (-15-(iNumber*3))
-while indx < iNumber do
-iNote += iInterval
-    until iNote < 65 do
-  	iNote = iNote-12
-  	enduntil
-  	until iNote > 40 do
-  	iNote = iNote+12
-  	enduntil
-iMidiOut noteScale iNote, iBaseMidi, iScale,iQ
-    SNoteOct mton iMidiOut
-    SChordArr[indx] = SNoteOct
-iMajor = int(random:i(0, 2))
-iInterval += (iChord+iMajor)
-iDelay random 0, 1
-schedule "VCOSound", iDelay, p3, iMidiOut, iAmpdB
-indx += 1
-;print iMidiOut
-od
+instr padPlay
+ iBaseNoteIn cabbageGetValue "BNote"
+ iScale      cabbageGetValue "scale"
+ iBaseMidi,iQ noteBase iBaseNoteIn
+ iMidiNote = iBaseMidi+(12*4)
+ iChord = int(random:i(3, 6))
+ iLenWhile = int(random:i(1, 5))
+ SChordArr[] init iLenWhile
+    indx = 0
+    iInterval = 0
+    iRndNote = int(random:i(-2, 2))
+    iNote = iMidiNote+iRndNote
+    iAmpdB = (-15-(iLenWhile*3))
+    while indx < iLenWhile do
+    iNote += iInterval
+    iNote rngMi iNote, 40, 65
+    iMidiOut noteScale iNote, iBaseMidi, iScale,iQ
+;        SNoteOct mton iMidiOut
+;        SChordArr[indx] = SNoteOct
+    iMajor = int(random:i(0, 2))
+    iInterval += (iChord+iMajor)
+    iDelay random 0, 1
+    schedule "padSound", iDelay, p3, iMidiOut, iAmpdB
+    indx += 1
+    ;print iMidiOut
+    od
 ;print 1
-printarray SChordArr, 1
+;printarray SChordArr, 1
 endin
 
-instr VCOSound
- kVCO ctrl7 10, 58, 0, 1
- if kVCO == 0 then
-; turnoff
- endif
-kCentIn cabbageGet "padcent"
-kAmpdBin cabbageGet "ambamp"
-kAmpdB ampdb kAmpdBin
-iMidi = p4
-iFrqIn mtof iMidi
-iTuneIn cabbageGetValue "tune"
-    if iTuneIn == 1 then
-    iTune = 440
-    elseif iTuneIn == 2 then
-    iTune = 432
-    endif
-iRatio = iTune/440
-iFrq = iFrqIn*iRatio
-
-
-
-iAmp ampdb p5
-kSpeedMinIn   cabbageGet "spdmin"
-kSpeedMaxIn   cabbageGet "spdmax"
-kFilter     cabbageGet "vcoFilt"
-kSpeedMin  rateCCk kSpeedMinIn, 1, 10
-kSpeedMax  rateCCk kSpeedMaxIn, 3, 12
-cabbageSetValue "spdmins",  kSpeedMin
-cabbageSetValue "spdmaxs",  kSpeedMax
-cabbageSetValue "vcoFilts",  kFilter
-kCent1 jspline kCentIn, kSpeedMin, kSpeedMax
-kCent2 jspline kCentIn, kSpeedMin, kSpeedMax
-kFrqv = iFrq*cent(kCent1)
-kFrqm = iFrq*cent(kCent2)
-kResSpd cabbageGet "resspd"
-kTableRes cabbageGet "tbrs"
-kFiltTable1 = 0
-kFiltTable2 = 0
-if kTableRes == 1 then
-iResTable ftgen 0, 0, 100, 8, 0, 40, 8, 2, 10, 5, 0, 5, 1, 30, 0
-kResRnd1 rspline 0, kResSpd, 0.4, 3
-kResRnd2 rspline 0, kResSpd, 0.4, 3
-kFiltTableIn1 table kResRnd1, iResTable
-kFiltTableIn2 table kResRnd2, iResTable
-kFiltTable1 abs kFiltTableIn1*1000
-kFiltTable2 abs kFiltTableIn2*1000
-endif
-avco vco2 iAmp, kFrqv,0,0.5
-avcoFlt clfilt avco, kFilter+kFiltTable1, 0, 10
-avcoFlt clfilt avcoFlt, 200, 1, 10
-iHarmonics random 2, 10
-aMoog	buzz iAmp, kFrqm, iHarmonics, giSine
-aMoogFlt clfilt aMoog, kFilter+kFiltTable2, 0, 10
-aMoogFlt clfilt aMoogFlt, 200, 1, 10
-kMix jspline 0.5, kSpeedMin/2, kSpeedMax/2
-aMix ntrpol  avcoFlt,aMoogFlt, kMix+0.5
-iAtt random 0.5, 1
-aEnvR linsegr 0, iAtt, 1, iAtt, 0
-;xtratim 0.1
-aOut = aMix*kAmpdB*aEnvR
-;outall aOut
-chnmix aOut, "sndwg"
-endin
-
-
-instr AnalogMachine
-kTime init 1
-if metro(1/kTime) == 1 then
-kTime random 10, 20
-kDur = kTime*1.2
-schedulek "AnalogPlay", 0, kDur
-endif
-endin
-
-instr AnalogPlay
-indx = 0
-iBaseFrq random 120, 700
-iFrq = iBaseFrq
-iRndLen = int(random:i( 4, 8))
-iRndArr[] init iRndLen
-iAmpdB = -3
-while indx < iRndLen do
-schedule "AnalogSound", 0, p3, iFrq, iBaseFrq, iAmpdB-(iRndLen*3)
-iRndCent random 50, 200
-iFrq += iBaseFrq*cent(iRndCent)
-indx += 1
-od
-endin
-
-
-instr AnalogSound
-kAmpdBin    cabbageGet "analogamp"
-kAmpdB      ampdb kAmpdBin+p6
-;iAmpdB      ampdb p6
-iCent       random 10, 200
-kCent       jspline iCent, 0.2, 0.7
-kFrq = p4*cent(kCent)
-kAmp        rspline 0, 1, 0.3, 0.7
-kAmp1       rspline 0, 1, 0.3, 0.7
-kAmp2       rspline 0, 1, 0.7, 2
-aSound      poscil kAmp, kFrq
-kRndAm1     rspline 0.1, 0.3, 0.4, 0.7
-kRndFm1     rspline 0.7, 1.5, 0.7, 2
-kRndAm2     rspline 0.2, 0.7, 0.4, 0.7
-kRndFm2     rspline 0.7, 3, 0.4, 0.7
-iRndFm1     random 2, 10
-iRndFm2     random 2, 10
-aFm1        poscil p4/iRndFm1*kRndAm1, p5/iRndFm2*kRndFm1
-aFm2        poscil p4/iRndFm2*kRndAm2, p5/iRndFm1*kRndFm2
-a1          poscil kAmp1, p5*cent(kCent)+aFm1
-a2          poscil kAmp2, p5*cent(kCent)+aFm2
-iDel        random 0.1, 0.5
- 	aTim	interp	iDel
- 	abuf	delayr	3
- 	ad	    deltapi	aTim	
- 	        delayw	-a1*a2 + (ad*0.3)
-aSound *= ad
-
-iMode = int(random:i(1, 3))
-if iMode == 1 then
-iFrqRnd random 400, 500
-aRing poscil 1, iFrqRnd
-elseif iMode == 2 then
-aRing init 1
-endif	
-	kFilter     cabbageGet "vcoFilt"
-	kResSpd     cabbageGet "resspd"
-    kTableRes   cabbageGet "tbrs"
-    kFiltTable = 0
+instr padSound
+ kCentIn = 0 ;cabbageGet "padcent"
+ kAmpdBin cabbageGet "ambamp"
+ kResSpd  = 2 ;cabbageGet "resspd"
+ kTableRes = 1 ;cabbageGet "tbrs"
+ kAmpdB ampdb -1
+ iMidi = p4
+ iFrqIn mtof iMidi
+ iRatio = giTune/440
+ iFrq = iFrqIn*iRatio
+ iAmp ampdb p5
+ kSpeedMinIn  = 2 ; cabbageGet "spdmin"
+ kSpeedMaxIn   = 5 ;cabbageGet "spdmax"
+ kFilter     = 800 ;cabbageGet "vcoFilt"
+ kSpeedMin  rateCCk kSpeedMinIn, 1, 10
+ kSpeedMax  rateCCk kSpeedMaxIn, 3, 12
+ kCent1 jspline kCentIn, kSpeedMin, kSpeedMax
+ kCent2 jspline kCentIn, kSpeedMin, kSpeedMax
+ kFrqv = iFrq*cent(kCent1)
+ kFrqm = iFrq*cent(kCent2)
+ kFiltTable1 = 0
+ kFiltTable2 = 0
     if kTableRes == 1 then
     iResTable ftgen 0, 0, 100, 8, 0, 40, 8, 2, 10, 5, 0, 5, 1, 30, 0
-    kResRnd rspline 0, kResSpd, 0.4, 3
-    kFiltTableIn table kResRnd, iResTable
-    kFiltTable abs kFiltTableIn*1000
+    kResRnd1 rspline 0, kResSpd, 0.4, 3
+    kResRnd2 rspline 0, kResSpd, 0.4, 3
+    kFiltTableIn1 table kResRnd1, iResTable
+    kFiltTableIn2 table kResRnd2, iResTable
+    kFiltTable1 abs kFiltTableIn1*1000
+    kFiltTable2 abs kFiltTableIn2*1000
     endif
-    iAtt random 0.3, 0.7
-    iRel random 0.1, 0.5
-    aEnv linsegr 0, iAtt, 1, iRel, 0
-	aFilt tone aSound*aRing, kFilter+kFiltTable
-	aFilt clfilt aFilt, 150, 1, 10	
-aOut = aFilt*kAmpdB*aEnv
-chnmix aOut, "sndwg"
+ iWaveShape = 2
+ kpw jspline 0.4, 2, 5
+ avco vco2 iAmp, kFrqv,iWaveShape,(kpw+0.5)
+ avcoFlt clfilt avco, kFilter+kFiltTable1, 0, 10
+ avcoFlt clfilt avcoFlt, 200, 1, 10
+ iHarmonics random 2, 10
+ aMoog	buzz iAmp, kFrqm, iHarmonics, giSine
+ aMoogFlt clfilt aMoog, kFilter+kFiltTable2, 0, 10
+ aMoogFlt clfilt aMoogFlt, 200, 1, 10
+ kMix jspline 0.5, kSpeedMin/2, kSpeedMax/2
+ aMix ntrpol  avcoFlt,aMoogFlt, kMix+0.5
+ iAtt random 0.5, 1
+ aEnv linsegr 0, iAtt, 1, iAtt, 0
+ ;xtratim 0.1
+ aOut = aMix*kAmpdB*aEnv
+ ;outall aOut
+ chnmix aMoog*aEnv, "sndwg"
 endin
+
 
 
 instr Bow
-iActive active p1
-cabbageSet 1,"bowlight","colour(200, 150, 50) visible(1)"
-Sactive     sprintf "text(%d)", iActive
-cabbageSet "activestring",Sactive
-kRelease release
-    if kRelease == 1  then
-    cabbageSet 1,"bowlight","colour(53, 67, 60, 255) visible(1)"
+ cabbageSet 1,"mtrx5","colour(200, 150, 50) visible(1)"
+    if release() == 1  then
+    cabbageSet 1,"mtrx5","colour(70, 70, 70) visible(1)"
     endif
-    iAtt random 0.1, 0.5
+ iAmdB ampdb -17
+ kPosIn         cabbageGet      "slider1"
+ kSpeedMinIn    cabbageGet      "slider2"
+ kSpeedMaxIn    cabbageGet      "slider3"
+ kFilterIn      cabbageGet      "slider4"
+ kCent          cabbageGet      "slider5"
+ iAtt           cabbageGetValue "slider6"
+ kPose          rateCCk kPosIn,         0.1,   5
+ kSpeedMin      rateCCk kSpeedMinIn,    0.2,   10
+ kSpeedMax      rateCCk kSpeedMaxIn,    0.7,   12
+ kFilter        rateCCk kFilterIn,      400,   15000
+ kCent          rateCCk kCent,      0,   500
+ iAtt           rateCCi iAtt,           0.001, 0.5
+ 
+ 
+ 
+
     iRel random 0.1, 0.5
-if p3 == -1 then
-      if gkSeqBow == 1 then
-      turnoff
-      endif
-aEnv linsegr 0, iAtt, 1, iRel, 0
-elseif p3 != -1 then
-aEnv transeg 0, iAtt, 1, 1, p3-iAtt, 6, 0
-endif
-kGainWGIn cabbageGet "ampwg"
-kGainWG = ampdb:k(kGainWGIn-20)
-iAmdB ampdb -17
-kPosIn        cabbageGet "pos"
-kSpeedMinIn   cabbageGet "spdmin"
-kSpeedMaxIn   cabbageGet "spdmax"
-kFilterIn     cabbageGet "wgfilt"
-kPose     rateCCk kPosIn, 0.1,2
-kSpeedMin rateCCk kSpeedMinIn, 0.2, 10
-kSpeedMax rateCCk kSpeedMaxIn, 0.7, 12
-kFilter   rateCCk kFilterIn, 400, 15000
-cabbageSetValue "poss",     kPose
-cabbageSetValue "spdmins",  kSpeedMin
-cabbageSetValue "spdmaxs",  kSpeedMax
-cabbageSetValue "wgfilts",  kFilter
+    aEnv linsegr 0, iAtt, 1, iRel, 0
 	kFrq init 60
 	kAmp init 0.1
 	kPoseRnd init 0.025
     iMidi = p4 ;notnum
+    
+    iBaseNoteIn cabbageGetValue "BNote"
+    iScale      cabbageGetValue "scale"
+    iBaseMidi,iQ noteBase iBaseNoteIn
+    iMidiOut noteScale iMidi,iBaseMidi,iScale, iQ
+    
 ;  	iFrq mtof iMidi
-    iFrqIn mtof iMidi
-    iTuneIn cabbageGetValue "tune"
-        if iTuneIn == 1 then
-        iTune = 440
-        elseif iTuneIn == 2 then
-        iTune = 432
-        endif
-    iRatio = iTune/440
+    iFrqIn mtof iMidiOut
+    iRatio = giTune/440
     iFrq = iFrqIn*iRatio
 
-    kCent cabbageGet "cent"
 	kGliss jspline kCent,kSpeedMin, kSpeedMax
 	kFrq = iFrq*cent(kGliss)
 	iPres   random  1.5, 4.5
@@ -1459,71 +1258,55 @@ cabbageSetValue "wgfilts",  kFilter
     kFiltFrq = kFilter+(iFrq*0.5)
     aFilt clfilt aSound, kFiltFrq, 0, 10
     aFilt clfilt aFilt, 150, 1, 10
-    aOut = aFilt*aEnv*kGainWG
+    aOut = aFilt*aEnv
 	chnmix aOut, "sndwg"
 endin
 
 
 instr Flute
-iActive active p1
-cabbageSet 1,"flutelight","colour(150, 200, 50) visible(1)"
-Sactive     sprintf "text(%d)", iActive
-cabbageSet "activeflute",Sactive
-kRelease release
-    if kRelease == 1  then
-    cabbageSet 1,"flutelight","colour(53, 67, 60, 255) visible(1)"
+ cabbageSet 1,"mtrx6","colour(150, 200, 50) visible(1)"
+    if release() == 1 then
+    cabbageSet 1,"mtrx6","colour(70,70,70) visible(1)"
     endif
-kGainWGIn cabbageGet "ampwg"
-kGainWG = ampdb:k(kGainWGIn-20)
-iGaindB ampdb -15
-kPosIn        cabbageGet "pos"
-kSpeedMinIn   cabbageGet "spdmin"
-kSpeedMaxIn   cabbageGet "spdmax"
-kFilterIn     cabbageGet "wgfilt"
-kPose      rateCCk kPosIn, 0.085, 1
-kSpeedMin  rateCCk kSpeedMinIn, 0.1, 7
-kSpeedMax  rateCCk kSpeedMaxIn, 0.2, 10
-kFilter    rateCCk kFilterIn, 400, 12000
-cabbageSetValue "poss",     kPose
-cabbageSetValue "spdmins",  kSpeedMin
-cabbageSetValue "spdmaxs",  kSpeedMax
-cabbageSetValue "wgfilts",  kFilter
+ iAmp ampdb -25
+  kPosIn        cabbageGet      "slider1"
+ kSpeedMinIn    cabbageGet      "slider2"
+ kSpeedMaxIn    cabbageGet      "slider3"
+ kFilterIn      cabbageGet      "slider4"
+ kCent          cabbageGet      "slider5"
+ iAtt           cabbageGetValue "slider6"
+ kPose          rateCCk kPosIn,        0.085, 1
+ kSpeedMin      rateCCk kSpeedMinIn,   0.1, 12
+ kSpeedMax      rateCCk kSpeedMaxIn,    0.2, 18
+ kFilter        rateCCk kFilterIn,      400,   12000
+ kCent          rateCCk kCent,      0,   200
+ iAtt           rateCCi iAtt,           0.001, 0.5
+ 
+
 	kFrq init 60
 	kAmp init 0.1
 	kPoseRnd init 0.025
     iMidi = p4 ;notnum
-;  	iFrq mtof iNum
-    iFrqIn mtof iMidi
-    iTuneIn cabbageGetValue "tune"
-        if iTuneIn == 1 then
-        iTune = 440
-        elseif iTuneIn == 2 then
-        iTune = 432
-        endif
-    iRatio = iTune/440
+  	iBaseNoteIn cabbageGetValue "BNote"
+    iScale      cabbageGetValue "scale"
+    iBaseMidi,iQ noteBase iBaseNoteIn
+    iMidiOut noteScale iMidi,iBaseMidi,iScale, iQ
+    iFrqIn mtof iMidiOut
+    iRatio = giTune/440
     iFrq = iFrqIn*iRatio
-    kCent cabbageGet "cent"
 	kGliss jspline kCent,kSpeedMin, kSpeedMax
 	kFrq = iFrq*cent(kGliss)
 iatt = 0.1
 idetk = 0.1
 kJet   rspline 0.085,kPose, kSpeedMin, kSpeedMax
 kAir rspline 0.03, 0.15, kSpeedMin/2, kSpeedMax/2
-aSound wgflute iGaindB, kFrq, kJet, iatt, idetk, kAir, 0, 0;, giSine ;giMyset1
-    iAtt random 0.1, 0.5
+aSound wgflute iAmp, kFrq, kJet, iatt, idetk, kAir, 0, 0;, giSine ;giMyset1
     iRel random 0.1, 0.5
-if p3 == -1 then
-      if gkSeqFlute == 1 then
-      turnoff
-      endif
-aEnv linsegr 0, iAtt, 1, iRel, 0
-elseif p3 != -1 then
-aEnv transeg 0, iAtt, 4, 1, p3-iAtt, -6, 0
-endif    
-    kFiltFrq = kFilter+(iFrq*0.5)
+    aEnv linsegr 0, iAtt, 1, iRel, 0 
+    kFiltFrq = kFilter+(iFrq*0.9)
     aFilt clfilt aSound, kFiltFrq, 0, 10
     aFilt clfilt aFilt, 150, 1, 10       
-    aOut = aFilt*kGainWG*aEnv
+    aOut = aFilt*aEnv
 chnmix aOut, "sndwg"
 ;outall aFlute
 endin
@@ -1626,67 +1409,6 @@ endif
 chnclear "sndseq"
 endin
 
-gkSpeaker1 init -45
-gkSpeaker2 init -45
-gkSpeaker3 init -60
-gkSpeaker4 init -60
-
-gkSpkrCopy1 init -45
-gkSpkrCopy2 init -45
-gkSpkrCopy3 init -60
-gkSpkrCopy4 init -60
-
-
-instr Speaker
-iMidi notnum
-iVel veloc
-iSpeed = 20
-iStart1 = i(gkSpeaker1)
-iStart2 = i(gkSpeaker2)
-iStart3 = i(gkSpeaker3)
-iStart4 = i(gkSpeaker4)
-
-iBaseMidi = 60
-
-
-if iMidi == iBaseMidi+1 then
-print rnd(9)
-gkSpeaker1 = gkSpkrCopy1
-gkSpeaker2 = gkSpkrCopy2
-gkSpeaker3 = gkSpkrCopy3
-gkSpeaker4 = gkSpkrCopy4
-endif
-
-if iMidi == iBaseMidi then
-gkSpeaker1 = int(line:k(iStart1, 1/iSpeed, iStart1-1))
-elseif iMidi == iBaseMidi+2 then
-gkSpeaker1 = int(line:k(iStart1, 1/iSpeed, iStart1+1))
-endif
-if iMidi == iBaseMidi+4 then
-gkSpeaker2 = int(line:k(iStart2, 1/iSpeed, iStart2-1))
-elseif iMidi == iBaseMidi+5 then
-gkSpeaker2 = int(line:k(iStart2, 1/iSpeed, iStart2+1))
-endif
-if iMidi == iBaseMidi+7 then
-gkSpeaker3 = int(line:k(iStart3, 1/iSpeed, iStart3-1))
-elseif iMidi == iBaseMidi+9 then
-gkSpeaker3 = int(line:k(iStart3, 1/iSpeed, iStart3+1))
-endif
-if iMidi == iBaseMidi+11 then
-gkSpeaker4 = int(line:k(iStart4, 1/iSpeed, iStart4-1))
-elseif iMidi == iBaseMidi+12 then
-gkSpeaker4 = int(line:k(iStart4, 1/iSpeed, iStart4+1))
-endif
-cabbageSetValue  "out1", gkSpeaker1+65
-cabbageSetValue  "outn1", gkSpeaker1
-cabbageSetValue  "out2", gkSpeaker2+65
-cabbageSetValue  "outn2", gkSpeaker2
-cabbageSetValue  "out3", gkSpeaker3+65
-cabbageSetValue  "outn3", gkSpeaker3
-cabbageSetValue  "out4", gkSpeaker4+65
-cabbageSetValue  "outn4", gkSpeaker4
-endin
-
 
 instr record
 SFilenames[] directory "./record", ".wav"
@@ -1710,178 +1432,165 @@ STimer sprintfk "%02d : %02d", kMin, kSec
 cabbageSet 1, "sec", "text", STimer
 endin
 
-
-
-
-instr widgetCrt
+instr widgetWrite   
+ iX = 0
+ iY = 0
+ indx = 0
+ ispcx = 0
+ while indx < 16 do
+ SKnob    sprintf "bounds(%d, %d, 70, 70),valueTextBox(0)\
+ channel(\"slider%d\") range(0, 1, 0, 1, 0.01), text(%d)\
+ markerColour(255, 255, 255)  trackerColour(150, 220, 150) colour(140, 150, 140)",\
+ iX+30+ispcx, iY+430, indx+1, indx+1
+ cabbageCreate "rslider", SKnob 
+ iX = (iX+70)
+ indx += 1
+    if (indx%4) == 0 then
+    iX += 20
+    ispcx = 0
+    endif
+    if (indx%8) == 0 then
+    iY += 80
+    iX = 0
+    ispcx = 0
+    endif
+ od
+ iX = 0
+ iY = 0
+ indx = 0
+ while indx < 16 do
+ SmPad    sprintf "bounds(%d, %d, 35, 35),\
+ channel(\"mpad%d\") colour:0(70, 70, 70) colour:1(150, 220, 150) text()", \
+ iX+710, iY+180, indx+1
+ cabbageCreate "button", SmPad 
+ iX = (iX+40)
+ indx += 1
+    if (indx%4) == 0 then
+    iX += 5
+    endif
+    if (indx%16) == 0 then
+    iY += 10
+    iX = 0
+    endif
+    if (indx%8) == 0 then
+    iY += 40
+    iX = 0
+    endif
+ od
+ iX = 0
+ iY = 0
+ indx = 0
+ ispcx = 0
+ ispcy = 0
+ while indx < 96 do
+ Smtrx    sprintf "bounds(%d, %d, 20, 20),\
+ channel(\"mtrx%d\") colour(70, 70, 70)", \
+ 60+iX+ispcx, iY+200+ispcy, indx+1
+ cabbageCreate "image", Smtrx 
+  iX += 24
+  indx += 1
+    if (indx%4) == 0 then
+    ispcx += 5
+    endif
+    if (indx%16) == 0 then
+    iY += 20
+    iX = 0
+    ispcx = 0
+    endif
+    if (indx%16) == 0 then
+    ispcy += 5
+    endif
+ od
 indx init 0
 while indx < 16 do
-SWidget sprintf "bounds(%d, 104, 25, 25), channel(\"seqnum%d\"), text(\"%d\"),fontColour(100,100,100) visible(0)",\
-indx*22+45, indx, rnd(9)
+SWidget sprintf "bounds(%d, 104, 25, 25), channel(\"seqnum%d\"), text(\"%d\")\
+,fontColour(100,100,100) visible(0)",indx*22+45, indx, rnd(9)
 cabbageCreate "label", SWidget
 indx += 1
 od
 endin
-schedule "widgetCrt", 0.01, 1
 
 instr Widgets
-iDurMaster = 9^9
-kStart init 0
-kStart cabbageGet "start"
-SseqIn cabbageGet "seqarr"
-kRecord cabbageGet "rcrd"
-if kStart == 1 && changed(kStart) == 1  then
-schedulek "Time", 0, iDurMaster
-schedulek "seq",0,iDurMaster,SseqIn
-schedulek "FxSeq", 0.01, iDurMaster
-schedulek "FxAmb", 0.01, iDurMaster
-    if kRecord == 1 then
-    schedulek "record", 0.01, iDurMaster
-    endif
-elseif kStart == 0 && changed(kStart) == 1 then
-turnoff2 "Time", 0, 0
-turnoff2 "seq", 0,0
-turnoff2 "FxSeq", 0,0
-turnoff2 "FxAmb", 0,0
-turnoff2 "record", 0,0
-endif
- kActive active "GetMidi"
- ;;bow setting
- kPos   ctrl7    2,31,0.025,2
-    if changed(kPos) == 1 then
-;    cabbageSetValue  "pos", kPos
-    endif   
- kSpeedMin   ctrl7    2,27,0.7,5 
-    if changed(kSpeedMin) == 1 then
-;    cabbageSetValue "spdmin", kSpeedMin
-    endif
- kSpeedMax   ctrl7     2,35,1,12
-    if changed(kSpeedMax) == 1 then
-;    cabbageSetValue  "spdmax", kSpeedMax
-    endif   
-  kCent   ctrl7     2,0,0,500
-    if changed(kCent) == 1 then
-    cabbageSetValue  "cent", kCent
-    endif     
-  kwgFilter   ctrl7     2,33,500,7000
-    if changed(kwgFilter) == 1 then
-;    cabbageSetValue  "wgfilt", kBowFilter
-    endif
- kAmpWG   ctrl7    2,29,0,20
-    if changed(kAmpWG) == 1 then
-    cabbageSetValue  "ampwg", kAmpWG
-    endif
-    
-;;Ambient
- kStartVCO cabbageGet "vcopad"
-; kStartVCO ctrl7 10, 58, 0, 1
- if kStartVCO == 1 && changed(kStartVCO) == 1 then
- schedulek "VCOMachine", 0, iDurMaster
- cabbageSetValue  "vcopad", k(1)
- elseif kStartVCO == 0 && changed(kStartVCO) == 1 then
- turnoff2 "VCOMachine", 0, 0
- turnoff2 "VCOPlay", 0, 0
- turnoff2 "VCOSound", 0, 1
- cabbageSetValue  "vcopad", k(0)
- endif
+ iDurMaster = 9^9
+ kStart init 0
+ kStart     cabbageGet "start"
+ SseqIn     cabbageGet "seqarr"
+ kRecord    cabbageGet "rcrd"
+ kTuneIn    cabbageGet "tune"  
+ kPedal     cabbageGet "mpad8"
  
- kStartAnalog ctrl7 10, 59, 0, 1
- if kStartAnalog == 1 && changed(kStartAnalog) == 1 then
- schedulek "AnalogMachine", 0, iDurMaster
- cabbageSetValue  "analogpad", k(1)
- elseif kStartAnalog == 0 && changed(kStartAnalog) == 1 then
- turnoff2 "AnalogMachine", 0, 0
- turnoff2 "AnalogPlay", 0, 0
- turnoff2 "AnalogSound", 0, 1
- cabbageSetValue  "analogpad", k(0)
- endif
- 
- 
-  kReset ctrl7 10, 63, 0, 1
-  if kReset == 1 && changed(kReset) == 1 then
-  cabbageSetValue  "seqmod",k(1)
-  cabbageSetValue  "notemod",k(1)
-  cabbageSetValue  "bpm",k(90)
-  schedulek "Reset", 0, 1
-  endif
- 
-  kChngRatio ctrl7 10, 62, 0, 1
-    if changed(kChngRatio) == 1 then
-    cabbageSetValue  "ratiornd", kChngRatio
+ kActive active "GetMidi"  
+    if kStart == 1 && changed(kStart) == 1  then
+    schedulek "Time", 0, iDurMaster
+    schedulek "seq",0,iDurMaster,SseqIn
+    schedulek "FxSeq", 0.01, iDurMaster
+    schedulek "FxAmb", 0.01, iDurMaster
+        if kRecord == 1 then
+        schedulek "record", 0.01, iDurMaster
+        endif
+    elseif kStart == 0 && changed(kStart) == 1 then
+    turnoff2 "Time", 0, 0
+    turnoff2 "seq", 0,0
+    turnoff2 "FxSeq", 0,0
+    turnoff2 "FxAmb", 0,0
+    turnoff2 "record", 0,0
     endif
-  kvcoFilt   ctrl7    1,33,300,3000
-    if changed(kvcoFilt) == 1 then
-    cabbageSetValue  "vcoFilt", kvcoFilt
-    endif   
- kCentVco   ctrl7     1,0,0,500
-    if changed(kCentVco) == 1 then
-    cabbageSetValue  "padcent", kCentVco
-    endif   
-   
-    
-
- kPedal ctrl7 15,64,0,1
-    if kPedal == 1 && changed(kPedal) == 1 then
-    kSusB = 1
-    cabbageSetValue "hold",kSusB
-    elseif kPedal == 0 && changed(kPedal) == 1 then
-    kSusB = 0
-    cabbageSetValue "hold",kSusB
-    elseif kPedal == 0 && changed(kPedal) == 1 && kActive == 0 then
-    kSusB = 0
+ updateSeq:
+    SIn rmvtxt SseqIn
+    iSeqArr[] StrToArr SIn
+    giSeqArr[] = iSeqArr
+    SnArrShow ArrToStrg giSeqArr
+    Sarr[] StrSprd SnArrShow
+    seqVis Sarr
+    if changed(SseqIn) == 1 then
+    reinit updateSeq
+    endif
+ rireturn
+     
+ updatetune:
+    iTuneIn = i(kTuneIn)
+    if iTuneIn == 1 then
+    iTune = 440
+    elseif iTuneIn == 2 then
+    iTune = 432
+    endif
+ giTune = iTune
+    if changed(kTuneIn) == 1 then
+    reinit updatetune
+    endif
+ rireturn
+           
+ kType, kChn, kNum, kData midiin
+    if kType == 176 && kNum >= 49 then ;;cc
+	    if changed(kNum, kData) == 1 then
+	    printks  "num=%d, value=%d\\n", -1, kNum, kData
+	    SCCnum sprintfk "mpad%d",(kNum-48)
+	    cabbageSetValue SCCnum, kData
+	    endif
+    elseif kType == 176 && kNum <= 48 then
+    SsliderNum sprintfk "slider%d",kNum-20
+    cabbageSetValue SsliderNum , kData/127
+    endif
+ SMidiShow     sprintfk "text(%d)", kData
+ cabbageSet 1, "data",SMidiShow
+ SChnShow      sprintfk "text(%d)", kChn
+ cabbageSet 1, "chndata",SChnShow
+    if kPedal == 0 && changed(kPedal) == 1 then
     schedulek "Empty",0,0.1,kActive
-    cabbageSetValue "hold",kSusB
     endif
     if kActive == 0 && changed(kActive) == 1 && kPedal == 0 then
     schedulek "Empty",0,0.1,kActive
     endif
-; kHold cabbageGet "hold"
-;    if kHold == 0 && changed(kHold) == 1 && kActive == 0 then
-;    schedulek "Empty",0,0.1,kActive
-;    endif
-    
- 
-     
- ;;seq 
-  kAmpSeq   ctrl7    1,21,0,20
-    if changed(kAmpSeq) == 1 then
-    cabbageSetValue  "ampseq", kAmpSeq
-    endif       
-                 
- kDurSlider   ctrl7    1,23,0,10
-    if changed(kDurSlider) == 1 then
-    cabbageSetValue  "dur", kDurSlider
-    endif
-    
-  kAttSlider   ctrl7    1,31,0.005,0.1
-    if changed(kAttSlider) == 1 then
-    cabbageSetValue  "att", kAttSlider
-    endif
-    
-  kBpmSlider   ctrl7    1,41,10,210
-    if changed(kBpmSlider) == 1 then
-    cabbageSetValue  "bpm", kBpmSlider
-    endif
-    
-    
-    
-kstatus, kchan, kdata1, kdata2  midiin
-    if changed(kdata2) == 1 then
-    SMidiShow     sprintfk "text(%d)", kdata2
-    cabbageSet 1, "data",SMidiShow
-    
-    SMidiChn    sprintfk "text(%d)", kchan
-    cabbageSet 1, "chndata",SMidiChn
-    
-;    cabbageSetValue "data", kdata2
-    endif
+  kbpmOut  ctrl7 1,37,30,200
+  cabbageSetValue  "bpm", kbpmOut
 endin
 
 
 
 </CsInstruments>
 <CsScore>
-i "Widgets" 0 [9^9]
+i "widgetWrite"  0      1
+i "Widgets"      0.1   [9^9]
 </CsScore>
 </CsoundSynthesizer>
 
