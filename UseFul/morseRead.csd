@@ -12,7 +12,7 @@ nchnls = 2
 
 
 
-opcode morseRead, kiS, Si
+opcode morseRead, kkS, Si
 Stxt, iBPMIn xin
 if iBPMIn >= 300 then
 iBPM = 300
@@ -22,6 +22,7 @@ else
 iBPM = iBPMIn
 endif
 kTrig = 0
+kOnOff = 1
  iMorseArr_A[] fillarray 1,2
  iMorseArr_B[] fillarray 2,1,1,1
  iMorseArr_C[] fillarray 2,1,2,1
@@ -49,6 +50,10 @@ kTrig = 0
  iMorseArr_Y[] fillarray 2,1,2,2
  iMorseArr_Z[] fillarray 2,2,1,1
  iLenLetter       strlen     Stxt 
+if iLenLetter == 0 then
+kOnOff = 0
+goto skip
+endif
  iTypeArr[] init iLenLetter
  indx = 0	
  while indx < iLenLetter do
@@ -144,12 +149,13 @@ kTrig = 0
     iMorseArr[] = iMorseArr_Z
     Schr = "Z"
     elseif iChar == 32 then
-    iMorseArr[] fillarray 0
+    iMorseArr[] fillarray 2
     Schr = " "
     else
-    iMorseArr[] fillarray 0
+    iMorseArr[] fillarray 2
     Schr = " "
     endif
+    printarray iMorseArr
     iTempo = iBPM/60  
     if metro(kTime) == 1 then
     	if iChar != 32 then
@@ -158,7 +164,8 @@ kTrig = 0
     kTime = 1/((iMorseArr[kMorseIndx])/(iTempo*4))
     kMorseIndx += 1
     		if kMorseIndx >= lenarray(iMorseArr) then 
-     		iDelay = 1/(iTempo*0.75)
+    		iLast = iMorseArr[lenarray(iMorseArr)-1]
+     		iDelay = (iLast/iTempo)*1.5
     		kTime = 0
 		   kMorseIndx = lenarray(iMorseArr)
 		   reinit next
@@ -170,9 +177,11 @@ kNext delayk 1, iDelay
 		kLetterIndx += 1
 			if kLetterIndx >= lenarray(iTypeArr) then
 			kLetterIndx = lenarray(iTypeArr)-1
+			kOnOff = 0
 			endif
 		endif
-xout kTrig, iDelay/10,Schr
+skip:
+xout kTrig,kOnOff, Schr
 
 endop
 
@@ -182,9 +191,12 @@ chn_S("display2", 2)
 chn_k("led", 2)
 instr morseMachine
 iBPM = 160
-Stxt = "hello world"
+iTempo = iBPM/60
+iDur = (iTempo*0.5)/20
+Stxt = "test me"
 chnset Stxt,"display1"
-    kTrig, iDur,Schr morseRead Stxt, iBPM
+    kTrig,kOnOff,Schr morseRead Stxt, iBPM
+; printk2 kOnOff
     	if kTrig == 1 && changed(kTrig) == 1 then
     	schedulek "morseSound", 0, iDur,Schr
     	endif    
@@ -207,7 +219,7 @@ puts Schr,1
 iAtt = p3/10
 iAmp = 0.1
 aEnv transeg 0, iAtt, 6, iAmp, p3-(iAtt*2), 1, iAmp, iAtt, -6, 0
- aSound poscil aEnv, 900
+ aSound poscil aEnv, 1200
  outall aSound
 endin
 
@@ -215,6 +227,16 @@ endin
 <CsScore>
 </CsScore>
 </CsoundSynthesizer>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -265,7 +287,7 @@ endin
   <g>240</g>
   <b>240</b>
  </bgcolor>
- <bsbObject type="BSBDisplay" version="2">
+ <bsbObject version="2" type="BSBDisplay">
   <objectName>display2</objectName>
   <x>143</x>
   <y>125</y>
@@ -276,7 +298,7 @@ endin
   <midichan>0</midichan>
   <midicc>-3</midicc>
   <description/>
-  <label>D</label>
+  <label>E</label>
   <alignment>center</alignment>
   <valignment>top</valignment>
   <font>Arial</font>
@@ -296,7 +318,7 @@ endin
   <borderradius>1</borderradius>
   <borderwidth>1</borderwidth>
  </bsbObject>
- <bsbObject type="BSBDisplay" version="2">
+ <bsbObject version="2" type="BSBDisplay">
   <objectName>display1</objectName>
   <x>68</x>
   <y>51</y>
@@ -307,7 +329,7 @@ endin
   <midichan>0</midichan>
   <midicc>-3</midicc>
   <description/>
-  <label>hello world</label>
+  <label>test me</label>
   <alignment>center</alignment>
   <valignment>top</valignment>
   <font>Arial</font>
@@ -327,7 +349,7 @@ endin
   <borderradius>1</borderradius>
   <borderwidth>1</borderwidth>
  </bsbObject>
- <bsbObject type="BSBController" version="2">
+ <bsbObject version="2" type="BSBController">
   <objectName>led</objectName>
   <x>107</x>
   <y>177</y>
@@ -356,7 +378,7 @@ endin
    <g>234</g>
    <b>0</b>
   </color>
-  <randomizable group="0" mode="both">false</randomizable>
+  <randomizable mode="both" group="0">false</randomizable>
   <bgcolor>
    <r>30</r>
    <g>30</g>
