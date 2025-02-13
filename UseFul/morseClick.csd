@@ -12,7 +12,7 @@ nchnls = 2
 
 
 
-opcode morseRead, kiS, Si
+opcode morseRead, akS, Si
 Stxt, iBPMIn xin
 if iBPMIn >= 300 then
 iBPM = 300
@@ -172,7 +172,8 @@ kNext delayk 1, iDelay
 			kLetterIndx = lenarray(iTypeArr)-1
 			endif
 		endif
-xout kTrig, iDelay/10,Schr
+		 aSound poscil kTrig*0.2, 1200
+xout aSound, kTrig,Schr
 
 endop
 
@@ -184,10 +185,8 @@ instr morseMachine
 iBPM = 160
 Stxt = "hello world"
 chnset Stxt,"display1"
-    kTrig, iDur,Schr morseRead Stxt, iBPM
-    	if kTrig == 1 && changed(kTrig) == 1 then
-    	schedulek "morseSound", 0, iDur,Schr
-    	endif    
+    aSound, kTrig,Schr morseRead Stxt, iBPM
+    outall aSound
 endin
 
 
@@ -195,21 +194,6 @@ schedule "morseMachine", 0, 555
 
 
 
-instr morseSound
-Schr = p4
-chnset Schr,"display2"
-kLED = 1
-	if release() == 1 then
-	kLED = 0
-	endif
-		chnset kLED,"led"
-puts Schr,1
-iAtt = p3/10
-iAmp = 0.1
-aEnv transeg 0, iAtt, 6, iAmp, p3-(iAtt*2), 1, iAmp, iAtt, -6, 0
- aSound poscil aEnv, 900
- outall aSound
-endin
 
 </CsInstruments>
 <CsScore>
@@ -251,11 +235,15 @@ endin
 
 
 
+
+
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
- <x>619</x>
- <y>259</y>
+ <x>857</x>
+ <y>444</y>
  <width>400</width>
  <height>341</height>
  <visible>true</visible>
@@ -265,7 +253,7 @@ endin
   <g>240</g>
   <b>240</b>
  </bgcolor>
- <bsbObject type="BSBDisplay" version="2">
+ <bsbObject version="2" type="BSBDisplay">
   <objectName>display2</objectName>
   <x>143</x>
   <y>125</y>
@@ -276,7 +264,7 @@ endin
   <midichan>0</midichan>
   <midicc>-3</midicc>
   <description/>
-  <label>D</label>
+  <label/>
   <alignment>center</alignment>
   <valignment>top</valignment>
   <font>Arial</font>
@@ -296,7 +284,7 @@ endin
   <borderradius>1</borderradius>
   <borderwidth>1</borderwidth>
  </bsbObject>
- <bsbObject type="BSBDisplay" version="2">
+ <bsbObject version="2" type="BSBDisplay">
   <objectName>display1</objectName>
   <x>68</x>
   <y>51</y>
@@ -327,7 +315,7 @@ endin
   <borderradius>1</borderradius>
   <borderwidth>1</borderwidth>
  </bsbObject>
- <bsbObject type="BSBController" version="2">
+ <bsbObject version="2" type="BSBController">
   <objectName>led</objectName>
   <x>107</x>
   <y>177</y>
