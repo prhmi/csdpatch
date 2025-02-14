@@ -12,16 +12,16 @@ nchnls = 2
 
 
 
-opcode morseRead, kkS, Si
-Stxt, iBPMIn xin
-if iBPMIn >= 300 then
-iBPM = 300
-elseif iBPMIn <= 30 then
-iBPM = 30
-else
-iBPM = iBPMIn
-endif
-kTrig = 0
+opcode morseRead, kkkS, Si
+Stxt, iBPM xin
+;if iBPMIn >= 300 then
+;iBPM = 300
+;elseif iBPMIn <= 30 then
+;iBPM = 30
+;else
+;iBPM = iBPMIn
+;endif
+ kTrig = 0
 kOnOff = 1
  iMorseArr_A[] fillarray 1,2
  iMorseArr_B[] fillarray 2,1,1,1
@@ -68,8 +68,9 @@ endif
  reinit update
  endif
  update:
+ iLetterIndx = i(kLetterIndx)
   kMorseIndx init 0
- iChar = iTypeArr[i(kLetterIndx)]
+ iChar = iTypeArr[iLetterIndx]
     if iChar == 97 then
     iMorseArr[] = iMorseArr_A
     Schr = "A"
@@ -149,30 +150,37 @@ endif
     iMorseArr[] = iMorseArr_Z
     Schr = "Z"
     elseif iChar == 32 then
-    iMorseArr[] fillarray 2
+    iMorseArr[] fillarray 1
     Schr = " "
     else
-    iMorseArr[] fillarray 2
+    iMorseArr[] fillarray 1
     Schr = " "
     endif
     printarray iMorseArr
-    iTempo = iBPM/60  
+    iTempo = (iBPM/60)*4
     if metro(kTime) == 1 then
     	if iChar != 32 then
     	kTrig = 1
     	endif
-    kTime = 1/((iMorseArr[kMorseIndx])/(iTempo*4))
+    kTime = 1/(iMorseArr[kMorseIndx]/iTempo)
+    kDur = iMorseArr[kMorseIndx]/iTempo
     kMorseIndx += 1
     		if kMorseIndx >= lenarray(iMorseArr) then 
     		iLast = iMorseArr[lenarray(iMorseArr)-1]
-     		iDelay = (iLast/iTempo)*1.5
+;     		iDelay = sumarray(iMorseArr)/iTempo/2
     		kTime = 0
-		   kMorseIndx = lenarray(iMorseArr)
+		   kMorseIndx = 0
 		   reinit next
     		endif
     endif
+;goto skip    
 next:
-kNext delayk 1, iDelay
+iDelay = (iLast/iTempo)*2.5
+;print iDelay
+if kTime == 0 then
+kNext init 0
+kNext = linseg:k( 0, iDelay, 1)
+endif
 		if kNext == 1 && kLetterIndx < lenarray(iTypeArr) then
 		kLetterIndx += 1
 			if kLetterIndx >= lenarray(iTypeArr) then
@@ -181,7 +189,7 @@ kNext delayk 1, iDelay
 			endif
 		endif
 skip:
-xout kTrig,kOnOff, Schr
+xout kTrig,kDur, kOnOff, Schr
 
 endop
 
@@ -190,15 +198,14 @@ chn_S("display1", 2)
 chn_S("display2", 2)
 chn_k("led", 2)
 instr morseMachine
-iBPM = 160
+iBPM = 120
 iTempo = iBPM/60
-iDur = (iTempo*0.5)/20
-Stxt = "test me"
+Stxt = "parham is happy"
 chnset Stxt,"display1"
-    kTrig,kOnOff,Schr morseRead Stxt, iBPM
+    kTrig,kDur, kOnOff,Schr morseRead Stxt, iBPM
 ; printk2 kOnOff
     	if kTrig == 1 && changed(kTrig) == 1 then
-    	schedulek "morseSound", 0, iDur,Schr
+    	schedulek "morseSound", 0, kDur*0.6,Schr
     	endif    
 endin
 
@@ -219,7 +226,7 @@ puts Schr,1
 iAtt = p3/10
 iAmp = 0.1
 aEnv transeg 0, iAtt, 6, iAmp, p3-(iAtt*2), 1, iAmp, iAtt, -6, 0
- aSound poscil aEnv, 1200
+ aSound poscil aEnv, 900
  outall aSound
 endin
 
@@ -273,13 +280,19 @@ endin
 
 
 
+
+
+
+
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
- <x>619</x>
- <y>259</y>
- <width>400</width>
- <height>341</height>
+ <x>0</x>
+ <y>0</y>
+ <width>304</width>
+ <height>211</height>
  <visible>true</visible>
  <uuid/>
  <bgcolor mode="background">
@@ -287,7 +300,7 @@ endin
   <g>240</g>
   <b>240</b>
  </bgcolor>
- <bsbObject version="2" type="BSBDisplay">
+ <bsbObject type="BSBDisplay" version="2">
   <objectName>display2</objectName>
   <x>143</x>
   <y>125</y>
@@ -298,7 +311,7 @@ endin
   <midichan>0</midichan>
   <midicc>-3</midicc>
   <description/>
-  <label>E</label>
+  <label>Y</label>
   <alignment>center</alignment>
   <valignment>top</valignment>
   <font>Arial</font>
@@ -318,7 +331,7 @@ endin
   <borderradius>1</borderradius>
   <borderwidth>1</borderwidth>
  </bsbObject>
- <bsbObject version="2" type="BSBDisplay">
+ <bsbObject type="BSBDisplay" version="2">
   <objectName>display1</objectName>
   <x>68</x>
   <y>51</y>
@@ -329,7 +342,7 @@ endin
   <midichan>0</midichan>
   <midicc>-3</midicc>
   <description/>
-  <label>test me</label>
+  <label>parham is happy</label>
   <alignment>center</alignment>
   <valignment>top</valignment>
   <font>Arial</font>
@@ -349,7 +362,7 @@ endin
   <borderradius>1</borderradius>
   <borderwidth>1</borderwidth>
  </bsbObject>
- <bsbObject version="2" type="BSBController">
+ <bsbObject type="BSBController" version="2">
   <objectName>led</objectName>
   <x>107</x>
   <y>177</y>
@@ -378,7 +391,7 @@ endin
    <g>234</g>
    <b>0</b>
   </color>
-  <randomizable mode="both" group="0">false</randomizable>
+  <randomizable group="0" mode="both">false</randomizable>
   <bgcolor>
    <r>30</r>
    <g>30</g>
