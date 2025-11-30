@@ -61,7 +61,7 @@ hmeter bounds(526, 492, 125, 15) channel("meter2")  outlineColour(0, 0, 0, 255),
 nslider bounds(688, 464, 77, 44) channel("maingain") range(-90, 50, 0, 1, 1) colour(49, 64, 79, 255) text("Master Gain")
 signaldisplay bounds(390, 466, 123, 46), channel("display") colour("white") displayType("waveform"), backgroundColour(40,40,60), zoom(-1), signalVariable("aShow")
 ;WgPad
-groupbox bounds(0, 25, 480, 380), text("WG"), plant("pop1"), popup(1), visible(0) colour(20, 20, 20), channel("pops1") {
+groupbox bounds(0, 25, 480, 380), text("WG"), plant("pop2"), popup(1), visible(0) colour(20, 20, 20), channel("pops2") {
 button bounds(22, 48, 80, 40), channel("bowonoff"), alpha(1), colour:0(70, 70, 80) colour:1(50, 80, 150) text("bow start", "bow stop")
 combobox bounds(260, 114, 75, 27)  channel("lfomodbow1")  text("line", "step", "seq")   value(2) colour(50, 54, 60, 255)
 combobox bounds(250, 146, 95, 27)  channel("lfomodbow2")  text("pos/vibr", "pos/filt", "vib/filt")   value(1) colour(50, 54, 60, 255)
@@ -95,7 +95,7 @@ button bounds(20, 464, 80, 40), channel("wgfolder"), alpha(1), colour:0(70, 70, 
 
 
 ;effects
-groupbox bounds(0, 25, 600, 430), text("Fx package"), plant("pop2"), popup(1), visible(0) colour(20, 20, 20), channel("pops2") {
+groupbox bounds(0, 25, 600, 430), text("Fx package"), plant("pop4"), popup(1), visible(0) colour(20, 20, 20), channel("pops4") {
 label    bounds(24, 80, 70, 18)    channel("labelfx1")  text("Seq") 
 combobox bounds(10, 30, 83, 34) channel("dlymod") text("sync", "sec") colour(50, 54, 60, 255) value(1)
 rslider bounds(100, 30, 90, 90) channel("dlyt1") range(0.3, 3, 0.1, 1, 0.1) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255) valueTextBox(1) text("delay")
@@ -121,18 +121,6 @@ rslider bounds(500, 290, 90, 90) channel("lowfseq3") range(20, 1000, 0.6, 1, 10)
 
 }
 button bounds(108, 464, 80, 40), channel("fxfolder"), alpha(1), colour:0(70, 70, 80) colour:1(50, 80, 150) text("Effects", "running")
-;;midi
-groupbox bounds(0, 25, 400, 200), text("Midi Setting"), plant("pop3"), popup(1), visible(0) colour(20, 20, 20), channel("pops3") {
-label    bounds(14, 54, 85, 18)    channel("labelm1")  text("Octaves") 
-nslider bounds(162, 38, 45, 45) channel("prgoct") range(0, 9, 0, 1, 1) colour(37, 56, 75, 255) text("Prgm")
-nslider bounds(210, 38, 45, 45) channel("noteoct") range(-7, 7, 0, 1, 1) colour(37, 56, 75, 255) text("Note")
-nslider bounds(112, 38, 45, 45) channel("ccoct") range(0, 9, 0, 1, 1) colour(37, 56, 75, 255) text("CC")
-nslider bounds(260, 38, 45, 45) channel("knoboct") range(0, 9, 0, 1, 1) colour(37, 56, 75, 255) text("knob")
-label    bounds(14, 118, 85, 18)    channel("labelm2")  text("prgmTime") 
-label bounds(116, 114, 96, 28) channel("prgdata") fontColour(163, 209, 250, 255) colour(37, 56, 75, 255)  text("12") fontSize(20)
-}
-button bounds(196, 464, 80, 40), channel("midifolder"), , colour:0(70, 70, 80, 255) colour:1(50, 80, 150, 255) text("Midi Set", "running")
-checkbox bounds(334, 472, 25, 25) channel("mpad8") colour:0(37, 56, 75, 255) colour:1(0, 154, 255, 255)
 
 
 </Cabbage>
@@ -512,153 +500,6 @@ opcode ArrToStrgN, S,i[]
   od
   xout Sprint
 endop
-gkCCArr[] init 6
-gkCCIndx init 0
-
-opcode setcc, kk, kk
-kNum, kData xin
-kCCnum = kNum
-if kData == 0 goto skip
-kIndx = gkCCIndx
-kTurnOff = 0
-	kndx = 0
-	while kndx < lenarray(gkCCArr) do
-		if gkCCArr[kndx] == kCCnum then
-		gkCCArr[kndx] = 0
-		kCConOff = 0
-		gkCCIndx = kndx
-		kTurnOff = 1
-		endif 
-	kndx += 1
-	od
-if kTurnOff == 0 then
-		kndx = 0 
-		kSkip = 1
-		while kndx < lenarray(gkCCArr) do
-			if gkCCArr[kndx] == 0 then
-			kSkip = 0
-			endif
-		kndx += 1
-		od
-	if kSkip == 0 then
-		while gkCCArr[kIndx] != 0 do
-		kIndx = (kIndx+1) % lenarray(gkCCArr)
-		od
-	gkCCArr[kIndx] = kCCnum
-	kCConOff = 1
-	gkCCIndx = (gkCCIndx+1) % lenarray(gkCCArr)
-	endif
-endif
-skip:
-if kNum >= 21 && kNum <= 52 then
-kCConOff = kData
-	if kData != 0 then
-	kCConOff = 1
-	endif
-endif
-	xout kCCnum, kCConOff
-endop
-gkPrgRepArr[] init 2
-gkPrgmIndx init 0
-opcode setprgm, kk, kk
-kPrgNum,kTime xin
-iDur = 0.5
-if kTime >= iDur then
-kTime = 0
-gkPrgmIndx = 0
-gkPrgRepArr[0] = 0
-gkPrgRepArr[1] = 0
-endif
-gkPrgRepArr[gkPrgmIndx] = kPrgNum
-if gkPrgmIndx == 0 then
-kTime = 0
-endif
-kPrgNumOut = kPrgNum
-if gkPrgmIndx == 0 then
-gkPrgRepArr[1] = 0
-endif
-if gkPrgmIndx == 1 && kTime < iDur then
-	if gkPrgRepArr[0] != gkPrgRepArr[1] then
-	kPrgNumOut = (gkPrgRepArr[0]*100)+gkPrgRepArr[1]
-	endif
-endif
-gkPrgmIndx = (gkPrgmIndx+1) % 2
-xout kPrgNumOut, kTime
-skip:
-endop
-
-gkUpDownPrg1 init 0
-gkUpDownPrg2 init 0
-gkUpDownPrg3 init 0
-gkUpDownPrg4 init 0
-gkOctArr[] init 2
-gkOctIndx init -1
-opcode setoct, kkkk, kk
-kPrgNum,kTime xin
-iDurReset = 0.1
-if changed(kPrgNum) == 1 then
-gkOctIndx = (gkOctIndx+1) % 2
-endif
-gkOctArr[gkOctIndx] = kTime
-kMidiTime abs gkOctArr[1]-gkOctArr[0]
-if kPrgNum == 1 then
-gkUpDownPrg1 -= 1
-	if gkUpDownPrg1 <= 1 then
-	gkUpDownPrg1 = 1
-	endif
-elseif kPrgNum == 5 then
-gkUpDownPrg1 += 1
-	if gkUpDownPrg1 >= 7 then
-	gkUpDownPrg1 = 7
-	endif
-endif
-if (kPrgNum == 1 || kPrgNum == 5) && kMidiTime < iDurReset then
-gkUpDownPrg1 = 0
-endif
-if kPrgNum == 2 then
-gkUpDownPrg2 -= 1
-	if gkUpDownPrg2 <= 1 then
-	gkUpDownPrg2 = 1
-	endif
-elseif kPrgNum == 6 then
-gkUpDownPrg2 += 1
-	if gkUpDownPrg2 >= 3 then
-	gkUpDownPrg2 = 3
-	endif
-endif
-if (kPrgNum == 2 || kPrgNum == 6) && kMidiTime < iDurReset then
-gkUpDownPrg2 = 0
-endif
-if kPrgNum == 3 then
-gkUpDownPrg3 -= 1
-	if gkUpDownPrg3 <= -7 then
-	gkUpDownPrg3 = -7
-	endif
-elseif kPrgNum == 7 then
-gkUpDownPrg3 += 1
-	if gkUpDownPrg3 >= 7 then
-	gkUpDownPrg3 = 7
-	endif
-endif
-if (kPrgNum == 3 || kPrgNum == 7) && kMidiTime < iDurReset then
-gkUpDownPrg3 = 0
-endif
-if kPrgNum == 4 then
-gkUpDownPrg4 -= 1
-	if gkUpDownPrg4 <= 1 then
-	gkUpDownPrg4 = 1
-	endif
-elseif kPrgNum == 8 then
-gkUpDownPrg4 += 1
-	if gkUpDownPrg4 >= 7 then
-	gkUpDownPrg4 = 7
-	endif
-endif
-if (kPrgNum == 4 || kPrgNum == 8) && kMidiTime < iDurReset then
-gkUpDownPrg4 = 0
-endif
-xout gkUpDownPrg1, gkUpDownPrg2, gkUpDownPrg3, gkUpDownPrg4
-endop
 
 
 giSteps init 24
@@ -681,7 +522,6 @@ giSeq      ftgen   0, 0, 50, 7, 1, 10, 1, 0, -0.4, 10, -0.4, 0, 0.5, 10, 0.5, 0,
  giNote[]      init iLenSeq
  giArrEmpty[]  init iLenSeq
  giWriteNote   init 0
- gkWGnote init 0
 
 instr GetMidi ;1
  iActive active "GetMidi"
@@ -689,7 +529,6 @@ instr GetMidi ;1
  kHold cabbageGet "mpad8"
  kRel release
  iMidi notnum
- gkWGnote = iMidi
   if iActive == 1 then
   giArrNote[] = giArrEmpty
   giWriteNote = 0
@@ -1384,6 +1223,123 @@ STimer sprintfk "%02d : %02d", kMin, kSec
 cabbageSet 1, "sec", "text", STimer
 endin
 
+instr MidiIn
+;Midi 
+kCCslider = 0
+kCCmPad = 0
+   kType, kChn, kNum, kData midiin
+   printk2 kChn
+;;mpad
+if kType == 176 && kNum >= 49 then
+	kCCmPad = 1
+	if changed(kNum, kData) == 1 then
+	;printks  "num=%d, value=%d\\n", -1, kNum, kData
+	SCCnum sprintfk "mpad%d",(kNum-48)
+	cabbageSetValue SCCnum, kData
+	endif
+;slider
+elseif kType == 176 && kNum <= 36 then
+kCCslider = 1
+SsliderNum sprintfk "slider%d",kNum-20
+cabbageSetValue SsliderNum , kData/127
+endif
+if kType == 144 && kChn == 2 then
+gkWGnote = kNum
+endif
+
+if kType == 176 && kChn == 2 then
+gkCCnote = kData
+endif
+    SMidiShow     sprintfk "text(%d)", kData
+    cabbageSet 1, "data",SMidiShow
+    SChnShow     sprintfk "text(%d)", kChn
+    cabbageSet 1, "chndata",SChnShow
+    
+
+kSlider1   cabbageGet "slider1"
+kSlider2   cabbageGet "slider2"
+kSlider3   cabbageGet "slider3"
+kSlider4   cabbageGet "slider4"
+kSlider5   cabbageGet "slider5"
+kSlider6   cabbageGet "slider6"
+kSlider7   cabbageGet "slider7"
+kSlider8   cabbageGet "slider8"
+kSlider9   cabbageGet "slider9"
+kSlider10  cabbageGet "slider10"
+kSlider11  cabbageGet "slider11"
+kSlider12  cabbageGet "slider12"
+kSlider13  cabbageGet "slider13"
+kSlider14  cabbageGet "slider14"
+kSlider15  cabbageGet "slider15"
+kSlider16  cabbageGet "slider16"
+kmPad1     cabbageGet "mpad1"
+kmPad2     cabbageGet "mpad2"
+kmPad3     cabbageGet "mpad3"
+kmPad4     cabbageGet "mpad4"
+kmPad5     cabbageGet "mpad5"
+kmPad6     cabbageGet "mpad6"
+kmPad7     cabbageGet "mpad7"
+kmPad8     cabbageGet "mpad8"
+
+
+
+if kChn == 1 && kCCslider == 1 then
+kSlider1 scale kSlider1, 15, 210, 0, 1
+kSlider2 scale kSlider2, 0.05, 5, 0, 1
+kSlider3 scale kSlider3, 0.001, 0.5, 0, 1
+kSlider4 scale kSlider4, 100, 4000, 0, 1
+cabbageSetValue "bpm1", int(kSlider1)
+cabbageSetValue "dur1", kSlider2
+cabbageSetValue "att1", kSlider3
+cabbageSetValue "filterseq1", int(kSlider4)
+cabbageSetValue "amp1", kSlider8
+kSlider9 scale kSlider9, 15, 210, 0, 1
+kSlider10 scale kSlider10, 0.05, 5, 0, 1
+kSlider11 scale kSlider11, 0.001, 0.5, 0, 1
+kSlider12 scale kSlider12, 100, 4000, 0, 1
+cabbageSetValue "bpm2", int(kSlider9)
+cabbageSetValue "dur2", kSlider10
+cabbageSetValue "att2", kSlider11
+cabbageSetValue "filterseq2", int(kSlider12)
+cabbageSetValue "amp2", kSlider16
+elseif kChn == 2 && kCCslider == 1 then
+kSlider1 scale kSlider1, 0.05, 20, 0, 1
+kSlider2 scale kSlider2, 0.05, 20, 0, 1
+kSlider3 scale kSlider3, 0.03, 5, 0, 1
+kSlider4 scale kSlider4, 0.1, 5, 0, 1
+kSlider6 scale kSlider6, 400, 2000, 0, 1
+kSlider8 scale kSlider8, 0.1, 3, 0, 1
+cabbageSetValue "lfobow1", kSlider1
+cabbageSetValue "lfobow2", kSlider2
+cabbageSetValue "bow1", kSlider3
+cabbageSetValue "bow2", kSlider4
+cabbageSetValue "bow3", kSlider5
+cabbageSetValue "bow4", kSlider6
+cabbageSetValue "bow5", kSlider8
+kSlider9  scale kSlider9, 0.05, 20, 0, 1
+kSlider10 scale kSlider10, 0.05, 20, 0, 1
+kSlider11 scale kSlider11, 0.1, 5, 0, 1
+kSlider13 scale kSlider13, 300, 8000, 0, 1
+kSlider16 scale kSlider16, 0.1, 3, 0, 1
+cabbageSetValue "lfoflt1", kSlider9
+cabbageSetValue "lfoflt2", kSlider10
+cabbageSetValue "flt1", kSlider11
+cabbageSetValue "flt2", kSlider12
+cabbageSetValue "flt3", kSlider13
+cabbageSetValue "flt4", kSlider16
+endif
+
+if kCCmPad = 1 then
+kmPad3 scale kmPad3, 0,1,0,127
+kmPad4 scale kmPad4, 0,1,0,127
+kmPad5 scale kmPad5, 0,1,0,127
+kmPad6 scale kmPad6, 0,1,0,127
+kBowTrg = (kmPad3+kmPad4) >= 1 ? 1 : 0
+kFltTrg = (kmPad5+kmPad6) >= 1 ? 1 : 0
+cabbageSetValue "bowonoff", kBowTrg
+cabbageSetValue "fltonoff", kFltTrg
+endif
+endin
 
 instr Widgets
 iDurMaster = 9^9
@@ -1395,6 +1351,7 @@ kRecord cabbageGet "rcrd"
 kSeq2Play cabbageGet "sq2"
 if kStart == 1 && changed(kStart) == 1 then
 schedulek "Time", 0, iDurMaster
+schedulek "MidiIn", 0, iDurMaster
 schedulek "speaker",0,iDurMaster
 elseif kStart == 0 && changed(kStart) == 1 then
 turnoff2 "Time", 0, 0
@@ -1402,6 +1359,7 @@ turnoff2 "seq", 0,0
 turnoff2 "Sound", 0,1
 turnoff2 "record", 0,0
 turnoff2 "speaker",0,0
+turnoff2 "MidiIn",0,0
 endif
     if kSeq2Play == 1 && changed(kSeq2Play) == 1 then
     schedulek "seq",0,iDurMaster, 1
@@ -1425,9 +1383,9 @@ endif
         rireturn
     kTrigWG cabbageGet "wgfolder"
     if     kTrigWG == 1 && changed(kTrigWG) == 1 then
-	cabbageSet 1, "pops1", "visible(1)"
+	cabbageSet 1, "pops2", "visible(1)"
     elseif kTrigWG == 0 && changed(kTrigWG) == 1 then
-	cabbageSet 1, "pops1", "visible(0)"
+	cabbageSet 1, "pops2", "visible(0)"
     endif
     kBowOnOff cabbageGet "bowonoff"
     if kBowOnOff == 1 && changed(kBowOnOff) == 1 then
@@ -1443,15 +1401,9 @@ endif
     endif
     kTrigFX cabbageGet "fxfolder"
     if     kTrigFX == 1 && changed(kTrigFX) == 1 then
-	cabbageSet 1, "pops2", "visible(1)"
+	cabbageSet 1, "pops4", "visible(1)"
     elseif kTrigFX == 0 && changed(kTrigFX) == 1 then
-	cabbageSet 1, "pops2", "visible(0)"
-    endif 
-    kTrigMidiFolder cabbageGet "midifolder"
-    if     kTrigMidiFolder == 1 && changed(kTrigMidiFolder) == 1 then
-	cabbageSet 1, "pops3", "visible(1)"
-    elseif kTrigMidiFolder == 0 && changed(kTrigMidiFolder) == 1 then
-	cabbageSet 1, "pops3", "visible(0)"
+	cabbageSet 1, "pops4", "visible(0)"
     endif 
 endin
 

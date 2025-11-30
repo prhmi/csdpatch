@@ -681,7 +681,6 @@ giSeq      ftgen   0, 0, 50, 7, 1, 10, 1, 0, -0.4, 10, -0.4, 0, 0.5, 10, 0.5, 0,
  giNote[]      init iLenSeq
  giArrEmpty[]  init iLenSeq
  giWriteNote   init 0
- gkWGnote init 0
 
 instr GetMidi ;1
  iActive active "GetMidi"
@@ -689,7 +688,6 @@ instr GetMidi ;1
  kHold cabbageGet "mpad8"
  kRel release
  iMidi notnum
- gkWGnote = iMidi
   if iActive == 1 then
   giArrNote[] = giArrEmpty
   giWriteNote = 0
@@ -1384,6 +1382,132 @@ STimer sprintfk "%02d : %02d", kMin, kSec
 cabbageSet 1, "sec", "text", STimer
 endin
 
+instr MidiIn
+kCC = 0
+kTime init 0
+if metro(100) == 1 then
+kTime += 0.01
+endif
+kType, kChn, kNum, kData midiin
+kDataOut init -1
+if kType == 176 then
+kCC = 1
+kNumOut, kDataOut setcc kNum,kData
+if kNum >= 21 && kNum <= 36 then
+SsliderNum sprintfk "slider%d",kNum-20
+cabbageSetValue SsliderNum , kData/127
+elseif kNum >= 59 && kNum <= 66 then
+SCCnum sprintfk "mpad%d",(kNum-58)
+cabbageSetValue SCCnum, kData
+endif
+	if changed(kNumOut,kDataOut) == 1 then
+	printks  "num=%d, value=%d\\n", -1, kNumOut,kDataOut
+	endif
+elseif kType == 192 then
+	if kNum <= 8 then
+	kccOct, kPrgOct, kNoteOct, kKnobOct setoct kNum,kTime
+	;printks  "cc=%d,	prg=%d,	note=%d,	knob=%d\\n", -1,\
+	 ;kccOct, kPrgOct, kNoteOct, kKnobOct
+	cabbageSetValue "ccoct",kccOct
+	cabbageSetValue "noteoct",kNoteOct
+	cabbageSetValue "prgoct",kPrgOct
+	cabbageSetValue "knoboct",kKnobOct
+	else
+	kNumOut, kTime setprgm kNum, kTime
+	;printks  "num=%d,	value=%.2f\\n", -1, kNumOut,kTime
+	SprgData sprintfk "%d - %.2f", kNumOut, kTime
+    cabbageSet 1, "prgdata", "text", SprgData
+	endif
+	if kNumOut == 12 then
+	kHold = kTime != 0 ? 1 : 0
+    cabbageSetValue "mpad8", kHold
+    elseif kNumOut == 11 then
+    kCC = 1
+    kBowOnOff = kTime != 0 ? 1 : 0
+    elseif kNumOut == 10 then
+    kCC = 1
+    kFltOnOff = kTime != 0 ? 1 : 0
+    endif
+ elseif kType == 160 then
+ kPrs = kData
+ ;printks  "num=%d,	value=%.2f\\n", -1, kNum,kPrs
+ elseif kType == 144 then
+ gkWGnote = kNum
+ endif
+ 
+kSlider1   cabbageGet "slider1"
+kSlider2   cabbageGet "slider2"
+kSlider3   cabbageGet "slider3"
+kSlider4   cabbageGet "slider4"
+kSlider5   cabbageGet "slider5"
+kSlider6   cabbageGet "slider6"
+kSlider7   cabbageGet "slider7"
+kSlider8   cabbageGet "slider8"
+kSlider9   cabbageGet "slider9"
+kSlider10  cabbageGet "slider10"
+kSlider11  cabbageGet "slider11"
+kSlider12  cabbageGet "slider12"
+kSlider13  cabbageGet "slider13"
+kSlider14  cabbageGet "slider14"
+kSlider15  cabbageGet "slider15"
+kSlider16  cabbageGet "slider16"
+kmPad1     cabbageGet "mpad1"
+kmPad2     cabbageGet "mpad2"
+kmPad3     cabbageGet "mpad3"
+kmPad4     cabbageGet "mpad4"
+kmPad5     cabbageGet "mpad5"
+kmPad6     cabbageGet "mpad6"
+kmPad7     cabbageGet "mpad7"
+kmPad8     cabbageGet "mpad8"
+if kCC == 1 then
+kSlider1 scale kSlider1, 15, 210, 0, 1
+kSlider2 scale kSlider2, 0.05, 5, 0, 1
+kSlider3 scale kSlider3, 100, 4000, 0, 1
+kSlider5 scale kSlider5, 0.001, 0.5, 0, 1
+cabbageSetValue "bpm1", int(kSlider1)
+cabbageSetValue "bpm2", int(kSlider1)
+cabbageSetValue "dur1", kSlider2
+cabbageSetValue "filterseq1", int(kSlider3)
+cabbageSetValue "amp1", kSlider4
+cabbageSetValue "att1", kSlider5
+cabbageSetValue "att2", kSlider5
+kSlider6 scale kSlider6, 0.05, 5, 0, 1
+kSlider7 scale kSlider7, 100, 4000, 0, 1
+cabbageSetValue "dur2", kSlider6
+cabbageSetValue "filterseq2", int(kSlider7)
+cabbageSetValue "amp2", kSlider8
+
+
+;;wg-bow
+kSlider9  scale kSlider9,  0.05, 20, 0, 1
+kSlider10 scale kSlider10, 0.03, 5, 0, 1
+kSlider12 scale kSlider12, 0.1, 5, 0, 1
+cabbageSetValue "lfobow1", kSlider9
+cabbageSetValue "lfobow2", kSlider9
+cabbageSetValue "bow1", kSlider10
+cabbageSetValue "bow3", kSlider11
+cabbageSetValue "bow5", kSlider12
+;wg-flute
+kSlider13 scale kSlider13,  0.05, 20, 0, 1
+kSlider14 scale kSlider14, 0.1, 5, 0, 1
+kSlider16 scale kSlider16, 0.1, 5, 0, 1
+
+cabbageSetValue "lfoflt1", kSlider13
+cabbageSetValue "lfoflt2", kSlider13
+cabbageSetValue "flt1", kSlider14
+cabbageSetValue "flt2", kSlider15
+cabbageSetValue "flt4", kSlider16
+
+
+;;wg-trig
+kmPad2 = kmPad2 != 0 ? 1 : 0
+kmPad3 = kmPad3 != 0 ? 1 : 0
+kBowTrg = (kmPad2+kBowOnOff) >= 1 ? 1 : 0
+kFltTrg = (kmPad3+kFltOnOff) >= 1 ? 1 : 0
+cabbageSetValue "bowonoff", kBowTrg
+cabbageSetValue "fltonoff", kFltTrg
+endif
+endin
 
 instr Widgets
 iDurMaster = 9^9
@@ -1395,6 +1519,7 @@ kRecord cabbageGet "rcrd"
 kSeq2Play cabbageGet "sq2"
 if kStart == 1 && changed(kStart) == 1 then
 schedulek "Time", 0, iDurMaster
+schedulek "MidiIn", 0, iDurMaster
 schedulek "speaker",0,iDurMaster
 elseif kStart == 0 && changed(kStart) == 1 then
 turnoff2 "Time", 0, 0
@@ -1402,6 +1527,7 @@ turnoff2 "seq", 0,0
 turnoff2 "Sound", 0,1
 turnoff2 "record", 0,0
 turnoff2 "speaker",0,0
+turnoff2 "MidiIn",0,0
 endif
     if kSeq2Play == 1 && changed(kSeq2Play) == 1 then
     schedulek "seq",0,iDurMaster, 1

@@ -1,6 +1,20 @@
+<Cabbage> bounds(0, 0, 0, 0)
+form size(500, 300), caption("Untitled") guiMode("queue")  colour(25, 25, 35) pluginId("crlp")
+;midi
+image bounds(10, 540, 491, 84) channel("cover6") colour(40, 40, 50, 255)
+label    bounds(14, 54, 85, 18)    channel("labelm1")  text("Octaves") 
+nslider bounds(162, 38, 45, 45) channel("prgoct") range(0, 9, 0, 1, 1) colour(37, 56, 75, 255) text("Prgm")
+nslider bounds(210, 38, 45, 45) channel("noteoct") range(-7, 7, 0, 1, 1) colour(37, 56, 75, 255) text("Note")
+nslider bounds(112, 38, 45, 45) channel("ccoct") range(0, 9, 0, 1, 1) colour(37, 56, 75, 255) text("CC")
+nslider bounds(260, 38, 45, 45) channel("knoboct") range(0, 9, 0, 1, 1) colour(37, 56, 75, 255) text("knob")
+label    bounds(14, 118, 85, 18)    channel("labelm2")  text("prgmTime") 
+label bounds(116, 114, 96, 28) channel("prgdata") fontColour(163, 209, 250, 255) colour(37, 56, 75, 255)  text("12") fontSize(20)
+checkbox bounds(220, 118, 25, 25) channel("holdmidi") colour:0(37, 56, 75, 255) colour:1(0, 154, 255, 255)
+</Cabbage>
+
 <CsoundSynthesizer>
 <CsOptions>
--m128
+-m128 -n --displays -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
 </CsOptions>
 <CsInstruments>
 
@@ -11,9 +25,9 @@ nchnls = 2
 
 
 massign 0, 0
-
 gkCCArr[] init 6
 gkCCIndx init 0
+
 opcode setcc, kk, kk
 kNum, kData xin
 kCCnum = kNum
@@ -49,7 +63,7 @@ if kTurnOff == 0 then
 	endif
 endif
 skip:
-if kNum >= 81 && kNum <= 88 then
+if kNum >= 21 && kNum <= 52 then
 kCConOff = kData
 	if kData != 0 then
 	kCConOff = 1
@@ -61,7 +75,7 @@ gkPrgRepArr[] init 2
 gkPrgmIndx init 0
 opcode setprgm, kk, kk
 kPrgNum,kTime xin
-iDur = 1.5
+iDur = 0.5
 if kTime >= iDur then
 kTime = 0
 gkPrgmIndx = 0
@@ -176,14 +190,25 @@ elseif kType == 192 then
 	kccOct, kPrgOct, kNoteOct, kKnobOct setoct kNum,kTime
 	printks  "cc=%d,	prg=%d,	note=%d,	knob=%d\\n", -1,\
 	 kccOct, kPrgOct, kNoteOct, kKnobOct
+	cabbageSetValue "ccoct",kccOct
+	cabbageSetValue "noteoct",kNoteOct
+	cabbageSetValue "prgoct",kPrgOct
+	cabbageSetValue "knoboct",kKnobOct
 	else
 	kNumOut, kTime setprgm kNum, kTime
 	printks  "num=%d,	value=%.2f\\n", -1, kNumOut,kTime
+	SprgData sprintfk "%d - %.2f", kNumOut, kTime
+    cabbageSet 1, "prgdata", "text", SprgData
 	endif
+	if kNumOut == 12 then
+	kHold = kTime != 0 ? 1 : 0
+	printk2 int(kHold)
+    cabbageSetValue "holdmidi", kHold
+    endif
  elseif kType == 160 then
  kPrs = kData
  printks  "num=%d,	value=%.2f\\n", -1, kNum,kPrs
-endif
+ endif
 endin
 
 
@@ -192,40 +217,3 @@ endin
 i 1 0 9999 
  </CsScore>
 </CsoundSynthesizer>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>0</x>
- <y>0</y>
- <width>0</width>
- <height>0</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="background">
-  <r>240</r>
-  <g>240</g>
-  <b>240</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>
