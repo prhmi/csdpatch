@@ -2,32 +2,19 @@
 ; Written by Parham Izadyar, 2022-2024
 ; parhamizadyar.net
 <Cabbage>
-form caption("Blur") size(500,300), pluginId("blur") colour( 30, 30, 50) guiMode("queue")
+form caption("Blur") size(240,400), pluginId("blur") colour( 30, 30, 50) guiMode("queue")
 ;image bounds(0, 0, 220, 150) file("back.jpg")
-combobox   bounds(120, 18, 57, 23), text("128","256","512","1024","2048","4096","8192"), channel("fft"), value(4), fontColour(255,255,255) colour(56, 63, 79, 255)
-rslider bounds(26, 48, 85, 85) channel("size") text("Blur Size") range(0.5, 10, 1, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1)
-checkbox  bounds(298, 20, 75, 21), text("Metro") , channel("metro")   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255),  fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
-checkbox  bounds(28, 20, 75, 21), text("On/Off") , channel("onoff")   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255),  fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
-rslider bounds(422, 220, 73, 72), channel("mix"), text("Mix"), range(0, 1, 1, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1) 
-combobox   bounds(120, 46, 101, 23), text("scrtch", "blur", "scrtch & blur"), channel("blurmod"), value(2), fontColour(255,255,255) colour(56, 63, 79, 255)
-hslider bounds(114, 74, 174, 25) channel("rel") range(0.1, 5, 0.5, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("Rel")
-hslider bounds(114, 100, 174, 25) channel("strt") range(0.1, 2, 0.5, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("start")
-
-hslider bounds(28, 138, 263, 25) channel("stch") range(1, 20, 10, 1, 1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("blur time")
-hslider bounds(298, 50, 200, 25) channel("spdmin") range(0.2, 3, 0.7, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("spd min")
-hslider bounds(298, 82, 200, 25) channel("spdmax") range(1, 5, 2, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("spd max")
-hslider bounds(298, 110, 200, 25) channel("sizemin") range(0.2, 2, 0.8, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("size min")
-hslider bounds(298, 138, 200, 25) channel("sizemax") range(1, 5, 2, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("size max")
-hslider bounds(298, 168, 200, 25) channel("durblur") range(0.5, 2, 1.2, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("dur blur")
-
-hslider bounds(28, 164, 263, 25) channel("blurres") range(0.1, 2, 0.6, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("blur res")
-checkbox  bounds(28, 194, 75, 21), channel("rvrb")  text("Reverb")  , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255),  fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
-hslider bounds(28, 218, 230, 25) channel("rvrbsize") range(0.2, 0.9, 0.6, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("Reverb Size")
-hslider bounds(28, 246, 230, 25) channel("rvrbmins") range(1, 5, 3, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("Reverb res")
-hslider bounds(260, 218, 150, 25) channel("rvrbmin") range(0.7, 5, 1, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("min")
-hslider bounds(260, 246, 150, 25) channel("rvrbmax") range(1, 12, 3, 1, 0.1) trackerColour(198, 231, 231, 255) valueTextBox(1) text("max")
-
-
+combobox   bounds(134, 64, 57, 23), text("1024","2048","4096","8192"), channel("fft"), value(3), fontColour(255,255,255) colour(56, 63, 79, 255)
+rslider bounds(32, 56, 60, 60) channel("size") text("Size") range(0, 1, 0.3, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) 
+rslider bounds(32, 184, 60, 60) channel("spd") text("speed") range(0, 1, 0.7, 1, 0.01) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) 
+rslider bounds(144, 184, 60, 60) channel("rng") text("range") range(0, 0.4, 0.1, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) 
+checkbox  bounds(30, 154, 75, 21), text("Metro") , channel("metro")   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255),  fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+checkbox  bounds(30, 20, 75, 21), text("On/Off") , channel("onoff")   , colour:1(236, 255, 0, 255) colour:0(113, 113, 113, 255),  fontColour:0(255, 255, 255, 255) fontColour:1(255, 255, 255, 255)
+rslider bounds(144, 302, 60, 60), channel("mix"), text("Mix"), range(0, 1, 1, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255)  
+rslider bounds(32, 302, 60, 60), channel("maingain"), text("Gain"), range(0, 4, 1, 1, 0.001) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255)  
+combobox   bounds(134, 92, 85, 23), text("scrtch", "blur", "sch & blr"), channel("blurmod"), value(1), fontColour(255,255,255) colour(56, 63, 79, 255)
+image bounds(22, 136, 200, 3) channel("image10009") colour(135, 162, 173, 255)
+image bounds(22, 276, 200, 3) channel("image10010") colour(135, 162, 173, 255)
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
@@ -39,170 +26,171 @@ ksmps = 64
 0dbfs = 1
 ;nchnls = 1
 
-giTableL    ftgen  0, 0, 60*sr, 2, 0
-giTableR    ftgen  0, 0, 60*sr, 2, 0
-giTableLength = ftlen(giTableL) / sr
+giTable1    ftgen  0, 0, 15*sr, 2, 0
+giTable2    ftgen  0, 0, 15*sr, 2, 0
+
+
+giTableLength = ftlen(giTable1)/sr
 
 
 seed 0
 
 
-opcode blurMe, aa,aaiki
-aInL,aInR, iFFTsize, kBlurSize,iResl xin
-	ioverlap = iFFTsize/4 
+opcode blurMe, a,aik
+aIn, iFFTsize, kBlurSize xin
+	ioverlap = iFFTsize/4
 	iwinsize = iFFTsize
-	iwintype = 1 
-fftinL		pvsanal	aInL, iFFTsize, ioverlap, iwinsize, iwintype
-fftblurL	pvsblur	fftinL, kBlurSize, iResl; blur
-aOutL		pvsynth	fftblurL
-
-fftinR		pvsanal	aInR, iFFTsize, ioverlap, iwinsize, iwintype
-fftblurR	pvsblur	fftinR, kBlurSize, iResl; blur
-aOutR		pvsynth	fftblurR
-
-xout aOutL, aOutR
+	iwintype = 1
+fftin	pvsanal	aIn, iFFTsize, ioverlap, iwinsize, iwintype
+fftblur	pvsblur	fftin, kBlurSize, 1; blur
+aOut		pvsynth	fftblur
+xout aOut
 endop
 
-
-instr Record
-aInL chnget "sndl"
-aInR chnget "sndr"
-iAtt = 0.1
-iRel = 0.5
-aEnv	transegr	0,iAtt,1, 1, iRel, -6, 0
+gaAudio init 0
+instr Record1
 aPointer linseg 0, giTableLength, giTableLength*sr
-tablew aInL*aEnv, aPointer, giTableL
-tablew aInR*aEnv, aPointer, giTableR
-chnclear "sndl"
-chnclear "sndr"
+tablew gaAudio, aPointer, giTable1
+endin
+
+instr Record2
+aPointer linseg 0, giTableLength, giTableLength*sr
+tablew gaAudio, aPointer, giTable2
 endin
 
 
-instr Play
-iSize = p4
-kSize cabbageGet "size"
-kStrchMin cabbageGet "stch"
-kBlurSize = kSize/kStrchMin
-
-kMod cabbageGet "blurmod"
-aStretchL paulstretch iSize, 1, giTableL
-aStretchR paulstretch iSize, 1, giTableR
-iAtt = 0.1
-iRel cabbageGetValue "rel"
-aEnv	transegr	0,iAtt,1, 1, iRel, -6, 0
-if kMod == 1 then
-aOutL = aStretchL
-aOutR = aStretchR
-endif
-
-iFFTsizeIn cabbageGetValue "fft"
+instr Play1
+iFFTsizeIn = p4+3
 iFFTsize = 2^(iFFTsizeIn+6)
+iSize = p5
+iStrchSize = iSize*10
+kBlurSize = iSize*2
+   aStretch paulstretch iStrchSize, 1, giTable1
+kMod cabbageGet "blurmod"
+iAtt = 0.1
+iRel = p3/2
+aEnv	linsegr	0,iAtt, 1, iRel, 0
 aPointer linseg 0, giTableLength, 1
-aInL table aPointer,giTableL, 1
-aInR table aPointer,giTableR, 1
-iReso cabbageGetValue "blurres"
-
-if kMod == 2 then
-aBlurL, aBlurR blurMe aInL, aInR,iFFTsize,kBlurSize,iReso
-aOutL = aBlurL
-aOutR = aBlurR
+aIn table aPointer,giTable1, 1
+if kMod == 1 then
+aOut = aStretch
+elseif kMod == 2 then
+aBlur blurMe aIn,iFFTsize,kBlurSize
+aOut = aBlur
+elseif kMod == 3 then
+aStBlur blurMe aStretch,iFFTsize,kBlurSize
+aOut = aStBlur
 endif
-
-
-if kMod == 3 then
-aStBlurL, aStBlurR blurMe aStretchL, aStretchR,iFFTsize,kBlurSize,iReso
-aOutL = aStBlurL
-aOutR = aStBlurR
-endif
-
-kRvrb cabbageGet "rvrb"
-kRvrbSizeIn cabbageGet "rvrbsize"
-kRvrbMines cabbageGet "rvrbmins"
-kRvrbMin cabbageGet "rvrbmin"
-kRvrbMax cabbageGet "rvrbmax"
-kRvrbSize = (kRvrbSizeIn+kBlurSize)
-if kRvrb == 1 then
-kMixRnd = jspline:k(0.4, kRvrbMin, kRvrbMax) + 0.5
-
-aRvbL, aRvbR  freeverb aOutL, aOutR,kRvrbSize/3, kRvrbSize;,1
-aRvbMixL		ntrpol		aOutR, aRvbL , kMixRnd
-aRvbMixR		ntrpol		aOutR, aRvbR , kMixRnd
-aOutL = aRvbMixL
-aOutR = aRvbMixR
-endif
-
-
-chnmix aOutL*aEnv, "outl"
-chnmix aOutR*aEnv, "outr"
+chnmix aOut*aEnv, "out1"
 endin
 
+instr Play2
+iFFTsizeIn = p4+3
+iFFTsize = 2^(iFFTsizeIn+6)
+iSize = p5
+iStrchSize = iSize*10
+kBlurSize = iSize*2
+   aStretch paulstretch iStrchSize, 1, giTable2
+kMod cabbageGet "blurmod"
+iAtt = 0.1
+iRel = p3/2
+aEnv	linsegr	0,iAtt, 1, iRel, 0
+aPointer linseg 0, giTableLength, 1
+aIn table aPointer,giTable2, 1
+if kMod == 1 then
+aOut = aStretch
+elseif kMod == 2 then
+aBlur blurMe aIn,iFFTsize,kBlurSize
+aOut = aBlur
+elseif kMod == 3 then
+aStBlur blurMe aStretch,iFFTsize,kBlurSize
+aOut = aStBlur
+endif
+chnmix aOut*aEnv, "out2"
+endin
 
 instr Widgets
 ;aInL,aInR diskin2 "../flute.wav", 1, 0, 1
-
+iDurMaster = 9^9
 
 iCh = nchnls
-
 if iCh == 1 then
 aInL inch 1
 aInR inch 1
 elseif  iCh == 2 then
 aInL, aInR ins
 endif
+aIn = aInL+aInR
+;aInL,aInR diskin "test.wav", 1, 0, 1
+gaAudio = aIn
 
-chnmix aInL, "sndl"
-chnmix aInR, "sndr"
  kSize cabbageGet "size" 
  kOnOff cabbageGet "onoff"
- kMetro cabbageGet "metro"
- kSpeedMin cabbageGet "spdmin"
- kSpeedMax cabbageGet "spdmax"
- kSizeMin cabbageGet "sizemin"
- kSizeMax cabbageGet "sizemax"
- kDur cabbageGet "durblur"
- kReso cabbageGet "blurres"
- kStartIn cabbageGet "strt"
- kStart = kSize*kStartIn
- if kOnOff == 1 && changed(kOnOff) == 1 && kMetro == 0 then
- schedulek "Record", 0, 9999
- schedulek "Play", kStart, 9999,kSize
- elseif kOnOff == 0 && kMetro == 0 then
- turnoff2 "Record", 0, 1
- turnoff2 "Play", 0, 1
- elseif kOnOff == 0 && kMetro == 1 then
-  kTimePlay init 1
- if metro(1/kTimePlay) == 1  then
- kDurPlay = kTimePlay*kDur
- kSize random kSizeMin, kSizeMax
- schedulek "Record", 0, kDurPlay
- schedulek "Play", kStart, kDurPlay, kSize
- kTimePlay random kSpeedMin, kSpeedMax
- endif
- endif
+ kFFTsize cabbageGet "fft"
  
+ if changed(kSize) == 1 || changed(kFFTsize) == 1 then
+ turnoff2 "Play1", 0, 1
+ turnoff2 "Play2", 0, 1
+ turnoff2 "Record1", 0, 1
+ turnoff2 "Record2", 0, 1
+ cabbageSetValue "onoff", k(0)
+ cabbageSetValue "metro", k(0)
+ endif
+kMetro cabbageGet "metro"
+ 
+ if     kOnOff == 1 && changed(kOnOff) == 1 && kMetro == 0 then
+ schedulek "Record1", 0, iDurMaster
+ schedulek "Play1", 0.1, iDurMaster, kFFTsize, kSize
+ elseif kOnOff == 0 && changed(kOnOff) == 1 then
+ turnoff2 "Record1", 0, 1
+ turnoff2 "Play1", 0, 1
+ endif
 
-kMix cabbageGet "mix"
-aOutL chnget "outl" 
-aOutR chnget "outr" 
-kPortTime linseg 0, 0.001, 0.05
- kMix portk kMix, kPortTime
-	aMixL		ntrpol		aInL, aOutL, kMix
-	aMixR		ntrpol		aInR, aOutR, kMix
-	
-	if iCh == 1 then
-out aMixL
-elseif  iCh == 2 then
-	outs aMixL, aMixR
+kTimeIn cabbageGet "spd"
+kRng cabbageGet "rng"
+
+kSpeed init 1
+;printk2 kSpeed
+if kMetro == 1 && kOnOff == 0 then
+
+if metro(1/kSpeed) == 1 then
+kSpeed scale kTimeIn, 20, 1, 0, 1
+kDur = kSpeed/2
+kStart = kSpeed/2
+kSize1 = kSize+(rand:k(kRng))
+kSize1 limit kSize1, 0, 1
+ schedulek "Record1", 0, kDur
+ schedulek "Play1", 0.1, kDur, kFFTsize, kSize1
+kSize2 = kSize+(rand:k(kRng))
+kSize2 limit kSize2, 0, 1
+ schedulek "Record2",kStart    , kDur
+ schedulek "Play2"  ,kStart+0.1, kDur, kFFTsize, kSize2
 endif
 
- chnclear "outl"
- chnclear "outr"
+endif
+
+kMainGain cabbageGet "maingain"
+aMainGain interp kMainGain
+
+kMix cabbageGet "mix"
+aOut1 chnget "out1" 
+aOut2 chnget "out2" 
+aOut sum aOut1, aOut2
+kPortTime linseg 0, 0.001, 0.05
+ kMix portk kMix, kPortTime
+	aMixL		ntrpol		aInL, aOut, kMix
+	aMixR		ntrpol		aInR, aOut, kMix
+aOutL = aMixL*aMainGain
+aOutR = aMixR*aMainGain	
+out aOutL, aOutR
+
+ chnclear "out1", "out2"
 
 endin
 
 </CsInstruments>
 <CsScore>
-i "Widgets" 0 [6^6]
+i "Widgets" 0 [9^9]
 </CsScore>
 </CsoundSynthesizer>
 
