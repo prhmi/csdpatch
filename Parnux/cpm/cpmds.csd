@@ -1,6 +1,6 @@
 
 <Cabbage>
-form caption("CPM-DS2")    size(965, 520)   guiMode("queue")  colour(20, 20, 20) pluginId("cpmd") ; style("legacy")
+form caption("CPM-DS2")    size(965, 520)   guiMode("queue")  colour(20, 20, 20) pluginId("cpmd") ;style("legacy")
 ;;LFO
 image bounds(30, 25, 215, 469) channel("lfoback") colour(20, 20, 20, 255) outlineColour(200, 200, 200, 255) outlineThickness(2) corners(5)
 label bounds(84, 30, 98, 16) channel("label10002") text("ULTRA LFO")
@@ -87,7 +87,7 @@ rslider bounds(782, 230, 50, 50) channel("fb")    range(0, 0.95, 0.3, 1, 0.01) o
 rslider bounds(840, 230, 50, 50) channel("dldep") range(0, 0.3, 0, 1, 0.001) outlineColour(60, 60, 60, 255) text("lfo dep") trackerColour(243, 243, 243, 255)
 rslider bounds(900, 230, 50, 50) channel("dlmix") range(0, 1, 0, 1, 0.01) trackerColour(243, 243, 243, 255) outlineColour(60, 60, 60, 255) text("D mix")
 rslider bounds(728, 340, 50, 50) channel("rsize") range(0.1, 0.9, 0.3, 1, 0.01) outlineColour(60, 60, 60, 255) text("size") trackerColour(243, 243, 243, 255)
-combobox bounds(804, 350, 64, 23) channel("mixmons") colour(70, 69, 69, 255) text("mono", "stereo") value(1)
+combobox bounds(804, 350, 64, 23) channel("mixmons") colour(70, 69, 69, 255) text("stereo", "mono") value(1)
 rslider bounds(896, 340, 50, 50) channel("rmix")  range(0, 1, 0, 1, 0.01) trackerColour(243, 243, 243, 255) outlineColour(60, 60, 60, 255) text("R mix")
 image bounds(743, 297, 190, 3) channel("mixerimg2") colour(166, 166, 166, 255)
 label bounds(730, 192, 68, 18) channel("mixerlabel2") text("Delay")
@@ -95,6 +95,7 @@ label bounds(730, 306, 68, 18) channel("mixerlabel3") text("Reverb")
 image bounds(743, 183, 190, 3) channel("mixerimg3") colour(166, 166, 166, 255)
 signaldisplay bounds(736, 400, 211, 104), channel("display") colour("white") displayType("waveform"), backgroundColour(30,30,30), zoom(-2), signalVariable("aShow")
 
+checkbox bounds(788, 140, 17, 17) channel("fbsel") colour:0(108, 106, 106, 255) colour:1(255, 43, 0, 255)
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
@@ -140,9 +141,21 @@ aIn, kSize, kMix xin
  xout aOutL, aOutR
 endop
 
+
+opcode rspstep, a, kkkk
+kMin,kMax, kSpdMin, kSpdMax xin
+kTimeRnd = (kSpdMin+kSpdMax)/2
+kTime randomh kSpdMin,kSpdMax,kTimeRnd
+kOut randomh kMin, kMax, kTime
+kPortTime randomh 0.01,0.2,kTimeRnd
+kOut portk kOut, kPortTime
+aOut interp kOut
+xout aOut
+endop
+
 opcode myFbk, k, a
 aIn xin
-  adRnd1     rspline 0.08, 0.1, 2, 4
+ adRnd1     rspline 0.08, 0.1, 2, 4
  adRnd2     rspline 0.01, 0.5, 2, 4
  aBuffer    delayr    5
  ad1        deltapi   adRnd1
@@ -161,8 +174,13 @@ kSpeedMin scale kFb, 0.02, 2, 0, 1
 kSpeedMax scale kFb, 0.04, 3, 0, 1
 kRngMin scale kFb, 300, 3000, 0, 1
 kRngMax scale kFb, 400, 7000, 0, 1
-adRnd1     rspline 0.01, 0.2, kSpeedMin, kSpeedMax
-adRnd2     rspline 0.02, 0.08, kSpeedMin, kSpeedMax
+  if cabbageGet:k("fbsel") == 0 then
+  adRnd1     rspline 0.01, 0.2, kSpeedMin, kSpeedMax
+  adRnd2     rspline 0.02, 0.08, kSpeedMin, kSpeedMax
+  elseif cabbageGet:k("fbsel") == 1 then
+  adRnd1     rspstep 0.01, 0.2, kSpeedMin, kSpeedMax
+  adRnd2     rspstep 0.02, 0.08, kSpeedMin, kSpeedMax
+  endif
  aBuffer    delayr    5
  ad1        deltapi   adRnd1
  ad2        deltapi   adRnd2
@@ -416,7 +434,6 @@ aDrone2 = gaDrone2*aEnv
 aAUX inch 1
 ;aAUX diskin "fox.wav", 1, 0, 1
   kCC init 1
-  kNote init 1000
 kstatus, kchan, kdata1, kdata2 midiin 
   if kstatus == 176 && kchan == 1 then
   kCC scale kdata2, 10, 0.1, 127, 0
@@ -434,8 +451,9 @@ kInput myWave aDrone2
 kFrq = kFrqIn*kInput*10
 elseif kPchIn == 4 && kdata1 == 21 then
 kFrq = kFrqIn*10*kCC
-elseif kPchIn == 5 then
+elseif kPchIn == 5 && kNote != 0 then
 kFrq = (kFrqIn*10)+(mtof:k(kNote))
+printk2 kNote
 elseif kPchIn == 6 then
 kInput myFbk gaLFO1
 kFrq = (kFrqIn*10)+(gkLFO1*25)
@@ -464,7 +482,7 @@ if kPWMIn != 1 then
   elseif kPWMIn == 4 && kdata1 == 22 then 
   kInput scale kCC, 100, 1000, 0.1, 10
   kInputS = int(kInput/50)*50
-  elseif kPWMIn == 5 then 
+  elseif kPWMIn == 5 && kNote != 0 then 
   kInput scale kNote, 100, 1000, 48, 72
   kInputS = int(kInput/50)*50
   elseif kPWMIn == 6 then 
@@ -539,7 +557,7 @@ aSound ntrpol aDrone, aSub, kSubMix
   elseif kCutIn == 4 && kdata1 == 23 then 
   kFilter scale kCC, 200, 4000, 0.1, 10
   kFilter = kFilt+(int(kFilter/10)*10)
-  elseif kCutIn == 5 then 
+  elseif kCutIn == 5 && kNote != 0 then
   kFilter scale kNote, 200, 4000, 48, 72
   kFilter = kFilt+(int(kFilter/10)*10)
     if kFilter <= 50 then
@@ -649,7 +667,6 @@ aDrone1 = gaDrone1*aEnv
 aAUX inch 1
 ;aAUX diskin "fox.wav", 1, 0, 1
   kCC init 1
-  kNote init 1000
 kstatus, kchan, kdata1, kdata2 midiin 
   if kstatus == 176 && kchan == 1 then
   kCC scale kdata2, 10, 0.1, 127, 0
@@ -667,7 +684,7 @@ kInput myWave aFilt
 kFrq = kFrqIn*kInput
 elseif kPchIn == 4 && kdata1 == 21 then
 kFrq = kFrqIn*10*kCC
-elseif kPchIn == 5 then
+elseif kPchIn == 5 && kNote != 0 then
 kFrq = (kFrqIn*10)+(mtof:k(kNote))
 elseif kPchIn == 6 then
 kInput myFbk gaLFO1
@@ -697,7 +714,7 @@ if kPWMIn != 1 then
   elseif kPWMIn == 4 && kdata1 == 22 then 
   kInput scale kCC, 100, 1000, 0.1, 10
   kInputS = int(kInput/50)*50
-  elseif kPWMIn == 5 then 
+  elseif kPWMIn == 5 && kNote != 0 then 
   kInput scale kNote, 100, 1000, 48, 72
   kInputS = int(kInput/50)*50
   elseif kPWMIn == 6 then 
@@ -772,7 +789,7 @@ aSound ntrpol aDrone, aSub, kSubMix
   elseif kCutIn == 4 && kdata1 == 23 then 
   kFilter scale kCC, 200, 4000, 0.1, 10
   kFilter = kFilt+(int(kFilter/10)*10)
-  elseif kCutIn == 5 then 
+  elseif kCutIn == 5 && kNote != 0 then 
   kFilter scale kNote, 200, 4000, 48, 72
   kFilter = kFilt+(int(kFilter/10)*10)
     if kFilter <= 50 then
@@ -813,6 +830,14 @@ kFb     cabbageGet "mainfb"
 kFbMod  cabbageGet "fbmod"
 kMonos cabbageGet "mixmons"
 
+if changed(kFbMod) == 1 then
+reinit RESET
+endif
+
+
+RESET:
+aSound init 0
+
 if     kFbMod == 1 then
 aSound = aIn
 elseif kFbMod == 2 then
@@ -825,6 +850,7 @@ aFb myFba aIn2, kFb, kMixFb
 aSound = aFb+aIn1
 endif
 
+rireturn
 
 
 kDlyTimeIn cabbageGet "dlyt"
