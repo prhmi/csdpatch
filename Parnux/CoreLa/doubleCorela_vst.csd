@@ -1,10 +1,10 @@
 ;v5
 <Cabbage>
-form caption("DoubleCoreLa")    size(785, 540)   guiMode("queue")  colour(25, 25, 35) pluginId("crlp") ; style("legacy")
+form caption("DoubleCoreLa")    size(785, 500)   guiMode("queue")  colour(25, 25, 35) pluginId("crlp") ; style("legacy")
 ;double corela
 image bounds(10, 15, 764, 386) channel("image10045") colour(19, 19, 24, 255)
-image bounds(10, 410, 365, 116) channel("image10046") colour(19, 19, 24, 255)
-image bounds(380, 410, 397, 115) channel("image10047") colour(19, 19, 24, 255)
+image bounds(10, 410, 224, 72) channel("image10046") colour(19, 19, 24, 255)
+image bounds(237, 410, 540, 73) channel("image10047") colour(19, 19, 24, 255)
 label    bounds(30, 104, 28, 12)    channel("label3")  text("seq") 
 label    bounds(30, 144, 28, 12)   channel("label5")  text("bss")
 label    bounds(30, 124, 28, 12)   channel("label6")  text("rep")
@@ -21,15 +21,15 @@ checkbox bounds(568, 274, 18, 18)  channel("rvrs2")   popupText("Synth")        
 checkbox bounds(20, 32, 18, 18)   channel("sq2")     popupText("Start")           colour:0(100, 100, 100, 255) colour:1(100, 250, 60, 255)  value(1)
 nslider  bounds(90, 29, 60, 45)     channel("bpm1")   range(10, 210, 90, 1, 1)    fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("BPM") 
 nslider  bounds(150, 44, 40, 30)    channel("DV1")     range(1, 16, 4, 1, 1)       fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("DV") 
-nslider  bounds(192, 35, 40, 40)    channel("steps1")  range(1, 28, 13, 1, 1)     fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("Step")
+nslider  bounds(192, 35, 40, 40)    channel("steps1")  range(1, 24, 13, 1, 1)     fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("Step")
 nslider  bounds(90, 236, 60, 45)   channel("bpm2")    range(10, 250, 90, 1, 1)   fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("BPM") 
 nslider  bounds(150, 250, 40, 30)  channel("DV2")     range(1, 16, 4, 1, 1)      fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("DV") 
-nslider  bounds(192, 240, 40, 40)  channel("steps2")  range(1, 28, 13, 1, 1)      fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("Step")
+nslider  bounds(192, 240, 40, 40)  channel("steps2")  range(1, 24, 13, 1, 1)      fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("Step")
 nslider  bounds(464, 236, 45, 38)  channel("oct2")  range(-4, 4, 0, 1, 1)      fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("octv") 
 nslider  bounds(464, 36, 45, 38)  channel("oct1")  range(-4, 4, 0, 1, 1)      fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("octv") 
 
-nslider bounds(340, 34, 90, 40) channel("att1") range(0.0001, 0.5, 0.001, 1, 0.0001) fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("att")
-nslider bounds(340, 240, 90, 40) channel("att2") range(0.0001, 0.5, 0.001, 1, 0.0001)  fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("att")
+nslider bounds(340, 34, 90, 40) channel("att1") range(0, 0.5, 0.001, 1, 0.0001) fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("att")
+nslider bounds(340, 240, 90, 40) channel("att2") range(0, 0.5, 0.001, 1, 0.0001)  fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("att")
 nslider bounds(246, 34, 90, 40) channel("dur1") range(0.05, 5, 1.5, 1, 0.01) fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("duration")
 nslider bounds(244, 240, 90, 40) channel("dur2") range(0.05, 5, 1.5, 1, 0.01)  fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("duration")
 vslider bounds(710, 18, 50, 150) channel("amp1") range(0, 1, 0.55, 1, 0.001) trackerColour(160, 200, 250, 255)text("ampS1")
@@ -47,19 +47,16 @@ nslider bounds(614, 160, 90, 40) channel("filterseq1") range(100, 12000, 800, 1,
 nslider bounds(618, 346, 90, 40) channel("filterseq2") range(100, 12000, 800, 1, 1) fontColour(220, 234, 245, 255) colour(50, 60, 70, 255)  text("Filter")
 
 ;time
-
-button bounds(272, 420, 88, 27) channel("start") text("S  T  A  R  T", "S  T  O  P") colour:0(124, 150, 204, 255) colour:1(69, 72, 96, 255) value(1)
-
 combobox bounds(506, 424, 57, 27)  channel("tune")  text("440", "432")   value(2) colour(50, 54, 60, 255)
-combobox bounds(598, 422, 58, 31), populate("*.snaps"), channelType("string") automatable(0) channel("combo99") value("0")  colour(50, 54, 60, 255) text("oo")
-filebutton bounds(660, 424, 50, 25), text("Save", "Save"), populate("*.snaps", "test"), mode("named preset") channel("filebutton8")  colour:0(50, 54, 60, 255)
-filebutton bounds(716, 424, 50, 25), text("Rmv", "Rmv"), populate("*.snaps", "test"), mode("remove preset") channel("filebutton101")  colour:0(50, 54, 60, 255)
+combobox bounds(650, 424, 58, 31), populate("*.snaps"), channelType("string") automatable(0) channel("combo99") value("0")  colour(50, 54, 60, 255) 
+filebutton bounds(716, 448, 50, 20), text("Save", "Save"), populate("*.snaps", "test"), mode("named preset") channel("filebutton8")  colour:0(50, 54, 60, 255)
+filebutton bounds(716, 424, 50, 20), text("Rmv", "Rmv"), populate("*.snaps", "test"), mode("remove preset") channel("filebutton101")  colour:0(50, 54, 60, 255)
 
 ;output
-hmeter bounds(526, 470, 125, 15) channel("meter1")  outlineColour(0, 0, 0, 255), overlayColour(0, 0, 0, 255)    outlineThickness(0)    value(0) meterColour:0(0, 193, 250, 255) 
-hmeter bounds(526, 492, 125, 15) channel("meter2")  outlineColour(0, 0, 0, 255), overlayColour(0, 0, 0, 255)    outlineThickness(0)    value(0) meterColour:0(0, 193, 250, 255)
-nslider bounds(688, 464, 77, 44) channel("maingain") range(-90, 50, 0, 1, 1) colour(49, 64, 79, 255) text("Master Gain")
-signaldisplay bounds(390, 466, 123, 46), channel("display") colour("white") displayType("waveform"), backgroundColour(40,40,60), zoom(-1), signalVariable("aShow")
+hmeter bounds(370, 424, 125, 15) channel("meter1")  outlineColour(0, 0, 0, 255), overlayColour(0, 0, 0, 255)    outlineThickness(0)    value(0) meterColour:0(0, 193, 250, 255) 
+hmeter bounds(370, 444, 125, 15) channel("meter2")  outlineColour(0, 0, 0, 255), overlayColour(0, 0, 0, 255)    outlineThickness(0)    value(0) meterColour:0(0, 193, 250, 255)
+nslider bounds(568, 422, 77, 44) channel("maingain") range(-90, 50, 0, 1, 1) colour(49, 64, 79, 255) text("Master Gain")
+signaldisplay bounds(242, 418, 123, 46), channel("display") colour("white") displayType("waveform"), backgroundColour(40,40,60), zoom(-1), signalVariable("aShow")
 ;WgPad
 groupbox bounds(0, 25, 480, 380), text("WG"), plant("pop1"), popup(1), visible(0) colour(20, 20, 20), channel("pops1") {
 button bounds(22, 48, 80, 40), channel("bowonoff"), alpha(1), colour:0(70, 70, 80) colour:1(50, 80, 150) text("bow start", "bow stop")
@@ -80,7 +77,7 @@ image bounds(42, 200, 400, 3) channel("wgwg") colour(128, 126, 126, 255)
 ;flute
 button bounds(22, 228, 80, 40), channel("fltonoff"), alpha(1), colour:0(70, 70, 80) colour:1(50, 80, 150) text("flute start", "flute stop")
 rslider bounds(142, 296, 60, 60) channel("lfoflt1") range(0.05, 20, 1, 1, 0.01) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255)  text("jet-rate")
-rslider bounds(398, 296, 60, 60) channel("lfoflt2") range(0.05, 20, 1, 1, 0.01) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255)  text("flt-rate")
+rslider bounds(398, 296, 60, 60) channel("lfoflt2") range(0.05, 20, 1, 1, 0.01) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255)  text("filt-rate")
 combobox bounds(256, 308, 75, 27)  channel("lfomodflt1")  text("line", "step", "seq")   value(2) colour(50, 54, 60, 255)
 combobox bounds(25, 318, 74, 27)  channel("fltfrqmod")  text("seq", "MIDI", "CC")   value(2) colour(50, 54, 60, 255)
 rslider bounds(142, 230, 60, 60) channel("flt1") range(0.1, 5, 0.56, 1, 0.01) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255)  text("jet")
@@ -91,14 +88,14 @@ image bounds(50, 284, 20, 20) channel("fltled") colour(40, 40, 50, 255)
 image bounds(210, 302, 20, 20) channel("fltledlfo1") colour(40, 40, 50, 255)
 image bounds(360, 302, 20, 20) channel("fltledlfo2") colour(40, 40, 50, 255)
 }
-button bounds(20, 464, 80, 40), channel("wgfolder"), alpha(1), colour:0(70, 70, 80) colour:1(50, 80, 150) text("W-G", "running")
+button bounds(20, 424, 80, 40), channel("wgfolder"), alpha(1), colour:0(70, 70, 80) colour:1(50, 80, 150) text("W-G", "running")
 
 
 ;effects
 groupbox bounds(0, 25, 600, 430), text("Fx package"), plant("pop2"), popup(1), visible(0) colour(20, 20, 20), channel("pops2") {
 label    bounds(24, 80, 70, 18)    channel("labelfx1")  text("Seq") 
 combobox bounds(10, 30, 83, 34) channel("dlymod") text("sync", "sec") colour(50, 54, 60, 255) value(1)
-rslider bounds(100, 30, 90, 90) channel("dlyt1") range(0.1, 3, 0.1, 1, 0.01) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255) valueTextBox(1) text("delay")
+rslider bounds(100, 30, 90, 90) channel("dlyt1") range(0.1, 3, 0.4, 1, 0.01) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255) valueTextBox(1) text("delay")
 rslider bounds(180, 30, 90, 90) channel("dlyfb1") range(0.1, 0.9, 0.3, 1, 0.01) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255) valueTextBox(1) text("fb")
 rslider bounds(260, 30, 90, 90) channel("dlymix1") range(0, 1, 0.3, 1, 0.1) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255) valueTextBox(1) text("d mix")
 rslider bounds(340, 30, 90, 90) channel("rvrbsize1") range(0.2, 0.9, 0.6, 1, 0.01) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255) valueTextBox(1) text("reverb")
@@ -120,19 +117,8 @@ rslider bounds(420, 290, 90, 90) channel("rvrbmix3") range(0, 1, 0.6, 1, 0.1) tr
 rslider bounds(500, 290, 90, 90) channel("lowfseq3") range(20, 1000, 0.6, 1, 10) trackerColour(54, 203, 233, 255) colour(139, 162, 171, 255) valueTextBox(1) text("HPF")
 
 }
-button bounds(108, 464, 80, 40), channel("fxfolder"), alpha(1), colour:0(70, 70, 80) colour:1(50, 80, 150) text("Effects", "running")
-;;midi
-groupbox bounds(0, 25, 400, 200), text("Midi Setting"), plant("pop3"), popup(1), visible(0) colour(20, 20, 20), channel("pops3") {
-label    bounds(14, 54, 85, 18)    channel("labelm1")  text("Octaves") 
-nslider bounds(162, 38, 45, 45) channel("prgoct") range(0, 9, 0, 1, 1) colour(37, 56, 75, 255) text("Prgm")
-nslider bounds(210, 38, 45, 45) channel("noteoct") range(-7, 7, 0, 1, 1) colour(37, 56, 75, 255) text("Note")
-nslider bounds(112, 38, 45, 45) channel("ccoct") range(0, 9, 0, 1, 1) colour(37, 56, 75, 255) text("CC")
-nslider bounds(260, 38, 45, 45) channel("knoboct") range(0, 9, 0, 1, 1) colour(37, 56, 75, 255) text("knob")
-label    bounds(14, 118, 85, 18)    channel("labelm2")  text("prgmTime") 
-label bounds(116, 114, 96, 28) channel("prgdata") fontColour(163, 209, 250, 255) colour(37, 56, 75, 255)  text("12") fontSize(20)
-}
-button bounds(196, 464, 80, 40), channel("midifolder"), , colour:0(70, 70, 80, 255) colour:1(50, 80, 150, 255) text("Midi Set", "running")
-checkbox bounds(334, 472, 25, 25) channel("mpad8") colour:0(37, 56, 75, 255) colour:1(0, 154, 255, 255)
+button bounds(108, 424, 80, 40), channel("fxfolder"), alpha(1), colour:0(70, 70, 80) colour:1(50, 80, 150) text("Effects", "running")
+checkbox bounds(196, 438, 25, 25) channel("mpad8") colour:0(37, 56, 75, 255) colour:1(0, 154, 255, 255)
 
 
 </Cabbage>
@@ -755,8 +741,9 @@ ksel = 0
 kNoteIn = giNote[ksel]
 kSeqIndx   init 0
 kNoteIndx  init 0
-
-
+if changed(kSteps) == 1 then
+kSeqIndx = 0
+endif
 iStepsNotes = giSteps*((p4-1)*3)
 iStepsRep = giSteps*(((p4-1)*3)+1)
 iStepsBass = giSteps*(((p4-1)*3)+2)
@@ -819,28 +806,20 @@ iStepsBass = giSteps*(((p4-1)*3)+2)
     schedulek "LEDon",0,0.1,kSeqIndx, p4
     schedulek "LEDoff",1/kTime,0.1,kSeqIndx, p4
         if kSeqIndx == 0 && changed(kSeqIndx) == 1 then 
-            if kRndWidget == 1 && changed(kRndWidget) == 1 && p4 == 1 then
-            schedulek "resetArr", 0.1, 1, 1
-            elseif kRndWidget == 2 && p4 == 1 then
-            schedulek "RndtWidget", 0.1, 1, 1
-            elseif kRndWidget == 3 && p4 == 1 then
-            schedulek "RndaWidget", 0.1, 1, 1
-            elseif kRndWidget == 4 && p4 == 1 then
-            schedulek "resetArr", 0.1, 1, 1
-            schedulek "RndiWidget", 0.2, 1, 1
-            endif
-            if kRndWidget == 1 && changed(kRndWidget) == 1 && p4 == 2 then
-            schedulek "resetArr", 0.1, 1, 2
-            elseif kRndWidget == 2 && p4 == 2 then
-            schedulek "RndtWidget", 0.1, 1, 2
-            elseif kRndWidget == 3 && p4 == 2 then
-            schedulek "RndaWidget", 0.1, 1, 2
-            elseif kRndWidget == 4 && p4 == 2 then
-            schedulek "resetArr", 0.1, 1, 2
-            schedulek "RndiWidget", 0.2, 1, 2
+        ;printk 1/10, random:k(0, 10)
+            if kRndWidget == 1 then
+            schedulek "resetArr", 0.1, 0.1, p4
+            elseif kRndWidget == 2 then
+            schedulek "RndtWidget", 0.1, 0.1, p4
+            elseif kRndWidget == 3 then
+            schedulek "RndaWidget", 0.1, 0.1, p4
+            elseif kRndWidget == 4 then
+            schedulek "resetArr", 0.1, 0.1, p4
+            schedulek "RndiWidget", 0.2, 0.1, p4
             endif
         endif
-    kSeqIndx = (kSeqIndx+1) % kSteps
+        printk2 kSteps
+    kSeqIndx = (kSeqIndx+1) % int(kSteps)
     endif
     
 endin
@@ -889,7 +868,7 @@ iBaseNoteIn   = cabbageGetValue:i(sprintf:S("BNote%d",p8))
 iScale        = cabbageGetValue:i(sprintf:S("scale%d",p8))
 iRvrs         = cabbageGetValue:i(sprintf:S("rvrs%d",p8))
 iSineMod      = cabbageGetValue:i(sprintf:S("sound%d",p8))
-kFilterL      = cabbageGet:k(sprintf:S("lowfseq%d",p8))
+kFilterL     cabbageGet "lowfseq1"
 kpw     = 0.5
 iAmp   = iAmpIn
 
@@ -1057,7 +1036,9 @@ kFrqMod    cabbageGet "bowfrqmod"
   kFilt = kFiltIn+(kLFO2*kLFOdep2)
   kPose = kPoseIn
   endif 
+
 iAmp   ampdb -5
+kFrq init 50
 if     kFrqMod == 1 then
 kFrq mtof gkNote
 elseif kFrqMod == 2 then
@@ -1066,11 +1047,25 @@ elseif kFrqMod == 3 then
 kCCnote scale gkCCnote, 10, 1200, 0, 127
 kFrq = kCCnote
 endif
-kFrq init 50
+
 kPresIn init 1.4
 kPoseIn init 0.1
 kVibr init 0
 iPres random 1.4, 4.5
+
+
+ScolorF sprintfk "colour(%d, 40, 50, 255)", 40+(kFrq*10)
+Scolor1 sprintfk "colour(%d, 40, 50, 255)", 40+(kLFO1*10)
+Scolor2 sprintfk "colour(%d, 40, 50, 255)", 40+(kLFO2*5000)
+cabbageSet 1, "bowledlfo1", Scolor1
+cabbageSet 1, "bowledlfo2", Scolor2
+cabbageSet 1, "bowled", ScolorF
+if release() == 1 then
+cabbageSet 1, "bowledlfo1", "colour(40, 40, 50, 255)"
+cabbageSet 1, "bowledlfo2", "colour(40, 40, 50, 255)"
+cabbageSet 1, "bowled", "colour(40, 40, 50, 255)"
+endif
+
 
 aBow	wgbow    iAmp,kFrq,iPres,kPose,0, kVibr, giSeq
 aFilter clfilt aBow, kFrq+kFilt, 0, 10
@@ -1113,6 +1108,7 @@ kFrqMod    cabbageGet "fltfrqmod"
 
 
 iAmp   ampdb -5
+kFrq init 50
 if     kFrqMod == 1 then
 kFrq mtof gkNote
 elseif kFrqMod == 2 then
@@ -1122,7 +1118,21 @@ kCCnote scale gkCCnote, 10, 1200, 0, 127
 kFrq = kCCnote
 endif
 
-kFrq init 50
+
+
+
+ScolorF sprintfk "colour(%d, 40, 50, 255)", 40+(kFrq*10)
+Scolor1 sprintfk "colour(%d, 40, 50, 255)", 40+(kLFO1*10)
+Scolor2 sprintfk "colour(%d, 40, 50, 255)", 40+(kLFO2*5000)
+cabbageSet 1, "fltledlfo1", Scolor1
+cabbageSet 1, "fltledlfo2", Scolor2
+cabbageSet 1, "fltled", ScolorF
+if release() == 1 then
+cabbageSet 1, "fltledlfo1", "colour(40, 40, 50, 255)"
+cabbageSet 1, "fltledlfo2", "colour(40, 40, 50, 255)"
+cabbageSet 1, "fltled", "colour(40, 40, 50, 255)"
+endif
+
 kJet init 0.085
 iatt = 0.1
 idetk = 0.1
@@ -1340,11 +1350,15 @@ instr RndaWidget
 SlenChn sprintf "steps%d",p4   
 iLenIn cabbageGetValue SlenChn
 iSteps = ((p4-1)*giSteps)*3
-iLen = iLenIn+iSteps
-    indx = 0
-    while indx < iLenIn do
-    iRnd = random:i(0, 100) > 40 ? 0 : 1
-    Ssq sprintf "sqsteps%d",indx+iSteps 
+iLen = iSteps+giSteps
+    indx = iSteps
+    while indx < iLen do
+      if indx < (iLenIn+iSteps) then
+      iRnd = random:i(0, 100) > 60 ? 0 : 1
+      else
+      iRnd = 0
+      endif
+    Ssq sprintf "sqsteps%d",indx 
     cabbageSetValue Ssq,iRnd
     indx += 1
     od
@@ -1387,8 +1401,7 @@ instr Widgets
 iDurMaster = 9^9
     schedule "widgetWrite", 0, 1
     
-kStart init 0
-kStart cabbageGet "start"
+kStart init 1
 kRecord cabbageGet "rcrd"
 kSeq2Play cabbageGet "sq2"
 if kStart == 1 && changed(kStart) == 1 then
