@@ -1,6 +1,8 @@
-; parnux VSTe v5.2, Cabbage v2.9.0
-; Written by Parham Izadyar, 2022-2024
-; parhamizadyar.net
+/*
+Ramkal VSTe package v6.0
+written by parham izadyar | 2020-225 | cabbage v2.9.0
+parhamizadyar.net
+*/
 <Cabbage>
 form caption("Tremolo") size(420, 100)  guiMode("queue")  colour(30,30,50)  pluginId("trml")
 ;image bounds(0, 142, 300, 150) file("3DPan.jpg") channel("image3")

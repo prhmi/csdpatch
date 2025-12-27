@@ -1,3 +1,8 @@
+/*
+Ramkal VSTe package v6.0
+written by parham izadyar | 2020-225 | cabbage v2.9.0
+parhamizadyar.net
+*/
 <Cabbage>
 form caption("vcf") size(250, 370), guiMode("queue") pluginId("vcfo") colour(30,30,50)
 rslider bounds(26, 50, 60, 60), channel("filt"), range(100, 4000, 400, 1, 1), text("Filt"), textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) 
@@ -21,7 +26,7 @@ label bounds(88, 282, 80, 16) channel("label10012") text("output")
 <CsInstruments>
 ; Initialize the global variables. 
 ksmps = 32
-nchnls = 2
+;nchnls = 2
 0dbfs = 1
 
 

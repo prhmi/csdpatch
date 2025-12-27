@@ -1,6 +1,8 @@
-; parnux VSTe v5.2, Cabbage v2.9.0
-; Written by Parham Izadyar, 2022-2024
-; parhamizadyar.net
+/*
+Ramkal VSTe package v6.0
+written by parham izadyar | 2020-225 | cabbage v2.9.0
+parhamizadyar.net
+*/
 <Cabbage>
 form caption("Blur") size(240,400), pluginId("blur") colour( 30, 30, 50) guiMode("queue")
 ;image bounds(0, 0, 220, 150) file("back.jpg")

@@ -1,10 +1,11 @@
-; parnux VSTe v5.2, Cabbage v2.9.0
-; Written by Parham Izadyar, 2022-2024
-; parhamizadyar.net
+/*
+Ramkal VSTe package v6.0
+written by parham izadyar | 2020-225 | cabbage v2.9.0
+parhamizadyar.net
+*/
 <Cabbage>
 form caption("Freeze") size(300,215) pluginId("frze") guiMode("queue") colour(30,30, 50)
 ;image bounds(0, 0, 300, 215) file("back.jpg")
-
 checkbox  bounds(116, 12, 75, 21) text("Random")  channel("metro")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)
 checkbox  bounds(18, 12, 73, 21) text("Freeze")  channel("frznow")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)
 checkbox  bounds(206, 12, 77, 21) text("AmpRnd")  channel("ampnow")  colour:1(236, 255, 0, 255) colour:0(96, 95, 95, 255) fontColour:0(243, 243, 243, 255) fontColour:1(243, 243, 243, 255)

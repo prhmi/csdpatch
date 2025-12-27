@@ -1,6 +1,8 @@
-; parnux VSTe v5.2, Cabbage v2.9.0
-; Written by Parham Izadyar, 2022-2024
-; parhamizadyar.net
+/*
+Ramkal VSTe package v6.0
+written by parham izadyar | 2020-225 | cabbage v2.9.0
+parhamizadyar.net
+*/
 <Cabbage>
 form caption("Shift") size(520, 250)  guiMode("queue")  colour(30,30,50)  pluginId("shft")
 rslider bounds(14, 10, 73, 72), channel("psh"), text("Pitch"), range(-1200, 1200, 0, 1, 1) textColour(255, 255, 255, 255) trackerColour(198, 231, 231, 255) outlineColour(0, 0, 0, 255)  fontColour(255, 255, 255, 255) valueTextBox(1) 
