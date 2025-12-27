@@ -1,4 +1,8 @@
-;v5
+/*
+parnux VSTi package v6.0
+written by parham izadyar | 2020-2025 | cabbage v2.9.0
+parhamizadyar.net
+*/
 <Cabbage>
 form caption("DoubleCoreLa")    size(785, 500)   guiMode("queue")  colour(25, 25, 35) pluginId("crlp") ; style("legacy")
 ;double corela
