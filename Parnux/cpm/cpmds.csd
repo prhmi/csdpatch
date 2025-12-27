@@ -1,4 +1,8 @@
-
+/*
+parnux VSTi package v6.0
+written by parham izadyar | 2020-2025 | cabbage v2.9.0
+parhamizadyar.net
+*/
 <Cabbage>
 form caption("CPM-DS2")    size(965, 520)   guiMode("queue")  colour(20, 20, 20) pluginId("cpmd") ;style("legacy")
 ;;LFO
