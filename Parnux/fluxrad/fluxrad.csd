@@ -1,25 +1,24 @@
 
 <Cabbage>
 form caption("FluxRad")    size(880, 620)   guiMode("queue") colour(20,20,40) pluginId("flrd") ; style("legacy")
-label bounds(664, 140, 185, 37) channel("sec") fontColour(169, 196, 219, 255) text(" 0 : 00 : 05")s
-button bounds(700, 74, 110, 35) channel("start") colour:0(102, 102, 113, 255) colour:1(50, 80, 150) text("S  T  A  R  T", "S  T  O  P") value(1)
+label bounds(664, 84, 185, 37) channel("sec") fontColour(169, 196, 219, 255) text(" 0 : 00 : 08")s
 ;;radio input
 image bounds(360, 422, 274, 176) channel("cover8") colour(30, 30, 50, 255)
-
 image bounds(24, 36, 302, 282) channel("cover1") colour(30, 30, 50, 255)
 image bounds(24, 354, 302, 244) channel("cover12") colour(30, 30, 50, 255)
+hmeter bounds(30, 292, 187, 16) channel("rline") outlineColour(0, 0, 0, 255) overlayColour(50, 50, 80, 255)    value(0.331562) corners(0) meterColour:0(120, 182, 207, 255)
 
 nslider bounds(228, 260, 50, 35) channel("ampn1") range(-60, 20, -5, 1, 1)  colour(37, 56, 75, 255)
 rslider bounds(110, 218, 60, 60) channel("rvspd") range(10, 180, 10, 1, 1) text("speed") trackerColour(111, 157, 217, 255)
 rslider bounds(40, 218, 60, 60) channel("rvmix") range(0, 1, 0, 1, 0.001) text("rvrs mix") trackerColour(111, 157, 217, 255)
 label bounds(74, 182, 121, 16) channel("labelr100") text("Revers-Machine")
-button bounds(40, 176, 25, 25) channel("metrorvs") colour:0(70, 70, 80) colour:1(50, 150, 250) text("") value(1)
+button bounds(40, 176, 25, 25) channel("metrorvs") colour:0(70, 70, 80) colour:1(50, 150, 250) text("") value(0)
 label bounds(68, 60, 101, 16) channel("labelr1001") text("FX-Machine")
 button bounds(40, 50, 25, 25) channel("metrofx") colour:0(70, 70, 80) colour:1(50, 150, 250) text("") value(0)
 rslider bounds(40, 90, 60, 60) channel("fxspd") range(10, 180, 50, 1, 1) text("speed") trackerColour(111, 157, 217, 255)
 label bounds(186, 60, 101, 16) channel("labelr10s") text("blur-control")
 
-rslider bounds(192, 90, 60, 60) channel("blrspd") range(10, 180, 70, 1, 1) text("speed") trackerColour(111, 157, 217, 255)
+rslider bounds(192, 90, 60, 60) channel("blrspd") range(0, 10, 0, 1, 1) text("speed") trackerColour(111, 157, 217, 255)
 
 vmeter bounds(292, 156, 15, 143) channel("meter1")  outlineColour(0, 0, 0, 255), overlayColour(0, 0, 0, 255)      value(0.39405)    outlineThickness(0) meterColour:0(250, 10, 0, 255) meterColour:1(10, 120, 40, 255) meterColour:2(10, 70, 200, 255)
 label bounds(510, 498, 118, 16) channel("labelpp11") text("pitch-Machine")
@@ -36,6 +35,7 @@ button bounds(532, 48, 90, 35) channel("frzply") colour:0(70, 70, 80) colour:1(5
 rslider bounds(372, 52, 60, 60) channel("rndfrz") range(0.2, 7, 0.5, 1, 0.1) text("frz time") trackerColour(111, 157, 217, 255)
 rslider bounds(436, 52, 60, 60) channel("rndamp") range(1, 12, 4, 1, 0.1) text("amp time") trackerColour(111, 157, 217, 255)
 image bounds(594, 94, 20, 20) channel("frzshow") colour(30, 30, 30, 255)
+image bounds(570, 94, 20, 20) channel("ampshow") colour(30, 30, 30, 255)
 ;loop
 image bounds(361, 134, 272, 130) channel("cover3") colour(30, 30, 50, 255)
 button bounds(532, 146, 90, 35) channel("loopply") colour:0(70, 70, 80) colour:1(50, 80, 150) text("loop", "running") value(0)
@@ -52,7 +52,12 @@ rslider bounds(500, 338, 60, 60) channel("tnstep") range(20, 200, 80, 1, 1) text
 rslider bounds(564, 338, 60, 60) channel("tngain") range(0.01, 2, 0.1, 1, 0.01) text("gain") trackerColour(111, 157, 217, 255)
 
 ;tapeRecord
-
+image bounds(648, 133, 217, 245) channel("cover5") colour(30, 30, 50, 255)
+button bounds(764, 146, 90, 35) channel("tapeply") colour:0(70, 70, 80) colour:1(50, 80, 150) text("tape", "running") value(0)
+hmeter bounds(662, 198, 149, 16) channel("rcline1") outlineColour(0, 0, 0) overlayColour(50, 50, 80)   meterColour:0(120, 182, 207) value(0.5)
+hmeter bounds(662, 230, 149, 16) channel("rcline2") outlineColour(0, 0, 0) overlayColour(50, 50, 80)   meterColour:0(120, 182, 207) value(0.5)
+rslider bounds(660, 274, 60, 60) channel("tapepch1") range(-2400, 1200, 0, 1, 50) text("cent1") trackerColour(111, 157, 217, 255)
+rslider bounds(724, 274, 60, 60) channel("tapepch2") range(-2400, 1200, 0, 1, 50) text("cent2") trackerColour(111, 157, 217, 255)
 
 ;output
 image bounds(649, 391, 216, 204) channel("cover10") colour(30, 30, 50, 255)
@@ -71,22 +76,27 @@ rslider bounds(248, 390, 60, 60) channel("noiseplay4") range(0, 70, 10, 1, 1) te
 rslider bounds(250, 486, 60, 60) channel("noiseplay6") range(0.1, 7, 3, 1, 0.01) text("gain") trackerColour(111, 157, 217, 255)
 button bounds(44, 496, 100, 40), channel("noiseply"), alpha(1), colour:0(70, 70, 80) colour:1(50, 80, 150) text("noise", "running")
 
+nslider bounds(380, 286, 88, 37) channel("tflt") range(1, 10, 1, 1, 0.1) text("filter") colour(42, 50, 55, 255)
+checkbox bounds(826, 196, 20, 20) channel("tr1") colour:0(58, 63, 67, 255) colour:1(255, 72, 0, 255)
+checkbox bounds(826, 228, 20, 20) channel("tr2") colour:0(58, 63, 67, 255) colour:1(255, 72, 0, 255)
+
+
+
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
--m128 -n --displays -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
+-m128 --displays ; -n -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
 </CsOptions>
 <CsInstruments>
 
-;sr = 44100
+sr = 48000
 ksmps = 64
 nchnls = 2
 0dbfs = 1
 
 
-massign 1, "noteMidi"
-pgmassign 0, 0
-ctrlinit 1,58,64
+;pgmassign 0, 0
+;ctrlinit 1,58,64
 
 
 
@@ -97,8 +107,6 @@ giTableLen = ftlen(giTable) / sr
 
 giTabRec1 ftgen 0, 0, giTableSize*sr, 2, 0
 giTabRec2 ftgen 0, 0, giTableSize*sr, 2, 0
-giTabRec3 ftgen 0, 0, giTableSize*sr, 2, 0
-giTabRec4 ftgen 0, 0, giTableSize*sr, 2, 0
 
 seed 0
 
@@ -198,9 +206,11 @@ endin
 
 instr radioTabRec
  gkTableTime line 0, 1, 1
-; aIn inch 1
+ aIn1 inch 1
+ aIn2 inch 2
+ aIn sum aIn1, aIn2
  iStart random 0, 40
- aIn diskin "radio.wav", 1, iStart, 1
+; aIn diskin "radio.wav", 1, iStart, 1
  kAmpdB cabbageGet "ampn1"
  kAmp ampdb kAmpdB
  aRadio linen aIn*kAmp, 0.01, p3, 0.01
@@ -225,6 +235,7 @@ instr radioPlay
  kLop cabbageGet "loopply"
  kTnr cabbageGet "tunerply"
  kPch cabbageGet "pchply"
+ kTpe cabbageGet "tapeply"
  kLoopMix cabbageGet "rvmix"
  
  iStart = i(gkTableTime)
@@ -235,17 +246,23 @@ instr radioPlay
  
 
 kSpeedBlr cabbageGet "blrspd"
- kMixBlr = int(randomh:k(0, 100,1/kSpeedBlr)) < 35 ? 0 : 1 
-   printk2 kMixBlr
-   kMixBlrOut port kMixBlr, 0.1
+if kSpeedBlr == 0 then
+kMixBlrOut = 0 
+else
+kMixBlr = int(randomh:k(0, 100,1/kSpeedBlr)) > 40 ? 0 : 1 
+kMixBlrOut port kMixBlr, 0.1
+endif
  
- kBlurSize = 0.4 ;randomh 1, 5, 3
+ kBlurSize = 0.2 ;randomh 1, 5, 3
  aBlur blurMe aMix, kBlurSize, kMixBlrOut
  
  aOut = aBlur
- if kFrz == 1 || kLop == 1 || kTnr == 1 || kPch == 1 then
+ if kSpeedBlr != 0 && //
+ (kFrz == 1 || kLop == 1 || kTnr == 1 || kPch == 1 || kTpe == 1) then
  ;aOut = aBlur*0
  aOut blurMe aMix*0.3, kBlurSize, 1
+ elseif kFrz == 1 || kLop == 1 || kTnr == 1 || kPch == 1 || kTpe == 1 then
+ aOut = a(0)
  endif
  
  chnmix aOut, "out"
@@ -262,6 +279,7 @@ instr radioFrz
  aMix ntrpol aIn,aRvrs, kLoopMix
  
  kTrig = int(randomh:k(0,2,kTime))
+ printk2 kTrig
 Scolor sprintfk "colour(%d, %d,%d)", (80*kTrig)+30,(80*kTrig)+30,(150*kTrig)+30
  cabbageSet 1, "frzshow", Scolor
  aFrz FrzMono aMix,kTrig
@@ -269,9 +287,14 @@ Scolor sprintfk "colour(%d, %d,%d)", (80*kTrig)+30,(80*kTrig)+30,(150*kTrig)+30
  kLFOfrq rspline 1, kTimeAmp, 2, 5
  if kTrig == 1 && kTimeAmp > 1 then
  aLFO lfo 1, kLFOfrq, 3
+ kLFO lfo 1, kLFOfrq, 3
  else
  aLFO = 1
+ kLFO = 0
  endif
+ Scolor2 sprintfk "colour(%d, %d,%d)", (80*kLFO)+30,(80*kLFO)+30,(150*kLFO)+30
+ cabbageSet 1, "ampshow", Scolor2
+ 
  aOut = aEnv*aLFO
  chnmix aOut, "out"
 endin
@@ -319,6 +342,7 @@ instr tunerRadio
  kFrqFltrUp   cabbageGet "tnmin"
  kFrqFltrDown cabbageGet "tnmax"
  kFrqPort cabbageGet "tnstep"
+  kTflt cabbageGet "tflt"
  kFrqPort = int(kFrqPort/10)*10
 
  until kFrq < kFrqFltrUp do
@@ -332,9 +356,10 @@ instr tunerRadio
  kFrq = int(kFrq/kFrqPort)*kFrqPort
 ; printk2 kFrq
  kamp portk kamp, kPortTime*2
- aSine1 poscil ampdb(kamp), kFrq
+ aSine1 vco2 ampdb(kamp), kFrq, 2, 0.5
+ aSine1 clfilt aSine1, kFrq*kTflt, 0, 50
  aSine2 poscil ampdb(kamp)/2, kFrq*1.5
- aOut = (aSine1+aSine2)*kGain
+ aOut = (aSine1)*kGain
 ; outall aSine*0.5
 Schn sprintf "out%d", 1
 chnmix aOut, "out"
@@ -352,12 +377,12 @@ kNoiseIn cabbageGet "noiseplay2"
 kRng cabbageGet "noiseplay3"
 kFrq cabbageGet "noiseplay4"
 kharsh scale kNoiseIn, 10, 2
- aGauss1 gausstrig 50, kRng, 0.8
- aGauss2 gaussi kRng/2, 0.3, kFrq
+ aGauss1 gausstrig kRng*5, kFrq*5, 0.8
+ aGauss2 gaussi kRng/2, kRng/50, kFrq
  aWNoise noise 0.8, 0.5
  aNoise = (aWNoise+aGauss1+aGauss2)*kharsh
  aFb init 1
- kFb scale kNoiseIn, 120, 20
+ kFb scale kNoiseIn, 170, 10
  iDelayTime  random 0.1, 0.25
  aNoise = (aNoise*kFb)+aFb
     aSine poscil 1, aNoise
@@ -424,25 +449,87 @@ aSound   temposcal kSpeed*kRvrs, iAmp, kPitch, giTable, 1
 ;outall aSound
 endin
 
+
 ;schedule "pchspd", 1, 9999
+
+gkTapeTime1 init 0
+gkTapeTime2 init 0
+gkTapeLen1  init 0
+gkTapeLen2  init 0
+
+instr taperec1
+kRadioLine phasor 1/giTableSize
+kTimeLine line 0, 1, 1
+if kTimeLine >= giTableSize then
+turnoff
+endif
+gkTapeTime1 = kTimeLine
+gkTapeLen1 = kRadioLine
+cabbageSetValue "rcline1", kRadioLine
+iStart = i(gkTableTime)
+ iPhase = iStart/giTableLen
+ aIn    poscil 1, (1/giTableLen),  giTable,iPhase
+ aLine linseg 0, giTableLen, giTableLen*sr
+ tablew aIn, aLine, giTabRec1
+endin
+
+instr taperec2
+kRadioLine phasor 1/giTableSize
+kTimeLine line 0, 1, 1
+if kTimeLine >= giTableSize then
+turnoff
+endif
+gkTapeTime2 = kTimeLine
+gkTapeLen2 = kRadioLine
+cabbageSetValue "rcline2", kRadioLine
+iStart = i(gkTableTime)
+ iPhase = iStart/giTableLen
+ aIn    poscil 1, (1/giTableLen),  giTable,iPhase
+ aLine linseg 0, giTableLen, giTableLen*sr
+ tablew aIn, aLine, giTabRec2
+endin
+
+
+instr tape1
+kPchIn cabbageGetValue "tapepch1"
+kPchRnd jspline 50, 2, 7
+kPch = cent:k(kPchIn+kPchRnd)
+iTime = i(gkTapeTime1)
+iLen = i(gkTapeLen1)
+kRadioLine phasor 1/iTime*kPch
+cabbageSetValue "rcline1", kRadioLine
+aPointer =  (phasor:a(1/iTime*kPch))*iLen
+aSound table aPointer,giTabRec1,1
+chnmix aSound, "out"
+endin
+
+instr tape2
+kPchIn cabbageGetValue "tapepch2"
+kPchRnd jspline 50, 2, 7
+kPch = cent:k(kPchIn+kPchRnd)
+iTime = i(gkTapeTime2)
+iLen = i(gkTapeLen2)
+kRadioLine phasor 1/iTime*kPch
+cabbageSetValue "rcline2", kRadioLine
+aPointer =  (phasor:a(1/iTime*kPch))*iLen
+aSound table aPointer,giTabRec2,1
+chnmix aSound, "out"
+endin
+
+;schedule "tape", 1, 9999
 
 instr speakers
  aIn chnget "out"
  kMasterdB cabbageGet "outn1"
  kMaster ampdb kMasterdB
  aMaster interp kMaster
-aShow1 = aIn
-aShow2 = aIn*5
-display	aShow1, 1/100, 1
-dispfft aShow1, 1/100, 1024
-display	aShow2, 1/100, 1
-dispfft aShow2, 1/100, 512
-cabbageSet "display2", "displayType", "spectroscope"
-cabbageSet "display2", "skew", 2
+aShow1 = aIn*aMaster
+display	aShow1, 1/1000, 5
 aOut = aIn*aMaster
  kMax max_k aOut, metro(20), 1
  cabbageSetValue "meter2", kMax, metro(20)
- outall aOut
+ out aOut,aOut
+ ;fout "record.wav", 8, aOut
  chnclear "out"
 endin
 
@@ -463,171 +550,12 @@ instr time
 endin
 
 
-instr midi
-kPad1  ctrl7 1,51,0,1
-kPad2  ctrl7 1,52,0,1
-kPad3  ctrl7 1,53,0,1
-kPad4  ctrl7 1,54,0,1
-kPad5  ctrl7 1,55,0,1
-kPad6  ctrl7 1,56,0,1
-kPad7  ctrl7 1,57,0,1
-kPad8  ctrl7 1,58,0,1
-
-
-
-kMetroFx cabbageGet "metrofx"
-kActive1 active "radioFrz"
-kActive2 active "loopMachine"
-kActive3 active "tunerRadio"
-kActive4 active "radioNoise"
-kActive5 active "pchspd"
-
-kActive = kActive1+kActive2+kActive3+kActive4+kActive5
-
-
-
-if kMetroFx == 0 then
-   cabbageSetValue "frzply",   kPad1
-   cabbageSetValue "loopply",  kPad2
-   cabbageSetValue "tunerply", kPad3
-   cabbageSetValue "pchply",   kPad4
-endif    
-      cabbageSetValue "noiseply", kPad5 
-      cabbageSetValue "metrofx",  kPad6
-      cabbageSetValue "metrorvs", kPad7
-      cabbageSetValue "metropch", kPad8
-
-
-kslider3  ctrl7 1,13,0,1
-kslider4  ctrl7 1,14,0,1
-kslider5  ctrl7 1,15,0,1
-kslider6  ctrl7 1,16,0,1
-kslider7  ctrl7 1,17,0,1
-kslider8  ctrl7 1,18,0,1
-
-
-kslider9    ctrl7 1,19,10,180
-kslider10   ctrl7 1,20,10,180
-kslider11   ctrl7 1,21,10,180
-
-cabbageSetValue "fxspd", kslider9
-cabbageSetValue "blrspd", kslider10
-cabbageSetValue "rvspd", kslider11
-
-;kslider15   ctrl7 1,25,-60,20
-;kslider16  ctrl7 1,26,-60,20
-;cabbageSetValue "ampn1", kslider15
-;cabbageSetValue "outn1", kslider16
-;
-kPchMachine cabbageGet "metropch" 
-
-if kPad5 == 0 then
-    if kPad7 == 0 then
-    kslider1  ctrl7 1,11,0,1
-    cabbageSetValue "rvmix", kslider1
-    elseif kPad7 == 1 then
-    kslider1  ctrl7 1,11,30,120
-    cabbageSetValue "rvspd", kslider1
-    endif
- 
-    kslider2  ctrl7 1,12,1,12
-    kslider3  ctrl7 1,13,0.3,10
-    kslider4  ctrl7 1,14,2,12
-    kslider5  ctrl7 1,15,300,900
-    kslider6  ctrl7 1,16,20,200
-    kslider7  ctrl7 1,17,0.01,2
-    kslider8  ctrl7 1,18,0,1
-    cabbageSetValue "rndfrz", kslider2/2
-    cabbageSetValue "rndamp", kslider2
-    cabbageSetValue "lptime", kslider3
-    cabbageSetValue "lprep", kslider4
-    cabbageSetValue "tnmin", kslider5
-    cabbageSetValue "tnmax", kslider5+200
-    cabbageSetValue "tnstep", kslider6
-        if kPchMachine == 0 then
-        kslider7  ctrl7 1,17,0.2,1.5
-        kslider8  ctrl7 1,18,0.2,1.5
-        cabbageSetValue "pchpch", kslider7
-        cabbageSetValue "pchspd", kslider8
-        elseif kPchMachine == 1 then
-        kslider7  ctrl7 1,17,1,7
-        kslider8  ctrl7 1,18,1,7
-        cabbageSetValue "pchmetro", kslider7
-        cabbageSetValue "spdmetro", kslider8
-        endif
-elseif kPad5 == 1 then
-kslider1  ctrl7 1,11,0,1
-kslider2  ctrl7 1,12,0,1
-kslider3  ctrl7 1,13,0,100
-kslider4  ctrl7 1,14,0,70
-kslider8  ctrl7 1,18,0.1,7
-cabbageSetValue "noiseplay1", kslider1
-cabbageSetValue "noiseplay2", kslider2
-cabbageSetValue "noiseplay3", kslider3
-cabbageSetValue "noiseplay4", kslider4
-cabbageSetValue "noiseplay6", kslider8
-    if kPad3 == 1 || cabbageGet:k("tunerply") == 1 then
-    kslider5  ctrl7 1,15,300,900
-    kslider6  ctrl7 1,16,20,200
-    kslider7  ctrl7 1,17,0.01,2
-    cabbageSetValue "tnmin", kslider5
-    cabbageSetValue "tnmax", kslider5+200
-    cabbageSetValue "tnstep", kslider6
-    cabbageSetValue "tngain", kslider7
-    elseif kPad4 == 1 || cabbageGet:k("pchply") == 1 then
-        if kPchMachine == 0 then
-        kslider5  ctrl7 1,15,0.2,1.5
-        kslider6  ctrl7 1,16,0.2,1.5
-        cabbageSetValue "pchpch", kslider5
-        cabbageSetValue "pchspd", kslider6
-        elseif kPchMachine == 1 then
-        kslider5  ctrl7 1,15,1,7
-        kslider6  ctrl7 1,16,1,7
-        cabbageSetValue "pchmetro", kslider5
-        cabbageSetValue "spdmetro", kslider6
-        endif
-    elseif kPad2 == 1 || cabbageGet:k("loopply") == 1 then
-    kslider5  ctrl7 1,15,0.3,10
-    kslider6  ctrl7 1,16,2,12
-    cabbageSetValue "lptime", kslider5
-    cabbageSetValue "lprep", kslider6
-    elseif kPad1 == 1 || cabbageGet:k("frzply") == 1 then
-    kslider5  ctrl7 1,15,0.2,7
-    kslider6  ctrl7 1,16,1,12
-    cabbageSetValue "rndfrz", kslider5
-    cabbageSetValue "rndamp", kslider6
-    endif
-endif
-
-
-endin
-
-schedule "midi", 0, 999
-
-instr noteMidi
-iMidi notnum
-print iMidi
-if release() == 1 then
-printk2 k(iMidi)
-endif
-endin
-
 instr widgets
  iDurMaster = 99999
- ;schedule "widgetWrite", 0, 1
- kStart cabbageGet "start"
-    if kStart == 1 && changed(kStart) == 1 then
-    schedulek "time", 0, iDurMaster
-    schedulek "speakers", 0, iDurMaster
-    schedulek "radioRecMachine", 0, iDurMaster
-    schedulek "radioPlay", 1, iDurMaster
-    elseif kStart == 0 && changed(kStart) == 1 then
-        kIndx = 1
-        while kIndx < 20 do
-        turnoff2 kIndx, 0, 0
-        kIndx += 1
-        od
-    endif
+    schedule "time", 0, iDurMaster
+    schedule "speakers", 0, iDurMaster
+    schedule "radioRecMachine", 0, iDurMaster
+    schedule "radioPlay", 1, iDurMaster
 
     kTrigNoise cabbageGet "noiseply"
     if     kTrigNoise == 1 && changed(kTrigNoise) == 1 then
@@ -664,6 +592,26 @@ instr widgets
 	turnoff2 "pchspd", 0, 0
     endif
   
+    kTrgTape1 cabbageGet "tr1"
+    kTrgTape2 cabbageGet "tr2"
+    kTapePly  cabbageGet "tapeply"
+    if     kTrgTape1 == 1 && changed(kTrgTape1) == 1 then
+	schedulek "taperec1", 0, 99999
+    elseif kTrgTape1 == 0 && changed(kTrgTape1) == 1 then
+	turnoff2 "taperec1", 0, 0
+    endif
+    if     kTrgTape2 == 1 && changed(kTrgTape2) == 1 then
+	schedulek "taperec2", 0, 99999
+    elseif kTrgTape2 == 0 && changed(kTrgTape2) == 1 then
+	turnoff2 "taperec2", 0, 0
+    endif
+    if     kTapePly == 1 && changed(kTapePly) == 1 then
+	schedulek "tape1", 0, 99999
+	schedulek "tape2", 0, 99999
+    elseif kTapePly == 0 && changed(kTapePly) == 1 then
+	turnoff2 "tape1", 0, 0
+	turnoff2 "tape2", 0, 0
+    endif
 endin
 
 </CsInstruments>
