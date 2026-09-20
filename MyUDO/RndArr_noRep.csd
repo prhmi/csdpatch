@@ -93,6 +93,10 @@ i1 0 .1
 </CsoundSynthesizer>
 
 
+
+
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
