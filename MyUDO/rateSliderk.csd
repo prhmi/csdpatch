@@ -26,7 +26,7 @@ endop
 instr 1
 iMin = 200
 iMax = 400
-kValueIn = 100
+kValueIn = 300
 kValue rateSliderk kValueIn,iMin,iMax
 printk2 kValue
 endin
