@@ -1,6 +1,6 @@
 /*
-Ramkal VSTe package v6.0
-written by parham izadyar | 2020-2025 | cabbage v2.9.0
+Shift — pitch shifter and frequency shifter with modulating texture and color.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2024.
 parhamizadyar.net
 */
 <Cabbage>

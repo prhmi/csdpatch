@@ -1,6 +1,7 @@
 /*
-Ramkal VSTe package v6.0
-written by parham izadyar | 2020-2025 | cabbage v2.9.0
+DDSP — Differentiable Digital Signal Processing. Neural-controlled
+classic DSP synthesis. Combines left and right inputs into one signal.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2026.
 parhamizadyar.net
 */
 <Cabbage>

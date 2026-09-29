@@ -1,6 +1,6 @@
 /*
-parnux VSTi package v6.0
-written by parham izadyar | 2020-2025 | cabbage v2.9.0
+Waveguide physical modeling synth for bowed string, flute, and brass.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2025.
 parhamizadyar.net
 */
 <Cabbage>

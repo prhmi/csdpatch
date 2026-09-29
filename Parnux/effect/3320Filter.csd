@@ -1,6 +1,6 @@
 /*
-Ramkal VSTe package v6.0
-written by parham izadyar | 2020-2025 | cabbage v2.9.0
+3320 Filter — digital emulation of the analog VCF chip with modulation.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2026.
 parhamizadyar.net
 */
 <Cabbage>

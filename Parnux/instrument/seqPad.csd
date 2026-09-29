@@ -1,6 +1,11 @@
+/*
+midi-map | MIDI chord generator and sustained pads sequencer.
+Builds chord voicings and sends them as MIDI notes to any synth or sampler.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2026
+parhamizadyar.net
+*/
 <Cabbage>
 form caption("seq-pad") size(320, 385), guiMode("queue"), pluginId("mmap") colour(20,20,30)
-
 button bounds(16, 20, 74, 31) channel("start") text("start", "stop") colour:0(48, 66, 77, 255) colour:1(48, 66, 77, 255)
 label bounds(260, 14, 30, 20)  channel("active")  align("right") text("")
 image bounds(294, 18, 12, 12)   channel("durled") colour(113, 122, 125, 255)

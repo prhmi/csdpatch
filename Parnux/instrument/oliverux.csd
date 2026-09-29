@@ -1,4 +1,10 @@
-<Cabbage> bounds(0, 0, 0, 0)
+/*
+Deep-listening pad synthesizer after Pauline Oliveros.
+Two waveguide physical-modeling voices.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2026
+parhamizadyar.net
+*/
+<Cabbage>
 form caption("oliverux") size(550, 300), guiMode("queue") pluginId("olvr") colour(10,20,35)
 button bounds(14, 12, 101, 31) channel("start") text("wg", "stop wg") colour:0(48, 66, 77, 255) colour:1(148, 66, 77, 255)
 
@@ -14,7 +20,7 @@ label bounds(392, 224, 72, 16) channel("tit3") text("pluck dB:") align("left")
 image bounds(476, 220, 60, 25) channel("gain2") colour(56, 58, 60, 255)
 nslider bounds(476, 216, 59, 31) channel("plkgain") range(-60, 20, 0, 1, 1) colour(10,20,35, 0) fontColour(176, 219, 231, 255)
 
-nslider bounds(22, 50, 79, 38) channel("len") range(3, 12, 7, 1, 1) colour(49, 64, 79, 255) fontColour(176, 219, 231, 255) text("Harmonics")
+nslider bounds(22, 50, 79, 38) channel("len") range(1, 12, 7, 1, 1) colour(49, 64, 79, 255) fontColour(176, 219, 231, 255) text("Harmonics")
 nslider bounds(108, 50, 79, 38) channel("wide") range(10, 50, 17, 1, 5) colour(49, 64, 79, 255) fontColour(176, 219, 231, 255) text("wide")
 nslider bounds(196, 50, 79, 38) channel("vibf") range(0, 5, 4.2, 1, 0.01) colour(49, 64, 79, 255) fontColour(176, 219, 231, 255) text("vib frq")
 nslider bounds(284, 50, 79, 38) channel("vibr") range(0, 0.006, 0.002, 1, 0.001) colour(49, 64, 79, 255) fontColour(176, 219, 231, 255) text("vib rng")
@@ -82,11 +88,11 @@ instr wgMachine
  iLen  cabbageGetValue "len"
  iWide cabbageGetValue "wide"
  iDelay = 0.3
- iAmp ampdb -5
+ iAmp ampdb -10
    while indx < iLen do
    iDelay random 1, iLen
-   schedule iBowNum+(iMidi/100), 0, p3, iFrq, iAmp/(iLen*3.3)
-   schedule iPlkNum+(iMidi/100), 0, p3, iFrq, iAmp/(iLen*0.3),iDelay
+   schedule iBowNum+(iMidi/100), 0, 9999, iFrq, iAmp/(iLen*3.3)
+   schedule iPlkNum+(iMidi/100), 0, 9999, iFrq, iAmp/(iLen*0.3),iDelay
    iRnd random 0, 15
    iFrq += (iWide+iRnd)
    indx += 1

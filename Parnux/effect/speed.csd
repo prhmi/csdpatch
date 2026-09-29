@@ -1,8 +1,8 @@
 /*
-Ramkal VSTe package v6.0
-written by parham izadyar | 2020-2025 | cabbage v2.9.0
+Speed — time-based random playback speed modulation with pitch preservation.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2023.
 parhamizadyar.net
-*/
+*/ 
 <Cabbage>
 form     caption("Speed") size(380,350), pluginId("sped"), colour(30,30,50) guiMode("queue")
 

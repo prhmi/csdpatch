@@ -1,7 +1,11 @@
+/*
+Record — live recorder for the bus signal.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2026.
+parhamizadyar.net
+*/
 <Cabbage>
 form size(300, 120), caption("record BUSs"), guiMode("queue"), pluginId("hstr"), guiRefresh(10) colour(20,20,30)
 button bounds(170, 66, 120, 31) channel("rcrd") text("record", "recording !") colour:0(48, 66, 77, 255) colour:1(148, 70, 80, 255)
-
 nslider bounds(230, 14, 59, 37) channel("bus") range(1, 16, 1, 1, 1) text("BUS") colour(48, 66, 77, 255)
 image bounds(146, 16, 17, 17) channel("led") colour(80, 80, 90, 255)
 label bounds(18, 72, 137, 19) channel("show"), text("record No. -") align("left")
@@ -58,7 +62,7 @@ aIn4 = inch:a(4)*aEnv
 aIn5 = inch:a(5)*aEnv
 aIn6 = inch:a(6)*aEnv
 
-Sdir sprintf "D:\\myWork\\music\\open\\record\\bus%d", iBus
+Sdir sprintf "D:\\record\\bus%d", iBus
 Sarray[] directory Sdir, ".wav"
 Sname sprintf "bus%d_record%d.wav", iBus, lenarray(Sarray)+1
 Sfile sprintf "%s\\%s",Sdir, Sname

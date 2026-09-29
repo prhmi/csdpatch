@@ -1,15 +1,17 @@
 /*
-parnux VSTi package v6.0
-written by parham izadyar | 2020-2025 | cabbage v2.9.0
+Morse code generator, sends dots and dashes as MIDI notes.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2024.
 parhamizadyar.net
 */
 <Cabbage>
-form caption("MorseCode") size(320, 150)  guiMode("queue")  colour(40,30,40) style("legacy") pluginId("mrse")
-texteditor bounds(12, 24, 300, 40) channel("morsetxt") colour(200, 170, 200, 200) colour:0(200, 170, 200, 200)fontSize(26) text("some one")
-nslider bounds(18, 72, 70, 44) channel("morsebpm") range(30, 300, 174, 1, 1) colour(70, 50, 70) fontColour(241, 178, 178, 255) text("Tempo")
-nslider bounds(90, 72, 68, 43) channel("morsefrq") range(200, 2000, 1200, 1, 1) colour(70, 50, 70, 255) fontColour(241, 178, 178, 255) text("Frq")
-nslider bounds(162, 72, 68, 43) channel("morseamp") range(-90, 0, -22, 1, 1) colour(70, 50, 70) fontColour(241, 178, 178, 255) text("Amp")
+form caption("MorseCode") size(350, 150)  guiMode("queue")  colour(40,30,40) style("legacy") pluginId("mrse")
+texteditor bounds(12, 24, 316, 40) channel("morsetxt") colour(200, 170, 200, 200) colour:0(200, 170, 200, 200)fontSize(26) text("some one")
+nslider bounds(18, 72, 70, 44) channel("morsebpm") range(30, 300, 154, 1, 1) colour(70, 50, 70) fontColour(241, 178, 178, 255) text("Tempo")
+nslider bounds(90, 72, 68, 43) channel("morsefrq") range(500, 3000, 1430, 1, 1) colour(70, 50, 70, 255) fontColour(241, 178, 178, 255) text("Frq")
+nslider bounds(162, 72, 68, 43) channel("morseamp") range(-90, 0, -1, 1, 1) colour(70, 50, 70) fontColour(241, 178, 178, 255) text("Amp")
 nslider bounds(232, 72, 68, 43) channel("morsefilt") range(500, 9000, 5000, 1, 1) colour(70, 50, 70) fontColour(241, 178, 178, 255) text("lopF")
+image bounds(306, 72, 20, 20) channel("morseplight") corners(2) colour(10, 10, 10, 255)
+
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
@@ -17,7 +19,7 @@ nslider bounds(232, 72, 68, 43) channel("morsefilt") range(500, 9000, 5000, 1, 1
 </CsOptions>
 <CsInstruments>
 
-sr = 44100
+;sr = 44100
 ksmps = 32
 nchnls = 2
 0dbfs = 1
@@ -161,7 +163,7 @@ endif
     iMorseArr[] fillarray 1
     Schr = " "
     endif
-    printarray iMorseArr
+    ;printarray iMorseArr
     iTempo = (iBPM/60)*4
     if metro(kTime) == 1 then
     	if iChar != 32 then
@@ -199,13 +201,22 @@ endop
 
 
 instr morseMachine
-Stxt = p4
-    iBPM cabbageGetValue "morsebpm" ; 120
-    iTempo = iBPM/60
-    kTrig, kDur, kOnOff, Schr morseRead Stxt, iBPM
-    	if kTrig == 1 && changed(kTrig) == 1 then
-    	schedulek "morseSound", 0, kDur*0.7,Schr
-    	endif    
+ Stxt = p4
+ iBPM cabbageGetValue "morsebpm" ; 120
+ iTempo = iBPM/60
+ kTrig, kDur, kOnOff, Schr morseRead Stxt, iBPM
+   if kTrig == 1 && changed(kTrig) == 1 then
+   schedulek "morseSound", 0, kDur*0.7,Schr
+   schedulek "midiSend", 0, kDur*0.7
+   schedulek "ledon", 0, 0.1
+   schedulek "ledoff", kDur*0.7, 0.1
+   endif
+   if kOnOff == 0 then
+   cabbageSet 1,"morseplight","colour(10, 10, 10)"
+   turnoff2 "morseSound", 0, 0
+   turnoff2 "speaker", 0, 0
+   turnoff
+   endif
 endin
 
 
@@ -220,34 +231,58 @@ instr morseSound
  iSineGain = iMorseSine
  iAmpIn cabbageGetValue "morseamp"
  iAmp ampdb iAmpIn
-    if p4 == 32 then
-    iGain = 0
-    elseif p4 == 200 then
-    iGain = 0
-    cabbageSet 1,"morseplight","colour(10, 10, 10)"
-    else
-     cabbageSet "morseplight","colour(245, 150, 245)"
-    iGain = 1
-    endif
+
+     ;cabbageSet "morseplight","colour(245, 150, 245)"
+
  iAtt = p3/10
+ if iAtt >= 0.002 then
+ iAtt = 0.001
+ endif
  aEnv transeg 0, iAtt, 6, iAmp, p3-(iAtt*2), 1, iAmp, iAtt, -6, 0
  aSound poscil aEnv, iFrq
  aNoise noise aEnv, 0.5
  iFilter cabbageGetValue "morsefilt"
  aNoiseF clfilt  aNoise, iFilter, 0, 10
  aNoiseOut clfilt aNoiseF, iFilter*0.9, 1, 10
- aOut = ((aSound*0.6)+(aNoiseOut*0.4))*iGain
- ;chnmix aOut, "out"
- outall aOut
-if release() == 1 && p4 != 200 then
-cabbageSet 1,"morseplight","colour(120, 100, 120)"
+ aOut = ((aSound*0.6)+(aNoiseOut*0.2))
+ chnmix aOut, "out"
+ ;outall aOut
+if release() == 1 then
+;cabbageSet 1, "morseplight","colour(120, 100, 120)"
 endif
+endin
+
+instr midiSend
+ iChn = 1
+ iNote = 60
+ iVeloc = 65
+ midion iChn, iNote, iVeloc
+endin
+
+instr ledon
+cabbageSet 1, "morseplight","colour(245, 150, 245)"
+endin
+instr ledoff
+cabbageSet 1, "morseplight","colour(120, 100, 120)"
+endin
+
+instr speaker
+aIn chnget "out"
+aNoise noise 0.03, 0
+aNoise clfilt aNoise, 400, 1, 10
+aNoise clfilt aNoise, 3000, 0, 10
+aOut = aIn+aNoise
+fout "record.wav", 4, aOut
+out aOut,aOut
+chnclear "out"
 endin
 
 
 instr widget
 Stype cabbageGet "morsetxt"
     if changed(Stype) == 1  then
+    turnoff2 "speaker", 0, 0
+    schedulek "speaker", 0, 99999
     turnoff2 "morseMachine", 0, 0
     turnoff2 "morseSound", 0, 0
     schedulek "morseMachine", 0, 9999, Stype, 0

@@ -1,6 +1,6 @@
 /*
-Ramkal VSTe package v6.0
-written by parham izadyar | 2020-2025 | cabbage v2.9.0
+Tracker — pitch tracker that generates a signal from the detected pitch.
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2023.
 parhamizadyar.net
 */
 <Cabbage> 

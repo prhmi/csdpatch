@@ -1,3 +1,8 @@
+/*
+midi-map | table based sequencer, sends dual MIDI CC out
+Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2026
+parhamizadyar.net
+*/
 <Cabbage> 
 form caption("seq-cc") size(320, 385), pluginId("mmap") colour(20,20,30)
 ;button bounds(270, 20, 101, 31) channel("start") text("start all", "stop all") colour:0(48, 66, 77, 255) colour:1(48, 66, 77, 255)
