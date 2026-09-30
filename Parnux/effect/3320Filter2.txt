@@ -1,0 +1,12 @@
+/*
+This is the <b>explanation</b>. You can use HTML here.<br>
+For example a link to <a href="https://cabbageaudio.com/">cabbage</a>,
+a line break, <i>italics</i>, and so on.
+*/
+
+; everything below the comment block
+; will appear in the code-box instead
+instr 1
+  a1 oscili 0.5, 440
+  out a1
+endin
