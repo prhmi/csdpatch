@@ -1,16 +1,14 @@
-/*
-Record — live recorder for the bus signal.
-Parnux v_6.1 — Cabbage v_2.9 and Csound v_6.18 © 2026.
-parhamizadyar.net
-*/
 <Cabbage>
-form size(300, 120), caption("record BUSs"), guiMode("queue"), pluginId("hstr"), guiRefresh(10) colour(20,20,30)
-button bounds(170, 66, 120, 31) channel("rcrd") text("record", "recording !") colour:0(48, 66, 77, 255) colour:1(148, 70, 80, 255)
-nslider bounds(230, 14, 59, 37) channel("bus") range(1, 16, 1, 1, 1) text("BUS") colour(48, 66, 77, 255)
+form size(320, 150), caption("record BUSs"), guiMode("queue"), pluginId("hstr"), guiRefresh(10) colour(20,20,30)
+;button bounds(170, 66, 120, 31) channel("rcrd") text("record", "recording !") colour:0(48, 66, 77, 255) colour:1(148, 70, 80, 255)
+button bounds(190, 66, 120, 31) channel("rcrd") text("record", "play to record") colour:0(48, 66, 77, 255) colour:1(100, 70, 80, 255)
+
+nslider bounds(250, 14, 59, 37) channel("bus") range(1, 16, 1, 1, 1) text("BUS") colour(48, 66, 77, 255)
 image bounds(146, 16, 17, 17) channel("led") colour(80, 80, 90, 255)
 label bounds(18, 72, 137, 19) channel("show"), text("record No. -") align("left")
 label bounds(20, 10, 112, 17) channel("label10004") text("live recording"), align("left")
 label bounds(20, 34, 113, 13) channel("label10005")  text("[6-chn supported]"), align("left")
+label bounds(18, 118, 288, 16) channel("dir") align("left") fontSize(14) fontColour(100,180,100,255)
 </Cabbage>
 <CsoundSynthesizer>
 <CsOptions>
@@ -40,15 +38,18 @@ endin
 
 instr check
 Sdir sprintf "D:\\myWork\\music\\open\\record\\bus%d", p4
+SdirShow sprintf "text(%s)", Sdir
+cabbageSet 1, "dir", SdirShow
 Sarray[] directory Sdir, ".wav"
 iLen lenarray Sarray
-print iLen
 Sshow sprintf "text(\"%d record exist\")", iLen
 cabbageSet "show", Sshow
 endin
 
 
 instr record
+StxtR = "text(\"record\", \"recording!\") colour:1(148, 70, 80, 255)"
+cabbageSet 1, "rcrd", StxtR
 ScolorOn = "colour(60,150,200,255)"
 cabbageSet 1, "led", ScolorOn
 iBus cabbageGetValue "bus"
@@ -62,7 +63,7 @@ aIn4 = inch:a(4)*aEnv
 aIn5 = inch:a(5)*aEnv
 aIn6 = inch:a(6)*aEnv
 
-Sdir sprintf "D:\\record\\bus%d", iBus
+Sdir sprintf "D:\\myWork\\music\\open\\record\\bus%d", iBus
 Sarray[] directory Sdir, ".wav"
 Sname sprintf "bus%d_record%d.wav", iBus, lenarray(Sarray)+1
 Sfile sprintf "%s\\%s",Sdir, Sname
@@ -83,6 +84,8 @@ elseif iChn == 6 then
 fout Sfile, 8, aIn1,aIn2,aIn3,aIn4,aIn5,aIn6
 endif
   if release() == 1 then
+  StxtS = "text(\"record\", \"ready...!\"), colour:1(100, 70, 80, 255)"
+  cabbageSet 1, "rcrd", StxtS
   ScolorOff = "colour(60,60,70,255)"
   cabbageSet 1, "led", ScolorOff
   endif
