@@ -6,12 +6,15 @@ parhamizadyar.net
 <Cabbage>
 form caption("seq-arp") size(320, 385), guiMode("queue"), pluginId("mmap") colour(20,20,30)
 button bounds(16, 20, 74, 31) channel("start") text("start", "stop") colour:0(48, 66, 77, 255) colour:1(48, 66, 77, 255)
+
+button bounds(156, 26, 30, 20) channel("sound") text("p", "p") colour:0(48, 66, 77, 255) colour:1(148, 66, 77, 255)
 nslider bounds(32, 98, 50, 40) channel("bpm") range(30, 140, 83, 1, 1) text("BPM") colour(48, 66, 77, 255)
-nslider bounds(84, 98, 50, 40) channel("dur") range(0.3, 3, 0.7, 1, 0.1) text("dur") colour(48, 66, 77, 255)
-nslider bounds(138, 106, 36, 31) channel("len1") range(3, 16, 8, 1, 1) text("ch-1") colour(48, 66, 77, 255)
-nslider bounds(182, 106, 36, 31) channel("len2") range(3, 16, 12, 1, 1) text("ch-2") colour(48, 66, 77, 255)
-nslider bounds(32, 148, 50, 40) channel("notemin") range(20, 100, 60, 1, 1) text("min") colour(48, 66, 77, 255)
-nslider bounds(84, 148, 50, 40) channel("notemax") range(20, 100, 72, 1, 1) text("max") colour(48, 66, 77, 255)
+nslider bounds(84, 98, 50, 40) channel("dur") range(0.3, 3, 0.7, 1, 0.1) text("x-dur") colour(48, 66, 77, 255)
+nslider bounds(138, 106, 36, 31) channel("len1") range(3, 16, 8, 1, 1) text("sq-1") colour(48, 66, 77, 255)
+nslider bounds(182, 106, 36, 31) channel("len2") range(3, 16, 12, 1, 1) text("sq-2") colour(48, 66, 77, 255)
+nslider bounds(32, 148, 50, 40) channel("strtn") range(1, 8, 4, 1, 1) text("oct-s") colour(48, 66, 77, 255)
+nslider bounds(84, 148, 50, 40) channel("octn") range(1, 8, 1, 1, 1) text("oct-e") colour(48, 66, 77, 255)
+
 nslider bounds(140, 148, 50, 40) channel("notelen") range(2, 8, 4, 1, 1) text("len") colour(48, 66, 77, 255)
 combobox bounds(252, 22, 46, 26) channel("basenote") colour(50, 64, 82, 255) text( "C", "C#", "D", "D#","E","F", "F#", "G","G#", "A", "Bb", "B") value(6)
 combobox bounds(220, 54, 81, 26) channel("scale") colour(50, 64, 82, 255) text("scale", "minor", "major", "prst1", "prst2") value(4)
@@ -30,7 +33,7 @@ button bounds(226, 300, 38, 30) channel("vi") text("vi", "vi") colour:0(48, 66, 
 button bounds(268, 300, 38, 30) channel("vii") text("vii", "vii") colour:0(48, 66, 77, 255) colour:1(48, 66, 77, 255)
 button bounds(198, 162, 38, 30) channel("gennote") text("gen", "gen") colour:0(48, 66, 77, 255) colour:1(48, 66, 77, 255)
 
-texteditor bounds(16, 204, 283, 27) channel("seqarr") fontSize(27) text("1 1") colour(50, 60, 80) fontColour(200,200,200)
+texteditor bounds(16, 204, 283, 26) channel("seqarr") fontSize(27) text("1 1") colour(50, 60, 80) fontColour(200,200,200)
 checkbox bounds(100, 26, 20, 20) channel("b1") colour:0(79, 79, 74, 255) colour:1(255, 245, 0, 255)
 checkbox bounds(124, 26, 20, 20) channel("b2") colour:0(79, 79, 74, 255) colour:1(255, 245, 0, 255)
 label bounds(254, 164, 41, 22)  channel("funcshow")  text("-") fontColour(209, 245, 52, 255)
@@ -81,35 +84,19 @@ endop
 
 
 opcode noteScale, iS,ii
- iNoteMin,iNoteMax xin
+ iOctS,iOctE xin
  iScale       cabbageGetValue "scale"
  iBaseNoteIn  cabbageGetValue "basenote"
- iOctRnd cabbageGetValue "rndoct"
-if iOctRnd == 1 then
-iOct = 0
-elseif iOctRnd == 2 then
-iOct = int(random:i(-2, 1))
-elseif iOctRnd == 3 then
-iOct = int(random:i(0, 2))
-elseif iOctRnd == 4 then
-iOct = int(random:i(-2, 2))
-endif
  iBaseNote = iBaseNoteIn-1
- start:
- iNoteRnd = int(random:i( iNoteMin, iNoteMax))
- iNote = iNoteRnd
- iOctav = iOct
-	     until iNote < iBaseNote+12 do
-	     iOctav += 1
-  		iNote -= 12
-  		enduntil
+
+ iNorm[]           genarray 0, 12
  iMinor[]          fillarray 0, 2, 3, 5, 7, 8, 10, 12
  iMajor[]          fillarray 0, 2, 4, 5, 7, 9, 11, 12
  iMySc1[]          fillarray 0, 1, 3, 5, 6, 8, 10, 12
  iMySc2[]          fillarray 0, 1, 3, 4, 6, 8, 9, 11, 12
- if     iScale == 1 goto skip
- ;iNoteOut = iNoteRnd
- if iScale == 2 then
+ if     iScale == 1 then
+ iScaleArr[] = iNorm
+ elseif iScale == 2 then
  iScaleArr[] = iMinor
  elseif iScale == 3  then
  iScaleArr[] = iMajor
@@ -118,37 +105,27 @@ endif
  elseif iScale == 5  then
  iScaleArr[] = iMySc2
  endif
- indx = 0
- iCheck = 0
- while indx < lenarray(iScaleArr) do
- if iNote == iScaleArr[indx]+iBaseNote then
- iCheck = 1
- endif
- indx += 1
- od
- ;print iCheck
-    if iCheck == 0 goto start
- SnoteOut MtoNameInt iNoteRnd
- skip:
- iNoteOut = iNote+(12*iOctav) 	
-;   iCheckRep = 0
-;   while iCheckRep < lenarray(giNoteArr) do
-;   if iNoteOut = giNoteArr[iCheckRep] goto start
-;   iCheckRep += 1
-;   od
+ 
+ iNoteIndx = int(random:i(0,lenarray(iScaleArr)))
+ iNote = iBaseNote+iScaleArr[iNoteIndx]
+ SnoteOut MtoNameInt iNote	
+ iRndOct = int(random:i(0,iOctE))
+ iNoteOut = iNote+((iOctS+1)*12)+(iRndOct*12)
  xout iNoteOut,SnoteOut
 endop 
-
 
 
 opcode FuncPrg, i[],ii
 iFunc,iLen xin
  iScale       cabbageGetValue "scale"
  iBaseNoteIn  cabbageGetValue "basenote"
- iMaxNote     cabbageGetValue "notemax"
- iMin         cabbageGetValue "notemin"
+ iStrtN       cabbageGetValue "strtn"
+ iEndN        cabbageGetValue "octn" 
+ iNoteMin = (iBaseNoteIn-1)+(12*iStrtN)
+ iNoteMax = iNoteMin+(12*iEndN)
+ ;print iNoteMin
  iNoteBase = iBaseNoteIn-1 
-    until iNoteBase > iMin do
+    until iNoteBase > iNoteMin do
     iNoteBase += 12
     enduntil
  iNorm[]    genarray 0, 12
@@ -167,30 +144,17 @@ iFunc,iLen xin
  elseif iScale == 5  then
  iScaleArr[] = iMySc2
  endif
-
 iOutArr[] init iLen
 SOutArr[] init iLen
+
  indx = 0
  iRead = iFunc-1
  while indx < iLen do
  iNote = iNoteBase+iScaleArr[iRead]
-   until iNote < iMaxNote do
-   iNote -= 12
-   enduntil
- iOctRnd cabbageGetValue "rndoct"
-   if iOctRnd == 1 then
-   iOct = 0
-   elseif iOctRnd == 2 then
-   iOct = int(random:i(-2, 1))
-   elseif iOctRnd == 3 then
-   iOct = int(random:i(0, 2))
-   elseif iOctRnd == 4 then
-   iOct = int(random:i(-2, 2))
-   endif
- iOutArr[indx] = iNote+(12*iOct) 
- ;Snote mton iNote
+  iOutArr[indx] = iNote
+ Snote mton iNote
  ;puts Snote, 1
- ;SOutArr[indx] = Snote
+ SOutArr[indx] = Snote
  indx += 1
  iRead = (iRead+2) % (lenarray(iScaleArr)-1)
  od
@@ -349,7 +313,9 @@ if metro(1/kTime1) == 1 then
    endif
 kDur1 = (kTime1)*kDurIn
 kNote1 = giNoteArr[kNoteIndx1%gkLenNote]
-schedulek "sound", 0, kDur1*2, kNote1
+   if cabbageGet:k("sound") == 1 then
+   schedulek "sound", 0, kDur1*2, kNote1
+   endif
 schedulek "midiSend", 0, kDur1, kNote1,kVel1, kChn1
 schedulek "ledOn", 0, kDur1, 1,kLEDindx1, 1
 schedulek "ledOff", kDur1, kDur1, 1,kLEDindx1
@@ -391,7 +357,9 @@ if metro(1/kTime2) == 1 then
    endif
 kDur2 = (kTime2)*kDurIn
 kNote2 = giNoteArr[kNoteIndx2%gkLenNote]
-schedulek "sound", 0, kDur2*2, kNote2
+   if cabbageGet:k("sound") == 1 then
+   schedulek "sound", 0, kDur2*2, kNote2
+   endif
 schedulek "midiSend", 0, kDur2, kNote2,kVel2, kChn2
 schedulek "ledOn", 0, kDur2, 2,kLEDindx2, 2
 schedulek "ledOff", kDur2, kDur2, 2,kLEDindx2
@@ -419,7 +387,7 @@ instr sound
 iAtt = 0.001
 iAmp ampdb -17
 aEnv transeg 0, iAtt, 4, iAmp, p3-iAtt, -6, 0
-iFrq mtof p4+12
+iFrq mtof p4
 aSound poscil aEnv, iFrq
 out aSound,aSound
 endin
@@ -528,8 +496,10 @@ endin
 instr genNote
 giNoteArr[] = giEmptArr
 iLen cabbageGetValue "notelen"
-iMin cabbageGetValue "notemin"
-iMax cabbageGetValue "notemax"
+
+ iStrtN       cabbageGetValue "strtn"
+ iEndN        cabbageGetValue "octn" 
+
 indx = 0
 while indx < 8 do
 SnoteOut sprintf "text(%s)", ""
@@ -540,14 +510,12 @@ od
 indx = 0
 while indx < iLen do
 start:
-iNote, Snote noteScale iMin, iMax
-if iLen >= (iMax-iMin)/2 goto skip
+iNote, Snote noteScale iStrtN, iEndN
    iCheckRep = 0
    while iCheckRep < lenarray(giNoteArr) do
    if iNote = giNoteArr[iCheckRep] goto start
    iCheckRep += 1
    od
-skip:
 giNoteArr[indx] = iNote
 Snote MtoNameInt iNote
 SnoteOut sprintf "text(%s)", Snote
@@ -591,7 +559,7 @@ endin
 
 instr midiSend
  iChn = p6
- print iChn
+ ;print iChn
  kActive active p1
  SactiveShow   sprintfk "text(%d)", kActive
  cabbageSet 1, "active", SactiveShow
@@ -688,9 +656,11 @@ Sfunc = "VI"
 elseif p4 = 7 then
 Sfunc = "VII"
 endif
+
 kChngColor transeg 0, p3*0.9, -2, 1
 SfuncShow sprintfk "text(%s) fontColour(209, 245, 52, %d)", Sfunc, kChngColor*255
  cabbageSet 1, "funcshow", SfuncShow
+ cabbageSet "funcshow", "text(-)"
 endin
 
 
@@ -702,15 +672,15 @@ instr widgets
  kNoteMax cabbageGet "notemax"
  kSeqMod cabbageGet "seqmod"
  
- 
+ cabbageSet "seqarr", "text(1 1 2 1 4)"
   schedule "genNote", 0, 0.1
  
 
     SWidgetChannels[] cabbageGetWidgetChannels
     kIndex, kTrig cabbageChanged SWidgetChannels
 if kTrig == 1 then
-if kIndex >= 17 && kIndex <= 23 then
-schedulek "funcChng", 0, 0.3, kIndex-16
+if kIndex >= 18 && kIndex <= 24 then
+schedulek "funcChng", 0, 0.3, kIndex-17
 endif
 endif
  
@@ -737,9 +707,7 @@ kLen2 cabbageGet "len2"
     cabbageSetValue "start", k(0)
     endif
     if changed(kGenNote) == 1 then
-    if kNoteLen < (kNoteMax-kNoteMin) then
     schedulek "genNote", 0, 1
-    endif
     endif
 endin
 
