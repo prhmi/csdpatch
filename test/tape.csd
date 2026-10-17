@@ -466,9 +466,9 @@ endop
 
 ; the source. It runs first in every control cycle. For a live input use:  gaSrcL inch 1  and  gaSrcR inch 2
 instr source
-    gaSrcL, gaSrcR diskin2 "../test.wav", 1, 0, 1
-    ;gaSrcL inch 1
-    ;gaSrcR inch 2
+    ;gaSrcL, gaSrcR diskin2 "../test.wav", 1, 0, 1
+    gaSrcL inch 1
+    gaSrcR inch 2
 endin
 
 
